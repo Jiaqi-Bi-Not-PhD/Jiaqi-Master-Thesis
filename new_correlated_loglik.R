@@ -8,10 +8,17 @@ corr_frailty_llhd <- function(X, Y, theta, cuts=NULL, nbase, data, design, base.
   
   if(base.dist == "lognormal") bparms1 <- c(theta[1], exp(theta[2]))
   else bparms1 <- exp(theta[1:nbase])
-  
+  #
+  print(bparms1)
   nx <- dim(X)[2]
+  #
+  beta <- theta[(nb+1):(nb+nx)]
+  #
+  print(beta)
   xbeta <- c(X%*%theta[(nb+1):(nb+nx)])
   sigma <- exp(theta[nb+nx+1])
+  #
+  print(sigma)
   z_initial <- theta[(nb+nx+2):length(theta)]
   
   
@@ -36,10 +43,10 @@ corr_frailty_llhd <- function(X, Y, theta, cuts=NULL, nbase, data, design, base.
                           sex = rep(2,nrow(data))))
   
   #### numerical integral #### 
-  integrand_part <- function(z_star, Hfam = Hfam, sigma = sigma, Sigma = Sigma, status1 = status1) {
-    term_1 <- log(z_star) * status1
-    term_2 <- z_star * sum(Hfam[Hfam != -Inf], na.rm = TRUE)
-    term_3 <- -0.5 * t(z_star) %*% solve(sigma^2 * Sigma) %*% z_star
+  integrand_part <- function(z_star, Hfam1 = Hfam, sigma1 = sigma, Sigma1 = Sigma, status11 = status1) {
+    term_1 <- log(z_star) * status11
+    term_2 <- z_star * sum(Hfam1[Hfam1 != -Inf], na.rm = TRUE)
+    term_3 <- -0.5 * t(z_star) %*% solve(sigma1^2 * Sigma1) %*% z_star
     integral <- sum(term_1) + sum(term_2) + sum(term_3)
   }
   
