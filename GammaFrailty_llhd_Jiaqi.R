@@ -27,6 +27,7 @@ loglik_frailty_single_gamma <- function(X, Y, theta, cuts=NULL, nbase, data, des
   df <- subset(data, data$proband == 1)
   d <- aggregate(Y[,2], list(data$famID), sum)[,2]
   Hfam <- aggregate(H, list(data$famID), sum)[,2]
+  print(Hfam)
   first_term <- aggregate(h_eachfam, list(data$famID), sum)[,2]
   
   
