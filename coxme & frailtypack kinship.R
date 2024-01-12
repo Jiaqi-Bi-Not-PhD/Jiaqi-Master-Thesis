@@ -11,7 +11,7 @@ kinship_mat <- with(brca1_prs, kinship(id = indID, dadid = fatherID, momid = mot
                                        sex = rep(2,nrow(brca1_prs))))
 
 ## coxme
-model_coxme <- coxme(Surv(timeBC, BC) ~ PRS + mgeneI + (1|indID),
+model_coxme <- coxme(Surv(timeBC, BC) ~ mgeneI + (1|indID),
                      varlist = list(kinship_mat),
                      data = brca1_prs)
 summary(model_coxme)
