@@ -1,0 +1,59 @@
+\chapter{Time series: Long memory}
+Here is a picture of a long memory time series. 
+\begin{figure}[ht]
+\begin{center}
+%\includegraphics[height = 9cm, width = 9cm]{pic1.jpeg}
+\includegraphics[height = 9cm, width = 9cm]{logo.png}
+\caption{A long memory time series\label{ts1}}
+\end{center}
+\end{figure}
+
+Here's a table.
+\begin{table}[ht]
+\begin{center}
+\begin{tabular}[ht]{|c|lr|c|} 
+%c stands for centre, l for left, r for right; the | puts lines in between, and the hline puts a horizontal line in
+\hline
+$n$ & $\alpha$ &$n\alpha$ & $\beta$\\
+\hline
+1 & 0.2 & 0.2 & 5\\
+\hline
+2 & 0.3 & 0.6 & 4\\
+\hline
+3 & 0.7 & 2.1 & 3\\
+\hline
+\end{tabular}
+\caption{A random table \label{tab1}}
+\end{center}
+\end{table}
+
+\begin{eqnarray}
+y &=& mx + b \label{eq1}\\
+&=& ax+ c
+\label{eq2}
+\end{eqnarray}
+
+This is an un-numbered equation, along with a numbered one. 
+\begin{eqnarray}
+u &=& px \nonumber\\
+p &=& P(X=x) \label{eqn3}
+\end{eqnarray}
+
+Look at Table \ref{tab1} and Figure \ref{ts1} and equations \ref{eq1},  \ref{eq2}, and \ref{eqn3}.
+
+Let's do some matrix algebra now.
+
+\begin{equation}
+det\left(\left|\begin{array}{ccc} 2 & 3 & 5\\
+4 & 4 & 6\\
+9 & 8 & 1
+\end{array}\right|\right) = 42
+\end{equation}
+
+In the equation and eqnarray environments, you don't need to have the dollar sign to enter math mode.
+
+\begin{eqnarray}
+\alpha = \beta_1 \Gamma^{-1}
+\end{eqnarray}
+
+This is citing a reference ~\cite{mygood11111}.  This is citing another ~\cite{mrx05}.  Nobody said something ~\cite{Nobody06}.

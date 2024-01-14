@@ -1,0 +1,11 @@
+\contentsline {chapter}{Certificate of Examination}{ii}{}%
+\contentsline {chapter}{Abstract}{iii}{}%
+\contentsline {chapter}{List of Figures}{v}{}%
+\contentsline {chapter}{List of Tables}{vi}{}%
+\contentsline {chapter}{List of Appendices}{vii}{}%
+\contentsline {chapter}{\numberline {1}Time series: Long memory}{1}{}%
+\contentsline {chapter}{\numberline {2}Theorems}{3}{}%
+\contentsline {section}{\numberline {2.1}Basic Theorems}{3}{}%
+\contentsline {chapter}{Bibliography}{4}{}%
+\contentsline {chapter}{\numberline {A}Proofs of Theorems}{5}{}%
+\contentsline {chapter}{Curriculum Vitae}{6}{}%
