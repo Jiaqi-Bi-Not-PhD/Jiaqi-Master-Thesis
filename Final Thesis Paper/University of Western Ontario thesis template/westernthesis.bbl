@@ -1,17 +1,39 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{5}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
-\bibitem{Nobody06}
-Nobody Jr.
-\newblock My article, 2006.
+\bibitem[Duncan et~al.(1998)Duncan, Reeves, and Cooke]{duncan1998brca1}
+JA~Duncan, JR~Reeves, and TG~Cooke.
+\newblock {BRCA1 and BRCA2 proteins: roles in health and disease.}
+\newblock \emph{Molecular pathology}, 51\penalty0 (5):\penalty0 237, 1998.
 
-\bibitem{mygood11111}
-ME.
-\newblock Oh, my!
-\newblock 1990.
+\bibitem[Greer and Whitcomb(2006)]{greer2006role}
+Julia~B Greer and David~C Whitcomb.
+\newblock {Role of BRCA1/2 mutations in pancreatic cancer}.
+\newblock \emph{Gut}, 2006.
 
-\bibitem{mrx05}
-Mr. X.
-\newblock {\em Mr. X Knows BibTeX}.
-\newblock AWOL, 2005.
+\bibitem[Haffty et~al.(2002)Haffty, Harrold, Khan, Pathare, Smith, Turner,
+  Glazer, Ward, Carter, Matloff, et~al.]{haffty2002outcome}
+Bruce~G Haffty, Elizabeth Harrold, Atif~J Khan, Pradip Pathare, Tanya~E Smith,
+  Bruce~C Turner, Peter~M Glazer, Barbara Ward, Daryl Carter, Ellen Matloff,
+  et~al.
+\newblock {Outcome of conservatively managed early-onset breast cancer by
+  BRCA1/2 status}.
+\newblock \emph{The Lancet}, 359\penalty0 (9316):\penalty0 1471--1477, 2002.
+
+\bibitem[Huang(2018)]{huang2018association}
+Yong-Wen Huang.
+\newblock {Association of BRCA1/2 mutations with ovarian cancer prognosis: an
+  updated meta-analysis}.
+\newblock \emph{Medicine}, 97\penalty0 (2), 2018.
+
+\bibitem[Friedenson(2007)]{friedenson2007brca1}
+Bernard Friedenson.
+\newblock {The BRCA1/2 pathway prevents hematologic cancers in addition to
+  breast and ovarian cancers}.
+\newblock \emph{BMC cancer}, 7\penalty0 (1):\penalty0 1--11, 2007.
 
 \end{thebibliography}

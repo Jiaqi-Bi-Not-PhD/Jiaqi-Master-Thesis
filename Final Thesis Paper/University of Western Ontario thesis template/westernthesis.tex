@@ -27,6 +27,8 @@
 %\usepackage{hyperref} %comment out for hardcopy
 \usepackage{txfonts}
 \usepackage{tocloft}
+\usepackage[numbers]{natbib}
+
 \makeatletter
 \numberwithin{figure}{chapter}
 \newenvironment{acknowledgements}%
@@ -384,7 +386,7 @@ This is a really silly abstract.
 %% This adds a line for the Bibliography in the Table of Contents.
 \addcontentsline{toc}{chapter}{Bibliography}
 %% ***   Set the bibliography style.   ***
-\bibliographystyle{plain} % (change according to your preference)
+\bibliographystyle{unsrtnat} % (change according to your preference)
 %%% ***   Set the bibliography file.   ***
 \bibliography{westernthesis}{}
 %% ***   NOTE   ***
