@@ -5,6 +5,7 @@
 \contentsline {chapter}{List of Appendices}{vii}{}%
 \contentsline {chapter}{\numberline {1}Introduction}{1}{}%
 \contentsline {section}{\numberline {1.1}Background}{1}{}%
+\contentsline {section}{\numberline {1.2}Motivation}{1}{}%
 \contentsline {chapter}{\numberline {2}Theorems}{2}{}%
 \contentsline {section}{\numberline {2.1}Basic Theorems}{2}{}%
 \contentsline {chapter}{Bibliography}{3}{}%

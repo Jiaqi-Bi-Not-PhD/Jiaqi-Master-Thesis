@@ -1,4 +1,4 @@
-\begin{thebibliography}{7}
+\begin{thebibliography}{8}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -35,6 +35,11 @@ Bernard Friedenson.
 \newblock {The BRCA1/2 pathway prevents hematologic cancers in addition to
   breast and ovarian cancers}.
 \newblock \emph{BMC cancer}, 7\penalty0 (1):\penalty0 1--11, 2007.
+
+\bibitem[Lux et~al.(2006)Lux, Fasching, and Beckmann]{lux2006hereditary}
+Michael~P Lux, Peter~A Fasching, and Matthias~W Beckmann.
+\newblock Hereditary breast and ovarian cancer: review and future perspectives.
+\newblock \emph{Journal of molecular medicine}, 84:\penalty0 16--28, 2006.
 
 \bibitem[Choi et~al.(2021{\natexlab{a}})Choi, Jung, Buys, Daly, John, Hopper,
   Andrulis, Terry, and Briollais]{choi2021competing}
