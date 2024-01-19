@@ -8,17 +8,11 @@ corr_frailty_llhd <- function(X, Y, theta, cuts=NULL, nbase, data, design, base.
   
   if(base.dist == "lognormal") bparms1 <- c(theta[1], exp(theta[2]))
   else bparms1 <- exp(theta[1:nbase])
-  #
   print(bparms1)
   nx <- dim(X)[2]
-  #
   beta <- theta[(nb+1):(nb+nx)]
-  #
-  print(beta)
   xbeta <- c(X%*%theta[(nb+1):(nb+nx)])
   sigma <- exp(theta[nb+nx+1])
-  #
-  print(sigma)
   z_initial <- theta[(nb+nx+2):length(theta)]
   
   
@@ -37,10 +31,13 @@ corr_frailty_llhd <- function(X, Y, theta, cuts=NULL, nbase, data, design, base.
   df1 <- data$df1[ip]
   Hfam <- aggregate(H, list(data$famID), sum)[,2]
   
-  ##### Sort Hfam to run mgauss.hermite for each family
+  ##### Generate kinship matrix
   
   Sigma <- with(data, kinship2::kinship(id = indID, dadid = fatherID, momid = motherID,
                           sex = rep(2,nrow(data))))
+  
+  #### Cholesky Decomposition
+  L <- chol(sigma^2 * Sigma)
   
   #### numerical integral #### 
   integrand_part <- function(z_star, Hfam1 = Hfam, sigma1 = sigma, Sigma1 = Sigma, status11 = status1) {
@@ -55,23 +52,20 @@ corr_frailty_llhd <- function(X, Y, theta, cuts=NULL, nbase, data, design, base.
   
   llhd <- sum(status1 * logh, na.rm = TRUE) + integrand_part(z_star = z_initial) - 0.5*log(hess_det)
   
-  
-  
-  # Ascertainment correction (design = pop, pop+)
-  
-  #cagep <- data$currentage[ip]-agemin
-  #xbeta.p <- xbeta[ip]
-  #bcumhaz.p <- cumhaz(base.dist, cagep, bparms1, cuts=cuts0)
-  
-  #H.p <- bcumhaz.p*exp(xbeta.p)
-  #logasc <- log(1-laplace(frailty.dist, H.p, sigma))
-  #logasc[logasc == -Inf] <- 0
-  #slogasc <- sum(logasc[logasc!=-Inf], na.rm=T) 
-  #sloglik <- sum(loglik[loglik!=-Inf], na.rm=T) + sum(logdL[logdL!=-Inf], na.rm = T) - slogasc
-  
-  
   return(-llhd)
 }
+
+# Ascertainment correction (design = pop, pop+)
+
+#cagep <- data$currentage[ip]-agemin
+#xbeta.p <- xbeta[ip]
+#bcumhaz.p <- cumhaz(base.dist, cagep, bparms1, cuts=cuts0)
+
+#H.p <- bcumhaz.p*exp(xbeta.p)
+#logasc <- log(1-laplace(frailty.dist, H.p, sigma))
+#logasc[logasc == -Inf] <- 0
+#slogasc <- sum(logasc[logasc!=-Inf], na.rm=T) 
+#sloglik <- sum(loglik[loglik!=-Inf], na.rm=T) + sum(logdL[logdL!=-Inf], na.rm = T) - slogasc
 
 ################ Test Zone ################
 initial_params <- c(1/41.41327,1,0,0, 1, rep(0, nrow(brca1_prs_cca)))
