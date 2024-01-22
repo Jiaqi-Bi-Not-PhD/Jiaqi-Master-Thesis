@@ -13,8 +13,6 @@ gradient <- function(X = X, event = status1, theta = theta, dist = base.dist) {
               grad_lambda = grad_lambda))
 }
 
-library(parallel)
-
 hessian <- function(X = X, time = time, event = status1, theta = theta, dist = base.dist, Sigma_inv) {
   expz <- exp(theta[(nbase + 1):length(theta)])
   
@@ -29,4 +27,37 @@ hessian <- function(X = X, time = time, event = status1, theta = theta, dist = b
               hessian_lambda = hessian_lambda))
 }
 
+corr_frailty_llhd <- function(X, Y, theta, cuts=NULL, nbase, data, design, base.dist, frailty.dist, agemin, vec=FALSE) {
+  if(!design %in% c("pop", "pop+"))  stop("Frailty model is only available for POP or POP+ design.")
+  
+  nb <- nbase # number of baselines parameters
+  
+  if(base.dist == "lognormal") bparms1 <- c(theta[1], exp(theta[2]))
+  else bparms1 <- exp(theta[1:nbase])
+  nx <- dim(X)[2]
+  beta <- theta[(nb+1):(nb+nx)]
+  xbeta <- c(X%*%theta[(nb+1):(nb+nx)])
+  sigma <- exp(theta[nb+nx+1])
+  
+  
+  time <- Y[,1] - agemin
+  cuts0 <- cuts - agemin
+  status1 <- Y[,2]
+  eventsum <- sum(status1)
+  print(eventsum)
+  
+  ip <- data$proband == 1
+  
+  bhaz <- hazards(base.dist, time, bparms1, cuts=cuts0)
+  bcumhaz <- cumhaz(base.dist, time, bparms1, cuts=cuts0)
+  
+  H <- bcumhaz*exp(xbeta)
+  logh <- log(bhaz) + xbeta
+  term1 <- status1*logh 
+  df1 <- data$df1[ip]
+  Hsum <- sum(H, na.rm = TRUE)
+  
+  
+  
+}
 

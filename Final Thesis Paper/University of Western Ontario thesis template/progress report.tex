@@ -276,7 +276,7 @@ Thus, substituting into the log-likelihood:
 \end{equation}
 
 \section{Incorporating the Kinship Matrix to Log-Normal Frailty}
-Family members are correlated within one family, that we denote $\Sigma_j$ as the kinship correlation matrix for family $j$. The likelihood construction needs multivariate form. For $\mathbf{Z}\sim\text{MVN}(0,\sigma^2\Sigma_j)$, the log-likelihood for family $j$ is 
+Family members are correlated within one family, that we denote $K$ as the kinship correlation matrix among all individuals $i$. Those who do not share familial relationships automatically have correlation of $0$. The kinship matrix $K$ has a diagonal of $0.5$. The likelihood construction needs multivariate form. For $\mathbf{Z}\sim\text{MVN}(0,\sigma^2K)$, the log-likelihood for family $j$ is 
 \begin{equation}
     \ell_j(\cdot)=\log\left [\prod_{i=1}^{n_j}(h(t_{ij}|\mathbf{x}_{ij}))^{\delta_{ij}}\int_{\mathbb{R}^{n_j}}\prod_{i=1}^{n_j}z_{ij}^{\delta_{ij}}\exp(\sum_{i=1}^{n_j}z_{ij}H(t_{ij}|\mathbf{x}_{ij}))f(\mathbf{z}_j)d\mathbf{z}_j\right ]
 \end{equation}

@@ -9,6 +9,10 @@ kinship_mat <- lapply(families, function(data) {
 ## a large kinship matrix for all
 kinship_mat <- with(brca1_prs, kinship(id = indID, dadid = fatherID, momid = motherID,
                                        sex = rep(2,nrow(brca1_prs))))
+library(Matrix)
+kinship_mat_sparse <- as(kinship_mat, "sparseMatrix")
+kinship_mat_sparse <- 2 * kinship_mat_sparse
+kinship_mat <- as.matrix(kinship_mat_sparse)
 
 ## coxme
 model_coxme <- coxme(Surv(timeBC, BC) ~ mgeneI + (1|indID),
