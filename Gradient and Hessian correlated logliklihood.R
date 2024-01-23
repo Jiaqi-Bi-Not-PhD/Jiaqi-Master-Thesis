@@ -57,7 +57,6 @@ corr_frailty_llhd <- function(X, Y, theta, cuts=NULL, nbase, data, design, base.
   df1 <- data$df1[ip]
   Hsum <- sum(H, na.rm = TRUE)
   
-  
-  
 }
 
+?grad

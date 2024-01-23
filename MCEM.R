@@ -9,7 +9,7 @@ mcem_step <- function(data, initial_theta,
   tol <- rep(tol, length(initial_theta))
   
   while (!converged & iter < max_iter) {
-    ## MC samppling
+    ## MC samppling using X_{obs}, try Gibb's sampling
     imputed_datasets <- mclapply(1:m_imputations, function(i) {
       imputed_data <- data
       mu <- mean(data$PRS[!is.na(data$PRS)])
