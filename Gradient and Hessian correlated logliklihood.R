@@ -13,6 +13,7 @@ gradient <- function(X = X, event = status1, theta = theta, dist = base.dist) {
               grad_lambda = grad_lambda))
 }
 
+## Hessian 
 hessian <- function(X = X, time = time, event = status1, theta = theta, dist = base.dist, Sigma_inv) {
   expz <- exp(theta[(nbase + 1):length(theta)])
   
@@ -27,6 +28,7 @@ hessian <- function(X = X, time = time, event = status1, theta = theta, dist = b
               hessian_lambda = hessian_lambda))
 }
 
+## log-likelihood
 corr_frailty_llhd <- function(X, Y, theta, cuts=NULL, nbase, data, design, base.dist, frailty.dist, agemin, vec=FALSE) {
   if(!design %in% c("pop", "pop+"))  stop("Frailty model is only available for POP or POP+ design.")
   
@@ -38,6 +40,7 @@ corr_frailty_llhd <- function(X, Y, theta, cuts=NULL, nbase, data, design, base.
   beta <- theta[(nb+1):(nb+nx)]
   xbeta <- c(X%*%theta[(nb+1):(nb+nx)])
   sigma <- exp(theta[nb+nx+1])
+  z <- exp(theta[nb+nx+2]:length(theta))
   
   
   time <- Y[,1] - agemin
@@ -57,6 +60,13 @@ corr_frailty_llhd <- function(X, Y, theta, cuts=NULL, nbase, data, design, base.
   df1 <- data$df1[ip]
   Hsum <- sum(H, na.rm = TRUE)
   
+  ## Kinship matrix * 2 => diag of 1
+  kinship_mat <- with(data, kinship2::kinship(id = indID, dadid = fatherID, momid = motherID,
+                                        sex = rep(2,nrow(data))))
+  kinship_mat_sparse <- as(kinship_mat, "sparseMatrix")
+  kinship_mat_sparse <- 2 * kinship_mat_sparse
+  kinship_mat <- as.matrix(kinship_mat_sparse)
+  
 }
 
-?grad
+

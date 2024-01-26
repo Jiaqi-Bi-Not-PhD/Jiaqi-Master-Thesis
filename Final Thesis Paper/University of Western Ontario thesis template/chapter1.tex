@@ -5,8 +5,9 @@ When the mutation exists on these genes may cause the impairments of proper func
 Inheriting one of these mutations does not guarantee developing cancer disease, but the mutation can increase the risk of getting those cancers~\cite{friedenson2007brca1}. 
 In medicine, these cancer types are classified as Hereditary Breast and Ovarian Cancer Syndrome (HBOC)~\cite{lux2006hereditary}. 
 There are many medical and statistical development in modelling the competing risk of breast cancer and ovarian cancer, such as applying parametric survival analysis based on two cancer outcomes developed by~\citet{choi2021competing}, and some clinical trials via risk-reducing approach of treatments on breast cancer patients~\cite{choi2021association}.
-The study has shown that 
+Importantly, since the study is based on the specific disease, there may be selection bias from the sampling process. To minimize the sampling bias, an ascertainment correction should be applied to the likelihood calculation. Thus, with different choices of baseline hazard function, there were several frailty distributions being introduced such as Gamma frailty, 
+and log-normal frailty to incorporate the family structure in the survival analysis. 
 
 \section{Motivation}
-
+One important factor of making the correct inference and prediction is to address the missing data problem within the dataset. In the observations of BRCA1/2 joining the Polygenic Risk Score (PRS), there are many individuals contain the missing data in the PRS. 
 
