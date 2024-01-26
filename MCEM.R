@@ -1,4 +1,4 @@
-##################### MCEM for Gamma (unconditional MC Sampling) #####################
+##################### MCEM for Gamma & log-normal (unconditional MC Sampling) #####################
 mcem_step <- function(data, initial_theta, 
                       design, 
                       m_imputations = 20, tol = 1e-6, max_iter = 1000, frailty.dist) {
@@ -18,7 +18,7 @@ mcem_step <- function(data, initial_theta,
       return(imputed_data)
     }, mc.cores = parallel::detectCores())
     
-    if (frailty.dist == "gamma") {
+
     ## E-step Gamma
     objective_function <- function(theta) {
       mean(unlist(mclapply(imputed_datasets, function(dataset) {
@@ -31,22 +31,21 @@ mcem_step <- function(data, initial_theta,
                                     design = design)
       }, mc.cores = parallel::detectCores())))
     }
-    }
     
-    else if (frailty.dist == "lognormal") {
+#    else if (frailty.dist == "lognormal") {
     ## E-step log-normal
-    objective_function <- function(theta) {
-      mean(unlist(mclapply(imputed_datasets, function(dataset) {
-        Y <- as.matrix(dataset[, c("timeBC", "BC")])
-        X <- as.matrix(dataset[, c("PRS", "mgeneI")])
-        lognormal_single(X = X, Y = Y, theta = theta, 
-                                    data = dataset, nbase = 2, 
-                                    base.dist = "Weibull", 
-                                    frailty.dist = "lognormal", agemin = 18,
-                                    design = design)
-      }, mc.cores = parallel::detectCores())))
-    }
-    }
+#    objective_function <- function(theta) {
+#      mean(unlist(mclapply(imputed_datasets, function(dataset) {
+#        Y <- as.matrix(dataset[, c("timeBC", "BC")])
+#        X <- as.matrix(dataset[, c("PRS", "mgeneI")])
+#        lognormal_single(X = X, Y = Y, theta = theta, 
+#                                    data = dataset, nbase = 2, 
+#                                    base.dist = "Weibull", 
+#                                    frailty.dist = "lognormal", agemin = 18,
+#                                    design = design)
+#      }, mc.cores = parallel::detectCores())))
+#    }
+#    }
     
     ## M-step: Gamma and log-normal, Nelder-Mead
     optimized_result <- optim(par = current_theta, objective_function)
@@ -72,9 +71,10 @@ mcem_step <- function(data, initial_theta,
        Frailty_Dist = frailty.dist))
 }
 
+library(parallel)
 initial_params <- c(1/41.41327,1,0, 0, 1)
 results_gamma <- mcem_step(data = brca1_prs, initial_theta = initial_params,
                            design = "pop", frailty.dist = "gamma")
 results_lognormal <- mcem_step(data = brca1_prs, initial_theta = initial_params, 
                      design = "pop", frailty.dist = "lognormal")
-GammaMCEM_results <- results
+
