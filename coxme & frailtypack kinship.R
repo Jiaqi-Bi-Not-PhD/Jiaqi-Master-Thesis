@@ -18,6 +18,10 @@ kinship_mat <- as.matrix(kinship_mat_sparse)
 model_coxme <- coxme(Surv(timeBC, BC) ~ mgeneI + (1|indID),
                      varlist = list(kinship_mat),
                      data = brca1_prs)
+
+model_coxme <- coxme(Surv(timeBC, BC) ~ mgeneI + (1|indID),
+                     varlist = list(kinship_mat_sparse),
+                     data = brca1_prs)
 summary(model_coxme)
 ###### frailtypack package ######
 library(frailtypack)
