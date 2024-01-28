@@ -152,14 +152,9 @@
 %% main text
 \section{To Do List during the Christmas}
 \begin{enumerate}
-    \item Review the missing data slides
-    \item Find where went wrong in log-Normal Frailty
-    \item Complete the code for Correlated Frailty
-    \item Alternate the MCEM for Gamma Frailty case to use conditional sampling on the missing PRS (conditional on observed PRS, $t$, time-to-BC, family structure, $\boldsymbol{\theta}$)
-    \item Summarize the code within an R package to make sure it's readable
-    \item Start initializing the thesis
-    \item Next Meeting on Jan. 11, 2024
-    \item Add citations to this document!
+    \item Correlated frailty - NR-algorithm
+    \item Using importance weights to implement MCEM
+    \item Multiple imputation - similar imputation step as MCEM
 \end{enumerate}
 \section{Weibull Parametric Approach and MCEM Method}
 From the beginning of the discussion, I have obtained the model, i.e., the hazard function is
@@ -220,7 +215,7 @@ for some function $s$ that does not involve with $z$. Let $\boldsymbol{\theta}=(
     &=\sum_{j=1}^k\log\left [\int_{0}^{\infty}\prod_{i=1}^{n_j}(z_j h(t_{ij}|\mathbf{x}_{ij}))^{\delta_{ij}}\exp(-z_j H(t_{ij}|\mathbf{x}_{ij}))f(z_j)dz_j\right ]\\
     &=\sum_{j=1}^k\log\left [\prod_{i=1}^{n_j}(h(t_{ij}|\mathbf{x}_{ij}))^{\delta_{ij}}\int_0^{\infty}z_j^{d_j}\exp(-z_j\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}_{ij}))f(z_j)dz_j \right ]\\
     &=\sum_{j=1}^k\log\left [\prod_{i=1}^{n_j}(h(t_{ij}|\mathbf{x}_{ij}))^{\delta_{ij}}\frac{(v+d_j-1)!}{(v-1)!(\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}_{ij})+v)^{d_j}}\Big(1+\frac{\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}_{ij})}{v}\Big)^{-v}\right ]\\
-    &=\sum_{j=1}^k\log\left [\prod_{i=1}^{n_j}((h(t_{ij}|\mathbf{x}_{ij}) )^{\delta_{ij}})\frac{(v+d_j-1)!}{v!v^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(\alpha t_{ij}^{\lambda}\xi_{ij})}{v})^{-v-d_j} \right ]\\
+    &=\sum_{j=1}^k\log\left [\prod_{i=1}^{n_j}((h(t_{ij}|\mathbf{x}_{ij}) )^{\delta_{ij}})\frac{(v+d_j-1)!}{v!v^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}))}{v})^{-v-d_j} \right ]\\
     &=\sum_{j=1}^k\log\left [(h(\cdot))^{\delta_{ij}} \frac{(v+d_j-1)!}{v!v^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}))}{v})^{-v-d_j} \right ]\\
     &=\sum_{j=1}^k\left [\sum_i(\delta_{ij}\log h(\cdot)) + \log\Big (\frac{(v+d_j-1)!}{v!v^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}))}{v})^{-v-d_j}\Big )\right ]
 \end{align}
@@ -274,21 +269,59 @@ Thus, substituting into the log-likelihood:
 \begin{equation}
     \ell_j(\cdot)=\sum_{i=1}^{n_j}\delta_{ij}\log(h(t_{ij}|\mathbf{x}_{ij}))+\log\Big (\frac{1}{\sqrt{\pi}}\sum_{p=1}^{N_p}\left [\omega_p\exp(\sqrt{2}\sigma y_p)^{d_{ij}}\exp\Big (-\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}_{ij})\exp(\sqrt{2}\sigma y_p)\Big )\right ]\Big )
 \end{equation}
+Similarly, the ascertainment correction in the log-normal frailty can be written as 
+\begin{align}
+    A_j(\cdot)&=1-\int_Z \exp(-z_j H_{j,p}(a_{j,p}|\mathbf{x}_{j,p}))f(z_j)dz_j\\
+    &=1-\sum_{p=1}^{N_p}\omega_p \exp\left (-(\sum_{i=1}^{n_j} H(a_{j,p}|\mathbf{x}_{ij}))\exp (\sqrt{2}\sigma y_{p})\right )
+\end{align}
 
-\section{Incorporating the Kinship Matrix to Log-Normal Frailty}
-Family members are correlated within one family, that we denote $\Sigma_j$ as the kinship correlation matrix for family $j$. The likelihood construction needs multivariate form. For $\mathbf{Z}\sim\text{MVN}(0,\sigma^2\Sigma_j)$, the log-likelihood for family $j$ is 
+\section{Correlated Frailty using Kinship Matrix}
+Family members are correlated within one family, that we denote $K$ as the kinship correlation matrix among all observations. This matrix ensures those individuals not from the same family automatically have a correlation of 0. The likelihood construction needs multivariate form. For $\mathbf{Z}\sim\text{MVN}(0,\sigma^2K)$, that $K$ has the diagonal of 1. The likelihood is 
+
+\begin{align}
+    L(\cdot)&=\int_{\mathbb{R}^n}\prod_{i=1}^n(h(t|\mathbf{x}_i, \mathbf{z}_i))^{\delta_i}\exp (-H(t|\mathbf{x}_i, \mathbf{z}_i))f(\mathbf{z})d\mathbf{z}\\
+    &=\int_{\mathbb{R}^n}\prod_{i=1}^n(h(t|\mathbf{x}_i))^{\delta_i}\exp(\mathbf{z}_i)^{\delta_i}\exp(-H(t|\mathbf{x}_i)\exp(\mathbf{z}_i))f(\mathbf{z})d\mathbf{z}\\
+    &=\prod_{i=1}^n(h(t|\mathbf{x}_i))^{\delta_i}\int_{\mathbb{R}^n}\exp(\delta_i\mathbf{z}_i-H(t|\mathbf{x}_i)\exp(\mathbf{z}_i))f(\mathbf{z})d\mathbf{z}
+\end{align}
+Applying the Laplace approximation, and taking the log for the likelihood, we obtain
 \begin{equation}
-    \ell_j(\cdot)=\log\left [\prod_{i=1}^{n_j}(h(t_{ij}|\mathbf{x}_{ij}))^{\delta_{ij}}\int_{\mathbb{R}^{n_j}}\prod_{i=1}^{n_j}z_{ij}^{\delta_{ij}}\exp(\sum_{i=1}^{n_j}z_{ij}H(t_{ij}|\mathbf{x}_{ij}))f(\mathbf{z}_j)d\mathbf{z}_j\right ]
+    \ell(\cdot)=\sum_{i=1}^n\Big [ \delta_i\log h(t|\mathbf{x}_i)\Big ] + \sum_{i=1}^n\Big [\delta_i \hat{\mathbf{z}}-H(t_i|\mathbf{x}_i)\exp(\hat{\mathbf{z}})\Big ] - \frac{1}{2}\hat{\mathbf{z}}^{\top}\Sigma^{-1}\hat{\mathbf{z}}
 \end{equation}
-Applying the Cholesky Decomposition, the integrand is 
+such that $\Sigma=\sigma^2 K$. Also, we treat the random effect $\mathbf{z}$ as a vector of parameters, and use outer-loop to search for the $\sigma$, and use inner-loop to search for other parameters (baseline parameters, and $\beta$) including $\mathbf{z}$. The process can be achieved via Newton-Raphson algorithm. For computational efficiency, we can set $\Sigma^{-1}=L^{\top}L$ through Cholesky Decomposition. In this way, 
+$\mathbf{z}L\sim MVN(0,\sigma^2 I)$. In order to apply NR-algorithm, the gradient and the hessian are required. The gradient for parameters is:
 \begin{equation}
-    \int_{\mathbb{R}^{n_j}}\prod_{i=1}^{n_j}(\mathbf{L}\mathbf{Z})_{ij}^{d_j}\exp(-\sum_{i=1}^{n_j}(\mathbf{L}\mathbf{Z})_{ij} H(t_{ij}|\mathbf{x}_{ij}))\Phi (\mathbf{z})d\mathbf{z}
+    \frac{\partial\ell}{\partial\boldsymbol{\beta}}=\sum_{i=1}^n\delta_i\mathbf{x}_i+\sum_{i=1}^n-H(t_i|\mathbf{x}_i)\mathbf{x}_i\exp(\mathbf{z})
 \end{equation}
-Applying the Gauss Hermite, it becomes
+
 \begin{equation}
-    \sum_{p=1}^{N_p}\omega_p (\mathbf{L}\mathbf{Z}_p)_{ij}^{d_j}\exp(-\sum_{i=1}^{n_j}(\mathbf{L}\mathbf{Z}_p)_{ij} H(t_{ij}|\mathbf{x}_{ij}))
+    \frac{\partial\ell}{\partial\mathbf{z}}=\sum_{i=1}^n\delta_i-(t_i|\mathbf{x}_i)\exp(\hat{\mathbf{z}})-\Sigma^{-1}\hat{\mathbf{z}}
 \end{equation}
-such that $\mathbf{L}$ is the Cholesky Decomposition, which $\Sigma=\mathbf{L}\mathbf{L}^{\top}$. And $\omega_p$ is the multivariate Gauss Hermite weights, $\mathbf{Z}_p$ is the nodes. The Cholesky Decomposition works well for positive definite matrices, it simplifies the computation of matrix operations, especially in solving systems of linear equations and inverting matrices. In our case, the covariance matrix $\Sigma$ is symmetric and positive definite, which the Cholesky Decomposition is ideally suited. 
+
+\begin{equation}
+    \frac{\partial\ell}{\partial\alpha}=\sum_{i=1}^n\frac{\delta_i}{\alpha} + \sum_{i=1}^n-\frac{H(t_i|\mathbf{x}_i)\exp(\hat{\mathbf{z}})}{\alpha}
+\end{equation}
+
+\begin{equation}
+    \frac{\partial\ell}{\partial\lambda}=\sum_{i=1}^n\delta_i(\frac{1}{\lambda}+\log (t_i))+\sum_{i=1}^n-H(t_i|\mathbf{x}_i)\exp(\hat{\mathbf{z}})\log (t_i)
+\end{equation}
+
+The hessian matrix element, i.e., second partial derivative is 
+
+\begin{equation}
+    \frac{\partial^2\ell}{\partial\boldsymbol{\beta}^{\top}\boldsymbol{\beta}}=\sum_{i=1}^n-H(t_i|\mathbf{x}_i)\exp(\hat{\mathbf{z}})x_{ij}x_{ik}
+\end{equation}
+
+\begin{equation}
+    \frac{\partial^2\ell}{\partial\mathbf{z}^{\top}\mathbf{z}}=\sum_{i=1}^n-H(t_i|\mathbf{x}_i)\exp(\hat{\mathbf{z}})-\Sigma^{-1}
+\end{equation}
+
+\begin{equation}
+    \frac{\partial^2\ell}{\partial\alpha^2}=\sum_{i=1}^n-\frac{\delta_i}{\alpha^2}
+\end{equation}
+
+\begin{equation}
+    \frac{\partial^2\ell}{\partial\lambda^2}=\sum_{i=1}^n-\frac{\delta_i}{\lambda^2}-H(t_i|\mathbf{x}_i)\exp(\hat{\mathbf{z}})\log(t_i)^2
+\end{equation}
 
 \subsection{Proof of $\Sigma=LL^{\top}$}
 Every symmetric positive definite matrix $\Sigma$ can be decomposed into $\Sigma=LL^{\top}$, where $L$ is a lower triangular matrix with real and positive diagonal entries. 
@@ -392,21 +425,14 @@ which implies
     =\Sigma
 \end{equation}
 \end{proof}
-Essentially, the Cholesky Decomposition transforms the multivariate normal to a standard multivariate normal. When $\mathbf{Z}\sim \mathcal{N}(0,\boldsymbol{\Sigma})$, let $\boldsymbol{\Sigma}=\mathbf{L}\mathbf{L}^{\top}$, then $\mathbf{Y}=\mathbf{L}^{-1}\mathbf{Z}\sim \mathcal{N}(0, \mathbf{I})$ that $\mathbf{I}$ is the identity matrix, since $\mathbf{L}^{-1}\boldsymbol{\Sigma}(\mathbf{L}^{-1})^{\top}=\mathbf{L}^{-1}\mathbf{L}\mathbf{L}^{\top}(\mathbf{L}^{-1})^{\top}=\mathbf{I}$. This will simplify the Gauss Hermite process. 
+Essentially, the Cholesky Decomposition transforms the multivariate normal to a standard multivariate normal. When $\mathbf{Z}\sim \mathcal{N}(0,\boldsymbol{\Sigma})$, let $\boldsymbol{\Sigma}=\mathbf{L}\mathbf{L}^{\top}$, then $\mathbf{Y}=\mathbf{L}^{-1}\mathbf{Z}\sim \mathcal{N}(0, \mathbf{I})$ that $\mathbf{I}$ is the identity matrix, since $\mathbf{L}^{-1}\boldsymbol{\Sigma}(\mathbf{L}^{-1})^{\top}=\mathbf{L}^{-1}\mathbf{L}\mathbf{L}^{\top}(\mathbf{L}^{-1})^{\top}=\mathbf{I}$. This will simplify the computational process. 
 \section{Monte Carlo EM}
-WLOG, the complete data log-likelihood for family $j$ is $\ell(\boldsymbol{\theta}; h_{ij})$
-where $\boldsymbol{\theta}$ consists all baseline parameters, and model coefficients say $\beta$. Suppose PRS and genotype are correlated somehow, denote $\rho$ be their correlation. For each cluster $j$, the E-step is (Scenario 1: PRS observed but genotype missing):
-\begin{align}
-    Q_i(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)})=\int \ell(\boldsymbol{\theta};h_{ij})\cdot f(g_{mis,i}|h_{ij}(t_{ij}|g_{obs,ij}, x_{ij},z_j), \rho, \boldsymbol{\theta}^{(r)})dg_{mis,ij}
-\end{align}
-In the scenario 2 that PRS missing while genotype observed: 
+The complete data log-likelihood for family $j$ is $\ell_j(\boldsymbol{\theta}; h_{ij})$
+where $\boldsymbol{\theta}$ consists all baseline parameters, and model coefficients say $\beta$. For each cluster $j$, the E-step is:
 \begin{align} 
-    Q_i(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)})=\int \ell(\boldsymbol{\theta};h_{ij})\cdot f(x_{mis,i}|h_{ij}(t_{ij}|x_{obs,ij}, g_{ij},z_j), \rho, \boldsymbol{\theta}^{(r)})dx_{mis,ij}
+    Q_i(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)})=\int \ell(\boldsymbol{\theta};h_{ij})\cdot f(x_{mis,i}|x_{obs,i},z_j, \boldsymbol{\theta}^{(r)})dx_{mis,ij}
 \end{align}
-In the scenario 3 that both are missing, considering the joint distribution of these two covariates:
-\begin{align}
-    Q_i(\boldsymbol{\theta};\boldsymbol{\theta}^{(r)})=\int\int_{(X,G)}\ell(\cdot) f(x_{mis,ij},g_{mis,ij}|h_{ij}(t_{ij}|x_{obs,ij}, g_{ij},z_j), \boldsymbol{\theta}^{(r)})dx_{mis,ij}dg_{mis,ij}
-\end{align}
+
 where $(X, G)\sim f(x,g|\cdot)$, and can be obtained through Gibbs Sampling, sample the size $m_i$ for each $i$-th observation, $x_{i1}^*,...,x_{im_i}^*$ from the distribution $f(x_{mis,ij}|\cdot)$, and take $M = 1,...,m_i$, such that each $X_{iM}^*$ depends on the iteration number for $r+1$ iterations. In general:
 \begin{align}
     \hat{Q}_i(\boldsymbol{\theta}; \boldsymbol{\theta}^{(r)})=\frac{1}{m_i}\sum_{M=1}^{m_i}\ell(x_{iM}^*, x_{obs,ij},t_{ij}, \boldsymbol{\theta},z_j)

@@ -1,6 +1,6 @@
 # Fdb version 3
-["pdflatex"] 1704742997 "/Volumes/T7/UWO Documents/MSc-Thesis-Western-Biostatistics-Progress-Report-main/Missing Data Final Project/progress report.tex" "progress report.pdf" "progress report" 1704742997
-  "/Volumes/T7/UWO Documents/MSc-Thesis-Western-Biostatistics-Progress-Report-main/Missing Data Final Project/progress report.tex" 1704742996 22713 f4fd1fcb1d56ffd01405ef941d2a1f44 ""
+["pdflatex"] 1706483682 "/Volumes/T7/UWO Documents/Thesis folder/Jiaqi-Master-Thesis/progress report/progress report.tex" "progress report.pdf" "progress report" 1706483682
+  "/Volumes/T7/UWO Documents/Thesis folder/Jiaqi-Master-Thesis/progress report/progress report.tex" 1706483682 23550 b72bbf5e015fce57fe7df08bbe5d2676 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2022/texmf-dist/fonts/tfm/jknappen/ec/ectt1000.tfm" 1136768653 1536 06717a2b50de47d4087ac0e6cd759455 ""
@@ -111,9 +111,9 @@
   "/usr/local/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt" 1673323592 2826441 c70f5cbdb9ae20468f063eeec802c709 ""
   "/usr/local/texlive/2022/texmf.cnf" 1647878952 577 209b46be99c9075fd74d4c0369380e8c ""
   "Figuras/MICE in survival, fail to incorp frailty.png" 1698517275 174957 7ae2fe243a3d8a480b22683c176b2a4d ""
-  "progress report.aux" 1704742997 1384 2bd921611e1f011fec46c1dab3cb6bfe "pdflatex"
+  "progress report.aux" 1706483682 1369 fcffc1eb4146a519b7dc37c66aa4e9d0 "pdflatex"
   "progress report.spl" 0 -1 0 "pdflatex"
-  "progress report.tex" 1704742996 22713 f4fd1fcb1d56ffd01405ef941d2a1f44 ""
+  "progress report.tex" 1706483682 23550 b72bbf5e015fce57fe7df08bbe5d2676 ""
   (generated)
   "progress report.aux"
   "progress report.log"

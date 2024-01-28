@@ -1,8 +1,8 @@
-PWD /Volumes/T7/UWO Documents/MSc-Thesis-Western-Biostatistics-Progress-Report-main/Missing Data Final Project
+PWD /Volumes/T7/UWO Documents/Thesis folder/Jiaqi-Master-Thesis/progress report
 INPUT /usr/local/texlive/2022/texmf.cnf
 INPUT /usr/local/texlive/2022/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2022/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT /Volumes/T7/UWO Documents/MSc-Thesis-Western-Biostatistics-Progress-Report-main/Missing Data Final Project/progress report.tex
+INPUT /Volumes/T7/UWO Documents/Thesis folder/Jiaqi-Master-Thesis/progress report/progress report.tex
 OUTPUT progress report.log
 INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/elsarticle/elsarticle.cls
 INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/elsarticle/elsarticle.cls
@@ -438,16 +438,10 @@ INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm7
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmti7.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmss8.tfm
-INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx8.tfm
-INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx6.tfm
-INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmmib10.tfm
-INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmmib8.tfm
-INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmmib6.tfm
-INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbsy10.tfm
-INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy8.tfm
-INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm
 OUTPUT progress report.pdf
 INPUT /usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map
+INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx8.tfm
+INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbx6.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/rsfso/ursfso.fd
 INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/rsfso/ursfso.fd
 INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/rsfso/ursfso.fd
@@ -455,6 +449,12 @@ INPUT /usr/local/texlive/2022/texmf-dist/tex/latex/rsfso/ursfso.fd
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/rsfso/rsfso10.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/rsfso/rsfso10.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/rsfso/rsfso7.tfm
+INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmmib10.tfm
+INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmmib8.tfm
+INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmmib6.tfm
+INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmbsy10.tfm
+INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy8.tfm
+INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/vf/public/rsfso/rsfso10.vf
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/cm/cmr10.tfm
 INPUT /usr/local/texlive/2022/texmf-dist/fonts/tfm/public/rsfso/rrsfso10.tfm
