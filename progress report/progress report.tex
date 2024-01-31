@@ -68,7 +68,7 @@
 
 %% Title, authors and addresses
 
-\title{Jiaqi's Thesis Progress Report (Updated Dec. 18)}
+\title{Jiaqi's Thesis Progress Report (Updated Jan. 28)}
 
 
 %% use optional labels to link authors explicitly to addresses:
@@ -150,7 +150,7 @@
 \linenumbers
 %\setstretch{1.5}
 %% main text
-\section{To Do List during the Christmas}
+\section{To Do List}
 \begin{enumerate}
     \item Correlated frailty - NR-algorithm
     \item Using importance weights to implement MCEM
@@ -433,26 +433,43 @@ where $\boldsymbol{\theta}$ consists all baseline parameters, and model coeffici
     Q_i(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)})=\int \ell(\boldsymbol{\theta};h_{ij})\cdot f(x_{mis,i}|x_{obs,i},z_j, \boldsymbol{\theta}^{(r)})dx_{mis,ij}
 \end{align}
 
-where $(X, G)\sim f(x,g|\cdot)$, and can be obtained through Gibbs Sampling, sample the size $m_i$ for each $i$-th observation, $x_{i1}^*,...,x_{im_i}^*$ from the distribution $f(x_{mis,ij}|\cdot)$, and take $M = 1,...,m_i$, such that each $X_{iM}^*$ depends on the iteration number for $r+1$ iterations. In general:
+sample the size $m_i$ for each $i$-th observation, $x_{i1}^*,...,x_{im_i}^*$ from the distribution $f(x_{mis,ij}|\cdot)$, and take $M = 1,...,m_i$, such that each $X_{iM}^*$ depends on the iteration number for $r+1$ iterations. In general:
 \begin{align}
     \hat{Q}_i(\boldsymbol{\theta}; \boldsymbol{\theta}^{(r)})=\frac{1}{m_i}\sum_{M=1}^{m_i}\ell(x_{iM}^*, x_{obs,ij},t_{ij}, \boldsymbol{\theta},z_j)
 \end{align}
+More specifically, 
+\begin{enumerate}
+    \item We first initialize $m, \theta^{(0)}$, and start the burn-in.
+    \item Also, we set importance weights $w_t=1$ for all $t=1,...,m$.
+    \item At the burn-in iteration $s$, we generate $x_{miss,1}, ..., x_{miss,m}\sim N(\mu_{X}|X_{obs}, \theta^{(s)}, z)$ using MCMC sample.
+    \item In the E-step, we estimate $Q(\theta|\theta^{(s)})$ by using the importance weights:
+    \begin{equation}
+        Q_m(\theta|\hat{\theta}^{(s)})=\frac{\sum_{t=1}^m w_t\log f(X_{obs}, X_{miss,t}|\theta)}{\sum_{r=1}^mw_t}
+    \end{equation}
+    \item Note the numerator is actually a weighted log-likelihood. In the M-step, we maximize $Q_m(\theta|\hat{\theta}^{(s)})$ to obtain $\hat{\theta}^{(s+1)}$. 
+    \item Repeat (3.) - (5.) for $s$ burn-in iterations.
+    \item Then re-initialize $\hat{\theta}^{(0)}=\hat{\theta}^{(s)}$
+    \item We generate $x_{miss,1},...,x_{miss,m}\sim N(\mu_{X}|X_{obs}, \hat{\theta}^{(0)}, z)$ using MCMC sampler. At iteration $r+1$
+    \item Compute the importance weights from the ratio of likelihood
+    \begin{equation}
+        w_t=\frac{L(\hat{\theta}^{(r)}|X_{miss,t}, X_{obs})}{L(\hat{\theta}^{(0)}|X_{miss,t}, X_{obs})}
+    \end{equation}
+    \item Thus, the E-step can be written as 
+    \begin{equation}
+        Q_m(\theta|\hat{\theta}^{(r)})=\frac{\sum_{t=1}^mw_t\log f(X_{miss,t}, X_{obs}|\theta)}{\sum_{t=1}^m w_t}
+    \end{equation}
+    \item Then M-step: we maximize $Q_m(\theta|\hat{\theta}^{(r)})$ to obtain $\hat{\theta}^{(r+1)}$. 
+\end{enumerate}
+This automated MCEM firstly optimizes the importance weights at burn-ins, then performs the actual EM to find $\hat{\theta}$. This importance weight ensures the imputation step of the missing data actually yields to the real distribution. 
+   
 
 
-\section{Stochastic EM?}
+
+
+
+%\section{Stochastic EM?}
 
 \section{Multiple Imputation Method}
-This method is easier to implement, because MICE package already incorporates fully conditional specification where each missing variable is imputed one at a time, conditional on others in the dataset. 
-However, I only need to write a self-defined function to include the random effect in the imputation-step. All methods provided by MICE fail to include the frailty scenario in survival analysis. There are many sources that they considered random effects in the linear mixed effect model. I believe survival analysis with frailty should be similar. 
-
-\begin{figure}[!htb]
-    \centering
-    \includegraphics[width=0.5\linewidth]{Figuras/MICE in survival, fail to incorp frailty.png}
-    \caption{MICE Code}\label{Fig:MICE no Frailty}
-\end{figure}
-
-Here I was trying to use random forest methods to impute both PRS and genotype, the performance of PRS seems good because the coefficient is close to the complete case analysis, but there is an inflation on the coefficient on genotype. 
-
 
 
 %\newpage
