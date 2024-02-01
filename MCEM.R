@@ -1,4 +1,4 @@
-##################### MCEM for Gamma & log-normal (unconditional MC Sampling) #####################
+##################### MCEM for Gamma & log-normal (MCMC Sampling using Importance Weights) #####################
 mcem_step <- function(data, initial_theta, 
                       design, 
                       m_imputations = 20, tol = 1e-6, max_iter = 1000, frailty.dist) {
@@ -32,21 +32,6 @@ mcem_step <- function(data, initial_theta,
       }, mc.cores = parallel::detectCores())))
     }
     
-#    else if (frailty.dist == "lognormal") {
-    ## E-step log-normal
-#    objective_function <- function(theta) {
-#      mean(unlist(mclapply(imputed_datasets, function(dataset) {
-#        Y <- as.matrix(dataset[, c("timeBC", "BC")])
-#        X <- as.matrix(dataset[, c("PRS", "mgeneI")])
-#        lognormal_single(X = X, Y = Y, theta = theta, 
-#                                    data = dataset, nbase = 2, 
-#                                    base.dist = "Weibull", 
-#                                    frailty.dist = "lognormal", agemin = 18,
-#                                    design = design)
-#      }, mc.cores = parallel::detectCores())))
-#    }
-#    }
-    
     ## M-step: Gamma and log-normal, Nelder-Mead
     optimized_result <- optim(par = current_theta, objective_function)
     current_theta <- optimized_result$par
@@ -78,3 +63,17 @@ results_gamma <- mcem_step(data = brca1_prs, initial_theta = initial_params,
 results_lognormal <- mcem_step(data = brca1_prs, initial_theta = initial_params, 
                      design = "pop", frailty.dist = "lognormal")
 
+#    else if (frailty.dist == "lognormal") {
+## E-step log-normal
+#    objective_function <- function(theta) {
+#      mean(unlist(mclapply(imputed_datasets, function(dataset) {
+#        Y <- as.matrix(dataset[, c("timeBC", "BC")])
+#        X <- as.matrix(dataset[, c("PRS", "mgeneI")])
+#        lognormal_single(X = X, Y = Y, theta = theta, 
+#                                    data = dataset, nbase = 2, 
+#                                    base.dist = "Weibull", 
+#                                    frailty.dist = "lognormal", agemin = 18,
+#                                    design = design)
+#      }, mc.cores = parallel::detectCores())))
+#    }
+#    }
