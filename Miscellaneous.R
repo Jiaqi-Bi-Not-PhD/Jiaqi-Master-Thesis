@@ -14,6 +14,16 @@ prs_data2 <- prs_data %>%
   dplyr::select(-"Person_ID")
 brca1_prs <- left_join(brca1, prs_data2, by = "indID")
 
+## For MCEM, if one family contains 0 observed PRS, delete this family
+brca1_prs_MCEM <- brca1_prs |>
+  mutate(PRS_obs = ifelse(!is.na(PRS), 1, 0)) |>
+  group_by(famID) |>
+  summarise(n_obs = sum(PRS_obs)) 
+
+brca1_prs_MCEM <- merge(brca1_prs_MCEM, brca1_prs, by = "famID")
+brca1_prs_MCEM <- brca1_prs_MCEM |>
+  filter(n_obs != 0)
+
 ## If CCA is preferred (471 obs)
 brca1_prs_cca <- brca1_prs %>%
   filter(!is.na(PRS)) %>%
@@ -57,3 +67,10 @@ plot.pedigree(ped_toplot)
 ##################################################################
 ####### ---------------End of Pedigree tree--------------- #######
 ##################################################################
+
+## Missing mechanism specification
+brca1_prs <- brca1_prs |>
+  mutate(miss_index = ifelse(is.na(PRS) == TRUE, 1, 0))
+model_miss <- glm(miss_index ~ mgeneI + log(timeBC) + currentage + proband, data = brca1_prs, family = binomial)
+summary(model_miss)
+
