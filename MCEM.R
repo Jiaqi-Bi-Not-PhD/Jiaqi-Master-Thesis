@@ -226,30 +226,30 @@ mcem_step <- function(data, initial_theta,
     }, mc.cores = parallel::detectCores())
     
     ## E-step Log-Normal
-    #objective_function <- function(theta) {
-    #  mean(unlist(mclapply(imputed_datasets, function(dataset) {
-    #    Y <- as.matrix(dataset[, c("timeBC", "BC")])
-    #    X <- as.matrix(dataset[, c("PRS", "mgeneI")])
-    #    lognormal_single(X = X, Y = Y, theta = theta, 
-    #                                data = dataset, nbase = 2, 
-    #                                base.dist = "Weibull", 
-    #                                frailty.dist = "lognormal", agemin = 18,
-    #                                design = design)
-    #  }, mc.cores = parallel::detectCores())))
-    #}
-    
-    ## E-step Gamma
     objective_function <- function(theta) {
       mean(unlist(mclapply(imputed_datasets, function(dataset) {
         Y <- as.matrix(dataset[, c("timeBC", "BC")])
         X <- as.matrix(dataset[, c("PRS", "mgeneI")])
-        loglik_frailty_single_gamma(X = X, Y = Y, theta = theta, 
+        lognormal_single(X = X, Y = Y, theta = theta, 
                                     data = dataset, nbase = 2, 
                                     base.dist = "Weibull", 
-                                    frailty.dist = "gamma", agemin = 18,
+                                    frailty.dist = "lognormal", agemin = 18,
                                     design = design)
       }, mc.cores = parallel::detectCores())))
     }
+    
+    ## E-step Gamma
+    #objective_function <- function(theta) {
+    #  mean(unlist(mclapply(imputed_datasets, function(dataset) {
+    #    Y <- as.matrix(dataset[, c("timeBC", "BC")])
+    #    X <- as.matrix(dataset[, c("PRS", "mgeneI")])
+    #    loglik_frailty_single_gamma(X = X, Y = Y, theta = theta, 
+    #                                data = dataset, nbase = 2, 
+    #                                base.dist = "Weibull", 
+    #                                frailty.dist = "gamma", agemin = 18,
+    #                                design = design)
+    #  }, mc.cores = parallel::detectCores())))
+    #}
     
     ## M-step: Gamma and log-normal, Nelder-Mead
     theta_history[[iter + 1]] <- current_theta
@@ -279,10 +279,21 @@ results_gamma <- mcem_step(data = brca1_prs_MCEM, initial_theta = initial_params
                            design = "pop", frailty.dist = "gamma", m_imputations = 5,
                            n_gibbs = 5, burn_in = 5)
 results_lognormal <- mcem_step(data = brca1_prs_MCEM, initial_theta = initial_params, 
-                               design = "pop", frailty.dist = "lognormal")
+                               design = "pop", frailty.dist = "lognormal", m_imputations = 5,
+                               n_gibbs = 5, burn_in = 5)
 
 ## Diagnostics
 theta_matrix <- do.call(rbind, results_gamma$theta_history)
+par(mfrow = c(3, 2)) 
+for (i in 1:ncol(theta_matrix)) {
+  plot(theta_matrix[, i], type = 'l', main = paste("Trace Plot for Parameter", i), xlab = "Iteration", ylab = "Parameter Estimate")
+}
+par(mfrow = c(3, 2)) 
+for (i in 1:ncol(theta_matrix)) {
+  acf(theta_matrix[, i], main = paste("ACF for Parameter", i))
+}
+
+theta_matrix <- do.call(rbind, results_lognormal$theta_history)
 par(mfrow = c(3, 2)) 
 for (i in 1:ncol(theta_matrix)) {
   plot(theta_matrix[, i], type = 'l', main = paste("Trace Plot for Parameter", i), xlab = "Iteration", ylab = "Parameter Estimate")
