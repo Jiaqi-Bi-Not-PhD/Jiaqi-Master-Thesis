@@ -320,7 +320,7 @@ library(foreach)
 mcem_step <- function(data, initial_theta, 
                       design, 
                       m_imputations = 20, tol = 1e-6, 
-                      max_iter = 1000, n_gibbs = 10, burn_in = 5,
+                      max_iter = 1000, n_gibbs = 20, burn_in = 5,
                       frailty.dist) {
   current_theta <- initial_theta
   converged <- FALSE
@@ -387,9 +387,6 @@ mcem_step <- function(data, initial_theta,
     optimized_result <- optim(par = current_theta, objective_function)
     current_theta <- optimized_result$par
     
-    
-   
-    
     ## Implement MC-based stopping rule here
     if (length(theta_history) >= 21) {
       squared_diffs <- sapply(1:length(current_theta), function(k) {
@@ -403,6 +400,7 @@ mcem_step <- function(data, initial_theta,
     
     
     iter <- iter + 1
+    print(iter)
     
   }
   
@@ -420,7 +418,15 @@ results_gamma <- mcem_step(data = brca1_prs_MCEM, initial_theta = initial_params
                            design = "pop", frailty.dist = "gamma", m_imputations = 20,
                            n_gibbs = 5, burn_in = 5)
 results_lognormal <- mcem_step(data = brca1_prs_MCEM, initial_theta = initial_params, 
-                               design = "pop", frailty.dist = "lognormal", m_imputations = 20,
-                               n_gibbs = 5, burn_in = 5)
-
+                               design = "pop", frailty.dist = "lognormal")
+## Diagnostics
+theta_matrix <- do.call(rbind, results_lognormal$theta_history)
+par(mfrow = c(3, 2)) 
+for (i in 1:ncol(theta_matrix)) {
+  plot(theta_matrix[, i], type = 'l', main = paste("Trace Plot for Parameter", i), xlab = "Iteration", ylab = "Parameter Estimate")
+}
+par(mfrow = c(3, 2)) 
+for (i in 1:ncol(theta_matrix)) {
+  acf(theta_matrix[, i], main = paste("ACF for Parameter", i))
+}
 
