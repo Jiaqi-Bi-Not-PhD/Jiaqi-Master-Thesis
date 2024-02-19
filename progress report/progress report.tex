@@ -152,48 +152,49 @@
 %% main text
 \section{To Do List}
 \begin{enumerate}
-    \item Correlated frailty - NR-algorithma
-    \item Using importance weights to implement MCEM
+    \item Correlated frailty - NR-algorithm
+    \item Gibb's Sampling in MCEM \& MI
     \item Multiple imputation - similar imputation step as MCEM
 \end{enumerate}
 \section{Weibull Parametric Approach and MCEM Method}
 From the beginning of the discussion, I have obtained the model, i.e., the hazard function is
 \begin{equation}
-    h_{ij}(t_{ij}|z_j)=h_0(t_{ij})\exp(\beta_1g_{ij}+\beta_2 x_{ij})z_j
+    h_{ij}(t_{ij}|z_j)=h_0(t_{ij})\exp(\beta_1x_{1,ij}+\beta_2 x_{2,ij})z_j
 \end{equation}
-where $g_{ij}$ is the genotype, or say mutation gene status for individual $i$ in family $j$, and $x_{ij}$
-is the PRS for individual $i$ in family $j$. The frailty term $z_j$, has a pdf of $f(z)$, which can be Gamma, or log-normal, 
-to ensure the support is always non-negative. The Weibull baseline hazard function is defined as
+There are total $n_j$ individuals in family $j$, where $i=1,...,n_j$, and total $J$ families that $j=1,...,J$. $x_{1,ij}$ is the genotype, or say mutation gene status for individual $i$ in family $j$. $x_{2,ij}$
+is the PRS for individual $i$ in family $j$. The frailty term $z_j$, has a pdf of $f(z)$, which can be Gamma, log-normal, or other common frailty distributions.
+The support of $f(z)$ is always non-negative. The Weibull baseline hazard function is defined as
 \begin{equation}
     h_0(t_{ij})=\alpha\lambda t_{ij}^{\lambda-1}
 \end{equation}
-where $\lambda$ is the shape parameter and $\alpha$ is the scale parameter. Let $\xi_{ij}=\exp(\beta_1 g_{ij}+\beta_2 x_{ij})$, the hazard function is 
+where $\lambda$ is the shape parameter and $\alpha$ is the scale parameter. Let $\xi_{ij}=\exp(\beta_1 x_{1,ij}+\beta_2 x_{2,ij})$, the hazard function is 
 \begin{equation}
     h_{ij}(t_{ij}|x_{ij}, g_{ij}, z_j)=\alpha\lambda t_{ij}^{\lambda-1}\xi_{ij}z_j
 \end{equation}
 The survival function $S(t)$ can be obtained through cumulative hazard function $H(t)$
 \begin{align}
-    H(t_{ij}|x_{ij}, g_{ij}, z_j)&=\int_0^{t}h_{ij}(u|\cdot)du\\
+    H(t_{ij}|x_{ij}, g_{ij}, z_j)&=\int_0^{t}h_{ij}(u|x_{ij}, g_{ij}, z_j)du\\
     &=\alpha\xi_{ij}z_j\lambda\int_0^t u^{\lambda-1}du\\
     &=\alpha\xi_{ij}z_j\lambda\cdot \frac{1}{\lambda} t_{ij}^{\lambda}=\alpha\xi_{ij}z_j t_{ij}^{\lambda}
 \end{align}
 and the survival function
 \begin{equation}
-    S(t_{ij}|x_{ij}, g_{ij}, z_j)=\exp(-H(t_{ij}|\cdot))=\exp(-\alpha\xi_{ij}z_j t_{ij}^{\lambda})
+    S(t_{ij}|x_{ij}, g_{ij}, z_j)=\exp(-H(t_{ij}|x_{ij}, g_{ij}, z_j))=\exp(-\alpha\xi_{ij}z_j t_{ij}^{\lambda})
 \end{equation}
-Therefore, the likelihood can be written as
+Let $\boldsymbol{\theta}=\{\beta_1, \beta_2, \alpha, \lambda, \boldsymbol{\phi}\}$, where $\boldsymbol{\phi}$ is the parameter vector for the frailty distribution of the choice. Therefore, the likelihood can be written as
 \begin{align}
-    L(\beta_1, \beta_2, \lambda, \alpha; x_{ij}, g_{ij}, t_{ij}, \delta_{ij}, z_j)=\prod_{j=1}^k\int_0^{\infty}\prod_{i=1}^{n}(\alpha\lambda t_{ij}^{\lambda-1}\xi_{ij}z_j)^{\delta_{ij}}\exp(-\alpha\xi_{ij}z_j t_{ij}^{\lambda})f(z)dz
+    L(\boldsymbol{\theta})&=\prod_{j=1}^J\int_0^{\infty}\prod_{i=1}^{n_j}(\alpha\lambda t_{ij}^{\lambda-1}\xi_{ij}z_j)^{\delta_{ij}}\exp(-\alpha\xi_{ij}z_j t_{ij}^{\lambda})f(z)dz\\
+    &=\prod_{j=1}^J\int_0^{\infty}\prod_{i=1}^{n_j}h(t_{ij}|\mathbf{x}_{ij},z_j)^{\delta_{ij}}\exp(-H(t_{ij}|\mathbf{x}_{ij},z_j))f(z)dz
 \end{align}
 So the log-likelihood is 
 \begin{equation}\label{eq:logllhd}
-    \ell(\beta_1, \beta_2, \lambda, \alpha; x_{ij}, g_{ij}, t_{ij}, \delta_{ij}, z_j)=\sum_{j=1}^k\log \left [ \int_0^{\infty}\prod_{i=1}^{n_j}(h(t_{ij}|\mathbf{x}_{ij}, z_j))^{\delta_{ij}}\exp (-H(t_{ij}|\mathbf{x}_{ij}, z_j))f(z_j)dz_j\right ]
+    \ell(\boldsymbol{\theta})=\sum_{j=1}^J\log \left [ \int_0^{\infty}\prod_{i=1}^{n_j}h(t_{ij}|\mathbf{x}_{ij}, z_j)^{\delta_{ij}}\exp (-H(t_{ij}|\mathbf{x}_{ij}, z_j))f(z)dz\right ]
 \end{equation}
 
 \section{Gamma Frailty} 
-The Laplace transform of the frailty $f(z_j)=\text{Gamma}(v_j, v_j)$, for the simplicity of the mathematical expression, the following Laplace transform will ignore the subscript, denote $\mathscr{L}(f(z))=\phi(\cdot)$:
+The Laplace transform of the frailty $z\sim\text{Gamma}(k, k)$, for the simplicity of the mathematical expression, the following Laplace transform will ignore the subscript, denote $\mathscr{L}(f(z))=\phi(s)$:
 \begin{align}
-    \mathscr{L}(f(z))=\phi(s)&=\int_0^{\infty}e^{-sz}f(z)dz\\
+    \phi(s)&=\int_0^{\infty}e^{-sz}f(z)dz\\
     &=\int_0^{\infty}e^{-sz}\frac{v^v}{\Gamma(v)}z^{v-1}e^{-vz}dz
 \end{align}
 Using the Gamma property: $\int_0^{\infty}z^{n-1}e^{-az}dz=\frac{\Gamma(n)}{a^n}$, $\phi(s)$ can be further written as
