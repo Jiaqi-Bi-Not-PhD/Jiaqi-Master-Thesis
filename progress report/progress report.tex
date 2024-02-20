@@ -192,14 +192,14 @@ So the log-likelihood is
 \end{equation}
 
 \section{Gamma Frailty} 
-The Laplace transform of the frailty $z\sim\text{Gamma}(k, k)$, for the simplicity of the mathematical expression, the following Laplace transform will ignore the subscript, denote $\mathscr{L}(f(z))=\phi(s)$:
+The Laplace transform of the frailty $z\sim\text{Gamma}(k, k)$, for the simplicity of the mathematical expression, the following Laplace transform will ignore the subscript, denote $\mathscr{L}(f(z))=\phi(s)$ where $s=\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}_{ij})$:
 \begin{align}
     \phi(s)&=\int_0^{\infty}e^{-sz}f(z)dz\\
-    &=\int_0^{\infty}e^{-sz}\frac{v^v}{\Gamma(v)}z^{v-1}e^{-vz}dz
+    &=\int_0^{\infty}e^{-sz}\frac{k^k}{\Gamma(v)}z^{k-1}e^{-kz}dz
 \end{align}
 Using the Gamma property: $\int_0^{\infty}z^{n-1}e^{-az}dz=\frac{\Gamma(n)}{a^n}$, $\phi(s)$ can be further written as
 \begin{equation}
-    \phi(s)=\frac{v^v}{\Gamma(v)}\int_0^{\infty}e^{-(s+v)z}z^{v-1}dz=\frac{v^v}{\Gamma(v)}\cdot \frac{\Gamma(v)}{(s+v)^v}=(1+\frac{s}{v})^{-v}
+    \phi(s)=\frac{k^k}{\Gamma(k)}\int_0^{\infty}e^{-(s+k)z}z^{k-1}dz=\frac{k^k}{\Gamma(k)}\cdot \frac{\Gamma(k)}{(s+k)^k}=(1+\frac{s}{k})^{-k}
 \end{equation}
 The second derivative is $\frac{d^2\phi(s)}{ds^2}=\int_0^{\infty}(-z)^2e^{-sz}f(z)dz$. 
 
@@ -208,28 +208,28 @@ The third derivative is $\frac{d^3\phi(s)}{ds^3}=\int_0^{\infty}(-z)^3e^{-sz}f(z
 Therefore, its $d$-th derivative, denote $\phi(s)^{(d)}$:
 \begin{align}
     \phi(s)^{(d)}&=(-1)^d\int_0^{\infty}z^de^{-sz}f(z)dz\\
-    &=(-1)^d\frac{(v+d-1)!}{(v-1)!(s+v)^d}(1+\frac{s}{v})^{-v}
+    &=(-1)^d\frac{(k+d-1)!}{(k-1)!(s+k)^d}(1+\frac{s}{k})^{-k}
 \end{align}
-for some function $s$ that does not involve with $z$. Let $\boldsymbol{\theta}=(\beta_1, \beta_2, \alpha, \lambda)$, the log-likelihood is then written as
+Let $\boldsymbol{\theta}=(\beta_1, \beta_2, \alpha, \lambda, k)$ for Gamma frailty model, the log-likelihood is then written as
 \begin{align}
     \ell(\boldsymbol{\theta})&=\sum_{j=1}^k\log \left [ \int_0^{\infty}\prod_{i=1}^{n_j}(h(t_{ij}|\mathbf{x}_{ij}, z_j))^{\delta_{ij}}\exp (-H(t_{ij}|\mathbf{x}_{ij}, z_j))f(z_j)dz_j\right ]\\
-    &=\sum_{j=1}^k\log\left [\int_{0}^{\infty}\prod_{i=1}^{n_j}(z_j h(t_{ij}|\mathbf{x}_{ij}))^{\delta_{ij}}\exp(-z_j H(t_{ij}|\mathbf{x}_{ij}))f(z_j)dz_j\right ]\\
-    &=\sum_{j=1}^k\log\left [\prod_{i=1}^{n_j}(h(t_{ij}|\mathbf{x}_{ij}))^{\delta_{ij}}\int_0^{\infty}z_j^{d_j}\exp(-z_j\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}_{ij}))f(z_j)dz_j \right ]\\
-    &=\sum_{j=1}^k\log\left [\prod_{i=1}^{n_j}(h(t_{ij}|\mathbf{x}_{ij}))^{\delta_{ij}}\frac{(v+d_j-1)!}{(v-1)!(\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}_{ij})+v)^{d_j}}\Big(1+\frac{\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}_{ij})}{v}\Big)^{-v}\right ]\\
-    &=\sum_{j=1}^k\log\left [\prod_{i=1}^{n_j}((h(t_{ij}|\mathbf{x}_{ij}) )^{\delta_{ij}})\frac{(v+d_j-1)!}{v!v^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}))}{v})^{-v-d_j} \right ]\\
-    &=\sum_{j=1}^k\log\left [(h(\cdot))^{\delta_{ij}} \frac{(v+d_j-1)!}{v!v^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}))}{v})^{-v-d_j} \right ]\\
-    &=\sum_{j=1}^k\left [\sum_i(\delta_{ij}\log h(\cdot)) + \log\Big (\frac{(v+d_j-1)!}{v!v^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}))}{v})^{-v-d_j}\Big )\right ]
+    &=\sum_{j=1}^J\log\left [\int_{0}^{\infty}\prod_{i=1}^{n_j}(z_j h(t_{ij}|\mathbf{x}_{ij}))^{\delta_{ij}}\exp(-z_j H(t_{ij}|\mathbf{x}_{ij}))f(z_j)dz_j\right ]\\
+    &=\sum_{j=1}^J\log\left [\prod_{i=1}^{n_j}(h(t_{ij}|\mathbf{x}_{ij}))^{\delta_{ij}}\int_0^{\infty}z_j^{d_j}\exp(-z_j\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}_{ij}))f(z_j)dz_j \right ]\\
+    &=\sum_{j=1}^J\log\left [\prod_{i=1}^{n_j}(h(t_{ij}|\mathbf{x}_{ij}))^{\delta_{ij}}\frac{(k+d_j-1)!}{(k-1)!(\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}_{ij})+k)^{d_j}}\Big(1+\frac{\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}_{ij})}{k}\Big)^{-k}\right ]\\
+    &=\sum_{j=1}^J\log\left [\prod_{i=1}^{n_j}((h(t_{ij}|\mathbf{x}_{ij}) )^{\delta_{ij}})\frac{(k+d_j-1)!}{k!k^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}))}{k})^{-k-d_j} \right ]\\
+    &=\sum_{j=1}^J\log\left [(h(\cdot))^{\delta_{ij}} \frac{(k+d_j-1)!}{k!k^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}))}{k})^{-k-d_j} \right ]\\
+    &=\sum_{j=1}^J\left [\sum_i(\delta_{ij}\log h(\cdot)) + \log\Big (\frac{(k+d_j-1)!}{k!k^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}))}{k})^{-k-d_j}\Big )\right ]
 \end{align}
 For each family $j$, the ascertainment is defined to be the probability of the proband $p$ being ascertained by the age $a_{j_p}$ at examination, denoting $A_j$. Applying the ascertainment correction for the log-likelihood in family $j$: 
 \begin{equation}
-    \ell(\cdot)=\ell_j(\cdot)-\log A_j(\cdot)
+    \tilde{\ell}_{j}(\boldsymbol{\theta})=\ell_j(\boldsymbol{\theta})-\log A_j(\boldsymbol{\theta})
 \end{equation}
-note we can still apply Laplace transform here, such that
+where $\tilde{\ell}$ is the log-likelihood with ascertainment correction, and $\ell$ is the crude log-likelihood. Define $\mathbf{x}_{j_p}$ the covariate matrix for proband in family $j$. Note we can still apply Laplace transform here, such that
 \begin{align}
-    A_j(\cdot)&=1-S_{j_p}(a_{j_p}|X_{j_p})\\
-    &=1-\int_Z S_{j_p}(a_{j_p}|X_{j_p},z_j)f(z_j)dz_j\\
-    &=1-\int_Z\exp(-z_j\cdot H_{j_p}(a_{j_p}|X_{j_p}))f(z_j)dz_j\\
-    &=1-(1+\frac{H_{j_p}(a_{j_p}|X_{j_p})}{k})^{-k}
+    A_j(\boldsymbol{\theta})&=1-S_{j_p}(a_{j_p}|\mathbf{x}_{j_p})\\
+    &=1-\int_0^{\infty} S_{j_p}(a_{j_p}|\mathbf{x}_{j_p},z_j)f(z_j)dz_j\\
+    &=1-\int_0^{\infty}\exp(-z_j\cdot H_{j_p}(a_{j_p}|\mathbf{x}_{j_p}))f(z_j)dz_j\\
+    &=1-(1+\frac{H_{j_p}(a_{j_p}|\mathbf{x}_{j_p})}{k})^{-k}
 \end{align}
 \section{Log-Normal Frailty}
 The log-normal frailty is not the power-variance-function (PVF) family, so there is no closed form for Laplace transform or expressions for survivors. But we are able to estimate the Laplace transform using Gauss Hermite Quadrature. We typically standardize the log-normal frailty $Z$ as
@@ -237,9 +237,9 @@ The log-normal frailty is not the power-variance-function (PVF) family, so there
     E(\log Z)&=0\\
     \text{Var}(\log Z)&=\sigma^2
 \end{align} 
-That is, $Z_j\sim \text{log-Normal}(0, \sigma^2)$. The probability density function $f(z_j)$ is then
+That is, $z\sim \text{log-Normal}(0, \sigma^2)$. The probability density function $f(z)$ is then
 \begin{equation}\label{eq:lognormalfrailty}
-    f(z_j)=\frac{1}{\sqrt{2\pi}\sigma}z_j^{-1}\exp (-\frac{\log (z_j)^2}{2\sigma^2})
+    f(z)=\frac{1}{\sqrt{2\pi}\sigma}z^{-1}\exp (-\frac{\log (z)^2}{2\sigma^2})
 \end{equation}
 The Laplace transform is then
 \begin{equation}
@@ -266,13 +266,13 @@ Applying Definition~\ref{defn:gausshermite}, the integral of the Laplace transfo
 \begin{equation}
     \phi(s)^d=\frac{1}{\sqrt{\pi}}\sum_{p=1}^{N_p}\omega_p\exp(-s\exp(\sqrt{2}\sigma y_p))\exp(\sqrt{2}\sigma y_p)^d
 \end{equation}
-Thus, substituting into the log-likelihood:
+where $p$ denotes the $p$-th element of Gauss Hermite Quadrature, i.e., $\omega_p$ denotes the $p$-th weight, $y_p$ denotes the $p$-th node, and $N_p$ denotes the total number of quadratures. Thus, substituting into the log-likelihood:
 \begin{equation}
-    \ell_j(\cdot)=\sum_{i=1}^{n_j}\delta_{ij}\log(h(t_{ij}|\mathbf{x}_{ij}))+\log\Big (\frac{1}{\sqrt{\pi}}\sum_{p=1}^{N_p}\left [\omega_p\exp(\sqrt{2}\sigma y_p)^{d_{ij}}\exp\Big (-\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}_{ij})\exp(\sqrt{2}\sigma y_p)\Big )\right ]\Big )
+    \ell_j(\boldsymbol{\theta})=\sum_{i=1}^{n_j}\delta_{ij}\log(h(t_{ij}|\mathbf{x}_{ij}))+\log\Big (\frac{1}{\sqrt{\pi}}\sum_{p=1}^{N_p}\left [\omega_p\exp(\sqrt{2}\sigma y_p)^{d_j}\exp\Big (-\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}_{ij})\exp(\sqrt{2}\sigma y_p)\Big )\right ]\Big )
 \end{equation}
 Similarly, the ascertainment correction in the log-normal frailty can be written as 
 \begin{align}
-    A_j(\cdot)&=1-\int_Z \exp(-z_j H_{j,p}(a_{j,p}|\mathbf{x}_{j,p}))f(z_j)dz_j\\
+    A_j(\boldsymbol{\theta})&=1-\int_{-\infty}^{\infty} \exp(-z H_{j,p}(a_{j,p}|\mathbf{x}_{j,p}))f(z)dz\\
     &=1-\sum_{p=1}^{N_p}\omega_p \exp\left (-(\sum_{i=1}^{n_j} H(a_{j,p}|\mathbf{x}_{ij}))\exp (\sqrt{2}\sigma y_{p})\right )
 \end{align}
 
@@ -429,14 +429,14 @@ which implies
 Essentially, the Cholesky Decomposition transforms the multivariate normal to a standard multivariate normal. When $\mathbf{Z}\sim \mathcal{N}(0,\boldsymbol{\Sigma})$, let $\boldsymbol{\Sigma}=\mathbf{L}\mathbf{L}^{\top}$, then $\mathbf{Y}=\mathbf{L}^{-1}\mathbf{Z}\sim \mathcal{N}(0, \mathbf{I})$ that $\mathbf{I}$ is the identity matrix, since $\mathbf{L}^{-1}\boldsymbol{\Sigma}(\mathbf{L}^{-1})^{\top}=\mathbf{L}^{-1}\mathbf{L}\mathbf{L}^{\top}(\mathbf{L}^{-1})^{\top}=\mathbf{I}$. This will simplify the computational process. 
 \section{Monte Carlo EM}
 The complete data log-likelihood for family $j$ is $\ell_j(\boldsymbol{\theta}; h_{ij})$
-where $\boldsymbol{\theta}$ consists all baseline parameters, and model coefficients say $\beta$. For each cluster $j$, the E-step is:
+where $\boldsymbol{\theta}$ consists all baseline parameters, and model coefficients $\beta$'s, as well as the frailty parameter $\phi$. The E-step for complete data is:
 \begin{align} 
-    Q_i(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)})=\int \ell(\boldsymbol{\theta};h_{ij})\cdot f(x_{mis,i}|x_{obs,i},z_j, \boldsymbol{\theta}^{(r)})dx_{mis,ij}
+    Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)})=\int \ell(\boldsymbol{\theta};h_{ij})\cdot f(x_{mis,i}|x_{obs,i},z, \boldsymbol{\theta}^{(r)}, t_{ij}, \delta_{ij})dx_{mis,ij}
 \end{align}
 
-sample the size $m_i$ for each $i$-th observation, $x_{i1}^*,...,x_{im_i}^*$ from the distribution $f(x_{mis,ij}|\cdot)$, and take $M = 1,...,m_i$, such that each $X_{iM}^*$ depends on the iteration number for $r+1$ iterations. In general:
+We sample the size $m_i$ for each $i$-th observation, $x_{i1}^*,...,x_{im_i}^*$ from the distribution $f(x_{mis,ij}|\cdot)$, and take $M = 1,...,m_i$, such that each $X_{iM}^*$ depends on the iteration number for $r+1$ iterations. In general:
 \begin{align}
-    \hat{Q}_i(\boldsymbol{\theta}; \boldsymbol{\theta}^{(r)})=\frac{1}{m_i}\sum_{M=1}^{m_i}\ell(x_{iM}^*, x_{obs,ij},t_{ij}, \boldsymbol{\theta},z_j)
+    \hat{Q}(\boldsymbol{\theta}; \boldsymbol{\theta}^{(r)})=\frac{1}{m_i}\sum_{M=1}^{m_i}\ell(x_{iM}^*, x_{obs,ij},t_{ij}, \boldsymbol{\theta},z_j)
 \end{align}
 More specifically, 
 \begin{enumerate}
