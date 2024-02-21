@@ -264,17 +264,55 @@ where $n$ is number of sample points used, and $x_i$ is the roots of Hermite pol
 \noindent
 Applying Definition~\ref{defn:gausshermite}, the integral of the Laplace transform is then
 \begin{equation}
-    \phi(s)^d=\frac{1}{\sqrt{\pi}}\sum_{p=1}^{N_p}\omega_p\exp(-s\exp(\sqrt{2}\sigma y_p))\exp(\sqrt{2}\sigma y_p)^d
+    \phi(s)^d=\frac{1}{\sqrt{\pi}}\sum_{\tilde{p}=1}^{N_{\tilde{p}}}\omega_{\tilde{p}}\exp(-s\exp(\sqrt{2}\sigma y_{\tilde{p}}))\exp(\sqrt{2}\sigma y_{\tilde{p}})^d
 \end{equation}
-where $p$ denotes the $p$-th element of Gauss Hermite Quadrature, i.e., $\omega_p$ denotes the $p$-th weight, $y_p$ denotes the $p$-th node, and $N_p$ denotes the total number of quadratures. Thus, substituting into the log-likelihood:
+where $\tilde{p}$ denotes the $\tilde{p}$-th element of Gauss Hermite Quadrature, i.e., $\omega_{\tilde{p}}$ denotes the $\tilde{p}$-th weight, $y_{\tilde{p}}$ denotes the $\tilde{p}$-th node, and $N_{\tilde{p}}$ denotes the total number of quadratures. Thus, substituting into the log-likelihood:
 \begin{equation}
     \ell_j(\boldsymbol{\theta})=\sum_{i=1}^{n_j}\delta_{ij}\log(h(t_{ij}|\mathbf{x}_{ij}))+\log\Big (\frac{1}{\sqrt{\pi}}\sum_{p=1}^{N_p}\left [\omega_p\exp(\sqrt{2}\sigma y_p)^{d_j}\exp\Big (-\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}_{ij})\exp(\sqrt{2}\sigma y_p)\Big )\right ]\Big )
 \end{equation}
 Similarly, the ascertainment correction in the log-normal frailty can be written as 
 \begin{align}
-    A_j(\boldsymbol{\theta})&=1-\int_{-\infty}^{\infty} \exp(-z H_{j,p}(a_{j,p}|\mathbf{x}_{j,p}))f(z)dz\\
-    &=1-\sum_{p=1}^{N_p}\omega_p \exp\left (-(\sum_{i=1}^{n_j} H(a_{j,p}|\mathbf{x}_{ij}))\exp (\sqrt{2}\sigma y_{p})\right )
+    A_j(\boldsymbol{\theta})&=1-\int_{-\infty}^{\infty} \exp(-z H(a_{j_p}|\mathbf{x}_{j_p}))f(z)dz\\
+    &=1-\sum_{\tilde{p}=1}^{N_{\tilde{p}}}\omega_{\tilde{p}} \exp\left (-(\sum_{i=1}^{n_j} H(a_{j_p}|\mathbf{x}_{j_p}))\exp (\sqrt{2}\sigma y_{\tilde{p}_p})\right )
 \end{align}
+
+\section{Monte Carlo EM}
+The complete data log-likelihood for family $j$ is $\ell_j(\boldsymbol{\theta}; h_{ij})$
+where $\boldsymbol{\theta}$ consists all baseline parameters, and model coefficients $\beta$'s, as well as the frailty parameter $\phi$. The E-step for complete data is:
+\begin{align} 
+    Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)})=\int \ell(\boldsymbol{\theta};h_{ij})\cdot f(x_{mis,i}|x_{obs,i},z, \boldsymbol{\theta}^{(r)}, t_{ij}, \delta_{ij}, p_j)dx_{mis,ij}
+\end{align}
+
+We sample the size $m_i$ for each $i$-th observation, $x_{i1}^*,...,x_{im_i}^*$ from the distribution $f(x_{mis,ij}|\cdot)$, and take $M = 1,...,m_i$, such that each $X_{iM}^*$ depends on the iteration number for $r+1$ iterations. In general:
+\begin{align}
+    \hat{Q}(\boldsymbol{\theta}; \boldsymbol{\theta}^{(r)})=\frac{1}{m_i}\sum_{M=1}^{m_i}\ell(x_{iM}^*, x_{obs,ij},t_{ij}, \boldsymbol{\theta},z_j)
+\end{align}
+More specifically, 
+\begin{enumerate}
+    \item We first initialize $m, \theta^{(0)}$, and start the burn-in.
+    \item Also, we set importance weights $w_t=1$ for all $t=1,...,m$.
+    \item At the burn-in iteration $s$, we generate $x_{miss,1}, ..., x_{miss,m}\sim N(\mu_{X}|X_{obs}, \theta^{(s)}, z)$ using MCMC sample.
+    \item In the E-step, we estimate $Q(\theta|\theta^{(s)})$ by using the importance weights:
+    \begin{equation}
+        Q_m(\theta|\hat{\theta}^{(s)})=\frac{\sum_{t=1}^m w_t\log f(X_{obs}, X_{miss,t}|\theta)}{\sum_{r=1}^mw_t}
+    \end{equation}
+    \item Note the numerator is actually a weighted log-likelihood. In the M-step, we maximize $Q_m(\theta|\hat{\theta}^{(s)})$ to obtain $\hat{\theta}^{(s+1)}$. 
+    \item Repeat (3.) - (5.) for $s$ burn-in iterations.
+    \item Then re-initialize $\hat{\theta}^{(0)}=\hat{\theta}^{(s)}$
+    \item We generate $x_{miss,1},...,x_{miss,m}\sim N(\mu_{X}|X_{obs}, \hat{\theta}^{(0)}, z)$ using MCMC sampler. At iteration $r+1$
+    \item Compute the importance weights from the ratio of likelihood
+    \begin{equation}
+        w_t=\frac{L(\hat{\theta}^{(r)}|X_{miss,t}, X_{obs})}{L(\hat{\theta}^{(0)}|X_{miss,t}, X_{obs})}
+    \end{equation}
+    \item Thus, the E-step can be written as 
+    \begin{equation}
+        Q_m(\theta|\hat{\theta}^{(r)})=\frac{\sum_{t=1}^mw_t\log f(X_{miss,t}, X_{obs}|\theta)}{\sum_{t=1}^m w_t}
+    \end{equation}
+    \item Then M-step: we maximize $Q_m(\theta|\hat{\theta}^{(r)})$ to obtain $\hat{\theta}^{(r+1)}$. 
+\end{enumerate}
+This automated MCEM firstly optimizes the importance weights at burn-ins, then performs the actual EM to find $\hat{\theta}$. This importance weight ensures the imputation step of the missing data actually yields to the real distribution. 
+   
+
 
 \section{Correlated Frailty using Kinship Matrix}
 Family members are correlated within one family, that we denote $K$ as the kinship correlation matrix among all observations. This matrix ensures those individuals not from the same family automatically have a correlation of 0. The likelihood construction needs multivariate form. For $\mathbf{Z}\sim\text{MVN}(0,\sigma^2K)$, that $K$ has the diagonal of 1. The likelihood is 
@@ -427,42 +465,6 @@ which implies
 \end{equation}
 \end{proof}
 Essentially, the Cholesky Decomposition transforms the multivariate normal to a standard multivariate normal. When $\mathbf{Z}\sim \mathcal{N}(0,\boldsymbol{\Sigma})$, let $\boldsymbol{\Sigma}=\mathbf{L}\mathbf{L}^{\top}$, then $\mathbf{Y}=\mathbf{L}^{-1}\mathbf{Z}\sim \mathcal{N}(0, \mathbf{I})$ that $\mathbf{I}$ is the identity matrix, since $\mathbf{L}^{-1}\boldsymbol{\Sigma}(\mathbf{L}^{-1})^{\top}=\mathbf{L}^{-1}\mathbf{L}\mathbf{L}^{\top}(\mathbf{L}^{-1})^{\top}=\mathbf{I}$. This will simplify the computational process. 
-\section{Monte Carlo EM}
-The complete data log-likelihood for family $j$ is $\ell_j(\boldsymbol{\theta}; h_{ij})$
-where $\boldsymbol{\theta}$ consists all baseline parameters, and model coefficients $\beta$'s, as well as the frailty parameter $\phi$. The E-step for complete data is:
-\begin{align} 
-    Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)})=\int \ell(\boldsymbol{\theta};h_{ij})\cdot f(x_{mis,i}|x_{obs,i},z, \boldsymbol{\theta}^{(r)}, t_{ij}, \delta_{ij})dx_{mis,ij}
-\end{align}
-
-We sample the size $m_i$ for each $i$-th observation, $x_{i1}^*,...,x_{im_i}^*$ from the distribution $f(x_{mis,ij}|\cdot)$, and take $M = 1,...,m_i$, such that each $X_{iM}^*$ depends on the iteration number for $r+1$ iterations. In general:
-\begin{align}
-    \hat{Q}(\boldsymbol{\theta}; \boldsymbol{\theta}^{(r)})=\frac{1}{m_i}\sum_{M=1}^{m_i}\ell(x_{iM}^*, x_{obs,ij},t_{ij}, \boldsymbol{\theta},z_j)
-\end{align}
-More specifically, 
-\begin{enumerate}
-    \item We first initialize $m, \theta^{(0)}$, and start the burn-in.
-    \item Also, we set importance weights $w_t=1$ for all $t=1,...,m$.
-    \item At the burn-in iteration $s$, we generate $x_{miss,1}, ..., x_{miss,m}\sim N(\mu_{X}|X_{obs}, \theta^{(s)}, z)$ using MCMC sample.
-    \item In the E-step, we estimate $Q(\theta|\theta^{(s)})$ by using the importance weights:
-    \begin{equation}
-        Q_m(\theta|\hat{\theta}^{(s)})=\frac{\sum_{t=1}^m w_t\log f(X_{obs}, X_{miss,t}|\theta)}{\sum_{r=1}^mw_t}
-    \end{equation}
-    \item Note the numerator is actually a weighted log-likelihood. In the M-step, we maximize $Q_m(\theta|\hat{\theta}^{(s)})$ to obtain $\hat{\theta}^{(s+1)}$. 
-    \item Repeat (3.) - (5.) for $s$ burn-in iterations.
-    \item Then re-initialize $\hat{\theta}^{(0)}=\hat{\theta}^{(s)}$
-    \item We generate $x_{miss,1},...,x_{miss,m}\sim N(\mu_{X}|X_{obs}, \hat{\theta}^{(0)}, z)$ using MCMC sampler. At iteration $r+1$
-    \item Compute the importance weights from the ratio of likelihood
-    \begin{equation}
-        w_t=\frac{L(\hat{\theta}^{(r)}|X_{miss,t}, X_{obs})}{L(\hat{\theta}^{(0)}|X_{miss,t}, X_{obs})}
-    \end{equation}
-    \item Thus, the E-step can be written as 
-    \begin{equation}
-        Q_m(\theta|\hat{\theta}^{(r)})=\frac{\sum_{t=1}^mw_t\log f(X_{miss,t}, X_{obs}|\theta)}{\sum_{t=1}^m w_t}
-    \end{equation}
-    \item Then M-step: we maximize $Q_m(\theta|\hat{\theta}^{(r)})$ to obtain $\hat{\theta}^{(r+1)}$. 
-\end{enumerate}
-This automated MCEM firstly optimizes the importance weights at burn-ins, then performs the actual EM to find $\hat{\theta}$. This importance weight ensures the imputation step of the missing data actually yields to the real distribution. 
-   
 
 
 

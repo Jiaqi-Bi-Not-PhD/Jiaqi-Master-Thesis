@@ -441,33 +441,30 @@ mcem_step <- function(data, initial_theta,
   converged <- FALSE
   iter <- 0
   
-  ## Store the history of theta to plot the diagnostics
   theta_history <- list()
   
-  ## Mark the initially missing PRS data
+  ## Missing PRS data
   data$missing_prs <- is.na(data$PRS)
   
-  ## Initialize a structure to hold the imputed data for each imputation
   last_imputed_state <- vector("list", m_imputations)
   for (i in 1:m_imputations) {
-    last_imputed_state[[i]] <- data # Initialize with the original data
+    last_imputed_state[[i]] <- data ## Initialize with the original data
   }
   
   while (!converged & iter < max_iter) {
-    ## Use mclapply to perform parallel Gibbs sampling and imputation
     imputed_datasets <- mclapply(1:m_imputations, function(i) {
       imputed_data <- last_imputed_state[[i]] ## Start with the last state
       
-      ## Fit the mixed-effects model on the current imputed data
+      ## f(PRS)~N(...)
       lmer_model <- lmer(PRS ~ log(timeBC):BC + currentage + proband + mgeneI + (1|famID), data = imputed_data, REML = FALSE)
       sigma1 <- sigma(lmer_model)
       
-      ## Perform Gibbs sampling with burn-in
+      ## Gibbs sampling with burn-in
       for (g in 1:(n_gibbs + burn_in)) {
         ## Iterate over families for imputation
         for (family in unique(imputed_data$famID)) { ## Family-wise
           family_data <- subset(imputed_data, famID == family)
-          ## Only consider originally missing PRS for imputation
+          ## Only originally missing PRS for imputation
           missing_prs <- family_data$missing_prs
           
           if (any(missing_prs)) {
@@ -538,9 +535,9 @@ mcem_step <- function(data, initial_theta,
 
 
 initial_params <- c(1/41.41327,1,0, 0, 1)
+log_normal_poss <- c(-19.0481278, 1.1189520, 0.4178628, 3.9732051, 2.8852498)
 results_gamma <- mcem_step(data = brca1_prs_MCEM, initial_theta = initial_params,
-                           design = "pop", frailty.dist = "gamma", m_imputations = 20,
-                           n_gibbs = 5, burn_in = 5)
+                           design = "pop", frailty.dist = "gamma", m_imputations = 20)
 results_lognormal <- mcem_step(data = brca1_prs_MCEM, initial_theta = initial_params, 
                                design = "pop", frailty.dist = "lognormal")
 ## Diagnostics
