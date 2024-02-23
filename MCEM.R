@@ -658,12 +658,12 @@ results_gamma <- mcem_step(data = brca1_prs_MCEM, initial_theta = initial_params
 results_lognormal2 <- mcem_step(data = brca1_prs_MCEM, initial_theta = log_normal_poss, 
                                design = "pop", frailty.dist = "lognormal")
 ## Diagnostics
-theta_matrix <- do.call(rbind, results_lognormal$theta_history)
+theta_matrix <- do.call(rbind, results_lognormal2$theta_history)
 par(mfrow = c(3, 2)) 
 for (i in 1:ncol(theta_matrix)) {
   plot(theta_matrix[, i], type = 'l', main = paste("Trace Plot for Parameter", i), xlab = "Iteration", ylab = "Parameter Estimate")
 }
-par(mfrow = c(3, 2)) 
+ par(mfrow = c(3, 2)) 
 for (i in 1:ncol(theta_matrix)) {
   acf(theta_matrix[, i], main = paste("ACF for Parameter", i))
 }

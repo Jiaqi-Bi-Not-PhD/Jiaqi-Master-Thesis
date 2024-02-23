@@ -282,13 +282,22 @@ Similarly, the ascertainment correction in the log-normal frailty can be written
 Given that family $j$ has some subjects containing the missing PRS due to the sampling cost (maybe), that not all subjects are being sampled for the PRS calculation. 
 We propose a Monte Carlo sampling method within the MCEM framework in terms of estimating the distribution of the PRS. 
 The PRS was calculated to infer the relationship between a phenotype and multiple genetic loci, while these information were not gained if one was not involved in the original GWAS. 
-Thus, we propose to sample the PRS using the information that we have already known. Denote $\mathbf{X}_{j,1}$ as the PRS scores vector in family $j$, and $\mathbf{X}_{j,2}$ the mutation status vector in family $j$. We then define $\mathbf{W}=(\log(\mathbf{t}_j)\odot \boldsymbol{\delta}_j, p_j, \mathbf{c}_j, \mathbf{X}_{j,2})$.
+Thus, we propose to sample the PRS using the information that we have already known. Denote $\mathbf{X}_{j,1}$ as the PRS scores vector in family $j$, and $\mathbf{X}_{j,2}$ the mutation status vector in family $j$. 
+Take $\mathbf{p}_j$ as the proband indicator in family $j$, $\mathbf{c}_j$ is the current age for patients in family $j$. 
+We then define $\mathbf{W}=(\log(\mathbf{t}_j)\odot \boldsymbol{\delta}_j, \mathbf{p}_j, \mathbf{c}_j, \mathbf{X}_{j,2})$.
 We can make the assumption on the distribution of the PRS, take $\mathbf{X}_{j,1}|\mathbf{W},\boldsymbol{\psi} \sim MVN (\mathbf{W}\boldsymbol{\psi}+\mathbf{u},\sigma^2\mathbf{I})$. 
 We are interested in modelling the PRS while accounting for the between family variance, so $\mathbf{u}\sim MVN(0, \sigma_u^2\mathbf{I})$. Thus, the E-step for Gamma frailty model with ascertainment correction is then
 \begin{align}
     E_{\mathbf{X}_{j,1,mis}}(\ell(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)}))&=\sum_{j=1}^J\Bigg [\sum_{i=1}^{n_j}\int_{\boldsymbol{X}_{j,1,mis}}(\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}))- \\ 
     & + \log\Big (\frac{(k+d_j-1)!}{k!k^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}))}{k})^{-k-d_j}\Big ) + \\
     & - \log(A_j(\boldsymbol{\theta})) + \log f(x_{ij,1,mis}|w_{ij},\boldsymbol{\psi}) dx_{ij,1,mis}\Bigg ]
+\end{align}
+Taking a sample of size $M$ when we sample $f(x_{ij,1,mis}|w_{ij}, \boldsymbol{\psi})$ for each subject $i$ in family $j$, $(x_{ij,i,mis}^{(1)}, ..., x_{ij,i,mis}^{(M)})$. 
+This leads to an E-step:
+\begin{align} 
+    Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)})&=\sum_{j=1}^J\Bigg [\sum_{i=1}^{n_j}\sum_{m=1}^M(\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}^{(m)}))- \\ 
+    & + \log\Big (\frac{(k+d_j-1)!}{k!k^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}^{(m)}))}{k})^{-k-d_j}\Big ) + \\
+    & - \log(A_j(\boldsymbol{\theta})) + \log f(x_{ij,1,mis}^{(m)}|w_{ij},\boldsymbol{\psi}) \Bigg ]
 \end{align}
 \subsection{Considering the Family Correlations}
 Given that family $j$ has some subjects containing the missing PRS due to the sampling cost (maybe), that not all subjects are being sampled for the PRS calculation. 
