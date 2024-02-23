@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.1.10)  21 FEB 2024 01:01
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.1.10)  22 FEB 2024 21:36
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -382,25 +382,25 @@ Overfull \hbox (37.87819pt too wide) detected at line 272
 []\OML/cmm/m/it/12 `[]\OT1/cmr/m/n/12 ([]) = [] \OML/cmm/m/it/12 ^^N[] []\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 h\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 t[]\OMS/cmsy/m/n/12 j\OT1/cmr/bx/n/12 x[]\OT1/cmr/m/n/12 )) + [] [][] [] [] []
  []
 
-
-Overfull \hbox (11.85341pt too wide) in paragraph at lines 317--318
+[5]
+Overfull \hbox (11.85341pt too wide) in paragraph at lines 330--331
 []\OT1/cmr/m/n/12 We sam-ple the size $\OML/cmm/m/it/12 m[]$ \OT1/cmr/m/n/12 for each $\OML/cmm/m/it/12 i$\OT1/cmr/m/n/12 -th ob-ser-va-tion, $\OML/cmm/m/it/12 x[]; :::; x[]$ \OT1/cmr/m/n/12 from the dis-tri-bu-tion $\OML/cmm/m/it/12 f\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 x[]\OMS/cmsy/m/n/12 j^^A\OT1/cmr/m/n/12 )$,
  []
 
-[5] [6] [7] [8] [9] (./progress report.aux) ) 
+[6] [7] [8] [9] [10] (./progress report.aux) ) 
 Here is how much of TeX's memory you used:
  5698 strings out of 476093
  83606 string characters out of 5795583
- 1870787 words of memory out of 5000000
+ 1871787 words of memory out of 5000000
  25978 multiletter control sequences out of 15000+600000
  524750 words of font info for 80 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  70i,18n,76p,617b,273s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{e:/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}<e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti7.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on "progress report.pdf" (9 pages, 265985 bytes).
+{e:/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}<e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti7.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
+Output written on "progress report.pdf" (10 pages, 287485 bytes).
 PDF statistics:
- 140 PDF objects out of 1000 (max. 8388607)
- 86 compressed objects within 1 object stream
+ 153 PDF objects out of 1000 (max. 8388607)
+ 94 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

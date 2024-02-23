@@ -153,7 +153,7 @@
 \section{To Do List}
 \begin{enumerate}
     \item Correlated frailty - NR-algorithm
-    \item Gibb's Sampling in MCEM \& MI
+    \item Gibb's Sampling in MCEM \& MI, partition the $\mathbf{X}$
     \item Multiple imputation - similar imputation step as MCEM
 \end{enumerate}
 \section{Weibull Parametric Approach and MCEM Method}
@@ -217,10 +217,10 @@ Let $\boldsymbol{\theta}=(\beta_1, \beta_2, \alpha, \lambda, k)$ for Gamma frail
     &=\sum_{j=1}^J\log\left [\prod_{i=1}^{n_j}(h(t_{ij}|\mathbf{x}_{ij}))^{\delta_{ij}}\int_0^{\infty}z_j^{d_j}\exp(-z_j\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}_{ij}))f(z_j)dz_j \right ]\\
     &=\sum_{j=1}^J\log\left [\prod_{i=1}^{n_j}(h(t_{ij}|\mathbf{x}_{ij}))^{\delta_{ij}}\frac{(k+d_j-1)!}{(k-1)!(\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}_{ij})+k)^{d_j}}\Big(1+\frac{\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}_{ij})}{k}\Big)^{-k}\right ]\\
     &=\sum_{j=1}^J\log\left [\prod_{i=1}^{n_j}((h(t_{ij}|\mathbf{x}_{ij}) )^{\delta_{ij}})\frac{(k+d_j-1)!}{k!k^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}))}{k})^{-k-d_j} \right ]\\
-    &=\sum_{j=1}^J\log\left [(h(\cdot))^{\delta_{ij}} \frac{(k+d_j-1)!}{k!k^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}))}{k})^{-k-d_j} \right ]\\
-    &=\sum_{j=1}^J\left [\sum_i(\delta_{ij}\log h(\cdot)) + \log\Big (\frac{(k+d_j-1)!}{k!k^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}))}{k})^{-k-d_j}\Big )\right ]
+    &=\sum_{j=1}^J\log\left [h(t_{ij}|\mathbf{x}_{ij})^{\delta_{ij}} \frac{(k+d_j-1)!}{k!k^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}))}{k})^{-k-d_j} \right ]\\
+    &=\sum_{j=1}^J\left [\sum_{i=1}^{n_j}(\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij})) + \log\Big (\frac{(k+d_j-1)!}{k!k^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}))}{k})^{-k-d_j}\Big )\right ]
 \end{align}
-For each family $j$, the ascertainment is defined to be the probability of the proband $p$ being ascertained by the age $a_{j_p}$ at examination, denoting $A_j$. Applying the ascertainment correction for the log-likelihood in family $j$: 
+For each family $j$, the ascertainment $A_j$ is defined to be the probability of the proband $p$ being ascertained by the age $a_{j_p}$ at examination. Applying the ascertainment correction for the log-likelihood in family $j$: 
 \begin{equation}
     \tilde{\ell}_{j}(\boldsymbol{\theta})=\ell_j(\boldsymbol{\theta})-\log A_j(\boldsymbol{\theta})
 \end{equation}
@@ -277,10 +277,23 @@ Similarly, the ascertainment correction in the log-normal frailty can be written
 \end{align}
 
 \section{Missing PRS}
+
+\subsection{Not Considering the Family Correlations}
+Given that family $j$ has some subjects containing the missing PRS due to the sampling cost (maybe), that not all subjects are being sampled for the PRS calculation. 
+We propose a Monte Carlo sampling method within the MCEM framework in terms of estimating the distribution of the PRS. 
+The PRS was calculated to infer the relationship between a phenotype and multiple genetic loci, while these information were not gained if one was not involved in the original GWAS. 
+Thus, we propose to sample the PRS using the information that we have already known. Denote $\mathbf{X}_{j,1}$ as the PRS scores vector in family $j$, and $\mathbf{X}_{j,2}$ the mutation status vector in family $j$. We then define $\mathbf{W}=(\log(\mathbf{t}_j)\odot \boldsymbol{\delta}_j, p_j, \mathbf{c}_j, \mathbf{X}_{j,2})$.
+We can make the assumption on the distribution of the PRS, take $\mathbf{X}_{j,1}|\mathbf{W},\boldsymbol{\psi} \sim MVN (\mathbf{W}\boldsymbol{\psi}+\mathbf{u},\sigma^2\mathbf{I})$. 
+We are interested in modelling the PRS while accounting for the between family variance, so $\mathbf{u}\sim MVN(0, \sigma_u^2\mathbf{I})$. Thus, the E-step for Gamma frailty model with ascertainment correction is then
+\begin{align}
+    E_{\mathbf{X}_{j,1,mis}}(\ell(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)}))&=\sum_{j=1}^J\Bigg [\sum_{i=1}^{n_j}\int_{\boldsymbol{X}_{j,1,mis}}(\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}))- \\ 
+    & + \log\Big (\frac{(k+d_j-1)!}{k!k^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}))}{k})^{-k-d_j}\Big ) + \\
+    & - \log(A_j(\boldsymbol{\theta})) + \log f(x_{ij,1,mis}|w_{ij},\boldsymbol{\psi}) dx_{ij,1,mis}\Bigg ]
+\end{align}
+\subsection{Considering the Family Correlations}
 Given that family $j$ has some subjects containing the missing PRS due to the sampling cost (maybe), that not all subjects are being sampled for the PRS calculation. 
 Since subjects within one family are correlated in some genetic associations, we intend to sample the missing PRS using a multivariate normal distribution. 
-Denote $\mathbf{X}_{j}\sim MVN(\boldsymbol{\mu}_j, \boldsymbol{\Sigma}_j)$ such that $\mathbf{X}_j$ is the vector of the PRS among all subjects in family $j$. 
-Also note $\mathbf{X}_j=(x_{1,j}, x_{2,j},..., x_{n_j, j})^{\top}$. 
+Denote $\mathbf{X}_{j}\sim MVN(\boldsymbol{\mu}_j, \boldsymbol{\Sigma}_j)$ such that $\mathbf{X}_j$ is the vector of the PRS among all subjects in family $j$, $\mathbf{X}_j=(x_{1,j}, x_{2,j},..., x_{n_j, j})^{\top}$. 
 When the missing PRS exists in family $j$, $\mathbf{X}_j$ can be decomposed into $\mathbf{X}_{obs,j}$ and $\mathbf{X}_{mis,j}$. Now suppose $\mathbf{X}_{obs,j}=(x_{1,j}, ..., x_{\mathring{n}_j,j})^{\top}$ and $\mathbf{X}_{mis,j}=( x_{\mathring{n}_j+1,j},...,x_{n_j,j})^{\top}$.
 We can also partition $\boldsymbol{\mu}_j$ such that
 \begin{align} 
