@@ -284,8 +284,8 @@ We propose a Monte Carlo sampling method within the MCEM framework in terms of e
 The PRS was calculated to infer the relationship between a phenotype and multiple genetic loci, while these information were not gained if one was not involved in the original GWAS. 
 Thus, we propose to sample the PRS using the information that we have already known. Denote $\mathbf{X}_{j,1}$ as the PRS scores vector in family $j$, and $\mathbf{X}_{j,2}$ the mutation status vector in family $j$. 
 Take $\mathbf{p}_j$ as the proband indicator in family $j$, $\mathbf{c}_j$ is the current age for patients in family $j$. 
-We then define $\mathbf{W}=(\log(\mathbf{t}_j)\odot \boldsymbol{\delta}_j, \mathbf{p}_j, \mathbf{c}_j, \mathbf{X}_{j,2})$.
-We can make the assumption on the distribution of the PRS, take $\mathbf{X}_{j,1}|\mathbf{W},\boldsymbol{\psi} \sim MVN (\mathbf{W}\boldsymbol{\psi}+\mathbf{u},\sigma^2\mathbf{I})$. 
+We then define $\mathbf{W}=(\log(\mathbf{t}_j), \boldsymbol{\delta}_j, \log(\mathbf{t}_j)\odot \boldsymbol{\delta}_j, \mathbf{p}_j, \mathbf{c}_j, \mathbf{X}_{j,2})$.
+We can make the assumption on the conditional distribution of the PRS, take $\mathbf{X}_{j,1}|\mathbf{W},\boldsymbol{\psi} \sim MVN (\mathbf{W}\boldsymbol{\psi}+\mathbf{u},\sigma^2\mathbf{I})$. 
 We are interested in modelling the PRS while accounting for the between family variance, so $\mathbf{u}\sim MVN(0, \sigma_u^2\mathbf{I})$. Thus, the E-step for Gamma frailty model with ascertainment correction is then
 \begin{align}
     E_{\mathbf{X}_{j,1,mis}}(\ell(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)}))&=\sum_{j=1}^J\Bigg [\sum_{i=1}^{n_j}\int_{\boldsymbol{X}_{j,1,mis}}(\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}))- \\ 

@@ -625,7 +625,7 @@ mcem_step <- function(data, initial_theta,
     optimized_result <- optim(par = current_theta, objective_function)
     current_theta <- optimized_result$par
     
-    ## Implement MC-based stopping rule here
+    ## Stopping rule
     if (length(theta_history) >= 21) {
       squared_diffs <- sapply(1:length(current_theta), function(k) {
         (theta_history[[iter + 1]][k] - theta_history[[iter - 19]][k])^2
