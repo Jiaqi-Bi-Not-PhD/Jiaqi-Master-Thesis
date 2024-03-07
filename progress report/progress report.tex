@@ -302,32 +302,7 @@ This leads to an E-step:
 \subsection{Considering the Family Correlations}
 Given that family $j$ has some subjects containing the missing PRS due to the sampling cost (maybe), that not all subjects are being sampled for the PRS calculation. 
 Since subjects within one family are correlated in some genetic associations, we intend to sample the missing PRS using a multivariate normal distribution. 
-Denote $\mathbf{X}_{j}\sim MVN(\boldsymbol{\mu}_j, \boldsymbol{\Sigma}_j)$ such that $\mathbf{X}_j$ is the vector of the PRS among all subjects in family $j$, $\mathbf{X}_j=(x_{1,j}, x_{2,j},..., x_{n_j, j})^{\top}$. 
-When the missing PRS exists in family $j$, $\mathbf{X}_j$ can be decomposed into $\mathbf{X}_{obs,j}$ and $\mathbf{X}_{mis,j}$. Now suppose $\mathbf{X}_{obs,j}=(x_{1,j}, ..., x_{\mathring{n}_j,j})^{\top}$ and $\mathbf{X}_{mis,j}=( x_{\mathring{n}_j+1,j},...,x_{n_j,j})^{\top}$.
-We can also partition $\boldsymbol{\mu}_j$ such that
-\begin{align} 
-    \mathbf{X}_j=
-    \begin{bmatrix}
-        \mathbf{X}_{obs,j}\\
-        \mathbf{X}_{mis,j}
-    \end{bmatrix}
-\end{align}
-and
-\begin{align} 
-    \boldsymbol{\mu}_j=
-    \begin{bmatrix}
-        \boldsymbol{\mu}_{obs,j}\\
-        \boldsymbol{\mu}_{mis,j}
-    \end{bmatrix}
-\end{align}
-Similarly, the covariace matrix is then decomposed
-\begin{align} 
-    \boldsymbol{\Sigma}_j=
-    \begin{bmatrix}
-        \boldsymbol{\Sigma}_{obs,j} & \boldsymbol{\Sigma}_{obs,mis,j}\\
-        \boldsymbol{\Sigma}_{obs, mis, j} & \boldsymbol{\Sigma}_{mis,j}
-    \end{bmatrix}
-\end{align}
+
 
 \section{Monte Carlo EM}
 The complete data log-likelihood for family $j$ is $\ell_j(\boldsymbol{\theta}; h_{ij})$
