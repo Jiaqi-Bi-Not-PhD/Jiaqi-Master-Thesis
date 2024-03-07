@@ -268,7 +268,7 @@ Applying Definition~\ref{defn:gausshermite}, the integral of the Laplace transfo
 \end{equation}
 where $\tilde{p}$ denotes the $\tilde{p}$-th element of Gauss Hermite Quadrature, i.e., $\omega_{\tilde{p}}$ denotes the $\tilde{p}$-th weight, $y_{\tilde{p}}$ denotes the $\tilde{p}$-th node, and $N_{\tilde{p}}$ denotes the total number of quadratures. Thus, substituting into the log-likelihood:
 \begin{equation}
-    \ell_j(\boldsymbol{\theta})=\sum_{i=1}^{n_j}\delta_{ij}\log(h(t_{ij}|\mathbf{x}_{ij}))+\log\Big (\frac{1}{\sqrt{\pi}}\sum_{p=1}^{N_p}\left [\omega_p\exp(\sqrt{2}\sigma y_p)^{d_j}\exp\Big (-\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}_{ij})\exp(\sqrt{2}\sigma y_p)\Big )\right ]\Big )
+    \ell_j(\boldsymbol{\theta})=\sum_{i=1}^{n_j}\delta_{ij}\log(h(t_{ij}|\mathbf{x}_{ij}))+\log\Big (\frac{1}{\sqrt{\pi}}\sum_{\tilde{p}=1}^{N_{\tilde{p}}}\left [\omega_{\tilde{p}}\exp(\sqrt{2}\sigma y_{\tilde{p}})^{d_j}\exp\Big (-\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}_{ij})\exp(\sqrt{2}\sigma y_{\tilde{p}})\Big )\right ]\Big )
 \end{equation}
 Similarly, the ascertainment correction in the log-normal frailty can be written as 
 \begin{align}
@@ -288,16 +288,22 @@ We then define $\mathbf{W}=(\log(\mathbf{t}_j), \boldsymbol{\delta}_j, \log(\mat
 We can make the assumption on the conditional distribution of the PRS, take $\mathbf{X}_{j,1}|\mathbf{W},\boldsymbol{\psi} \sim MVN (\mathbf{W}\boldsymbol{\psi}+\mathbf{u},\sigma^2\mathbf{I})$. 
 We are interested in modelling the PRS while accounting for the between family variance, so $\mathbf{u}\sim MVN(0, \sigma_u^2\mathbf{I})$. Thus, the E-step for Gamma frailty model with ascertainment correction is then
 \begin{align}
-    E_{\mathbf{X}_{j,1,mis}}(\ell(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)}))&=\sum_{j=1}^J\Bigg [\sum_{i=1}^{n_j}\int_{\boldsymbol{X}_{j,1,mis}}(\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}))- \\ 
-    & + \log\Big (\frac{(k+d_j-1)!}{k!k^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}))}{k})^{-k-d_j}\Big ) + \\
+    E_{\mathbf{X}_{j,1,mis}}(\ell(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)}))&=\sum_{j=1}^J\Bigg [\sum_{i=1}^{n_j}\int_{\boldsymbol{X}_{j,1,mis}}(\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}))+ \\ 
+    & + \log\Big (\frac{(k+d_j-1)!}{k!k^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}))}{k})^{-k-d_j}\Big ) - \\
     & - \log(A_j(\boldsymbol{\theta})) + \log f(x_{ij,1,mis}|w_{ij},\boldsymbol{\psi}) dx_{ij,1,mis}\Bigg ]
 \end{align}
 Taking a sample of size $M$ when we sample $f(x_{ij,1,mis}|w_{ij}, \boldsymbol{\psi})$ for each subject $i$ in family $j$, $(x_{ij,i,mis}^{(1)}, ..., x_{ij,i,mis}^{(M)})$. 
 This leads to an E-step:
 \begin{align} 
-    Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)})&=\sum_{j=1}^J\Bigg [\sum_{i=1}^{n_j}\sum_{m=1}^M(\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}^{(m)}))- \\ 
-    & + \log\Big (\frac{(k+d_j-1)!}{k!k^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}^{(m)}))}{k})^{-k-d_j}\Big ) + \\
+    Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)})&=\sum_{j=1}^J\Bigg [\sum_{i=1}^{n_j}\sum_{m=1}^M(\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}^{(m)}))+ \\ 
+    & + \log\Big (\frac{(k+d_j-1)!}{k!k^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}^{(m)}))}{k})^{-k-d_j}\Big ) - \\
     & - \log(A_j(\boldsymbol{\theta})) + \log f(x_{ij,1,mis}^{(m)}|w_{ij},\boldsymbol{\psi}) \Bigg ]
+\end{align}
+Similarly, the expectation with respect to the missing PRS in log-normal frailty can be written as
+\begin{align} 
+    E_{\mathbf{X}_{j,1,mis}}(\ell(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)}))&=\sum_{j=1}^J\Bigg [\sum_{i=1}^{n_j}\int_{\boldsymbol{X}_{j,1,mis}}(\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}))+ \\ 
+    & + \log\Big (\frac{1}{\sqrt{\pi}}\sum_{\tilde{p}=1}^{N_{\tilde{p}}}\Big [\omega_{\tilde{p}}\exp (\sqrt{2}\sigma y_{\tilde{p}})^{d_j}\exp (-\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}_{ij})\exp(\sqrt{2}\sigma y_{\tilde{p}}))\Big]\Big ) - \\
+    & - \log(A_j(\boldsymbol{\theta})) + \log f(x_{ij,1,mis}|w_{ij},\boldsymbol{\psi}) dx_{ij,1,mis}\Bigg ]
 \end{align}
 \subsection{Considering the Family Correlations}
 Given that family $j$ has some subjects containing the missing PRS due to the sampling cost (maybe), that not all subjects are being sampled for the PRS calculation. 
