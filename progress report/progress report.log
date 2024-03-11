@@ -1,30 +1,30 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.1.9)  7 MAR 2024 15:13
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022) (preloaded format=pdflatex 2023.1.10)  10 MAR 2024 20:27
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
  %&-line parsing enabled.
-**"/Volumes/T7/UWO Documents/Thesis folder/Jiaqi-Master-Thesis/progress report/progress report.tex"
-(/Volumes/T7/UWO Documents/Thesis folder/Jiaqi-Master-Thesis/progress report/progress report.tex
-LaTeX2e <2021-11-15> patch level 1
-L3 programming layer <2022-02-24> (/usr/local/texlive/2022/texmf-dist/tex/latex/elsarticle/elsarticle.cls
+**"e:/UWO/Jiaqi-Master-Thesis/progress report/progress report.tex"
+(e:/UWO/Jiaqi-Master-Thesis/progress report/progress report.tex
+LaTeX2e <2022-11-01> patch level 1
+L3 programming layer <2022-12-17> (e:/texlive/2022/texmf-dist/tex/latex/elsarticle/elsarticle.cls
 Document Class: elsarticle 2020/11/20, 3.3: Elsevier Ltd
-(/usr/local/texlive/2022/texmf-dist/tex/latex/l3kernel/expl3.sty
-Package: expl3 2022-02-24 L3 programming layer (loader) 
- (/usr/local/texlive/2022/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
-File: l3backend-pdftex.def 2022-02-07 L3 backend support: PDF output (pdfTeX)
+(e:/texlive/2022/texmf-dist/tex/latex/l3kernel/expl3.sty
+Package: expl3 2022-12-17 L3 programming layer (loader) 
+ (e:/texlive/2022/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2022-10-26 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count185
-\l__pdf_internal_box=\box50
-)) (/usr/local/texlive/2022/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
-Package: xparse 2022-01-12 L3 Experimental document command parser
-) (/usr/local/texlive/2022/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+\l__pdf_internal_box=\box51
+)) (e:/texlive/2022/texmf-dist/tex/latex/l3packages/xparse/xparse.sty
+Package: xparse 2022-12-17 L3 Experimental document command parser
+) (e:/texlive/2022/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
 \etb@tempcnta=\count186
 )
-\@bls=\dimen138
- (/usr/local/texlive/2022/texmf-dist/tex/latex/base/article.cls
-Document Class: article 2021/10/04 v1.4n Standard LaTeX document class
-(/usr/local/texlive/2022/texmf-dist/tex/latex/base/size12.clo
-File: size12.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
+\@bls=\dimen140
+ (e:/texlive/2022/texmf-dist/tex/latex/base/article.cls
+Document Class: article 2022/07/02 v1.4n Standard LaTeX document class
+(e:/texlive/2022/texmf-dist/tex/latex/base/size12.clo
+File: size12.clo 2022/07/02 v1.4n Standard LaTeX file (size option)
 )
 \c@part=\count187
 \c@section=\count188
@@ -34,27 +34,27 @@ File: size12.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
 \c@subparagraph=\count192
 \c@figure=\count193
 \c@table=\count194
-\abovecaptionskip=\skip47
-\belowcaptionskip=\skip48
-\bibindent=\dimen139
-) (/usr/local/texlive/2022/texmf-dist/tex/latex/graphics/graphicx.sty
+\abovecaptionskip=\skip48
+\belowcaptionskip=\skip49
+\bibindent=\dimen141
+) (e:/texlive/2022/texmf-dist/tex/latex/graphics/graphicx.sty
 Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
- (/usr/local/texlive/2022/texmf-dist/tex/latex/graphics/keyval.sty
-Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+ (e:/texlive/2022/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2022/05/29 v1.15 key=value parser (DPC)
 \KV@toks@=\toks16
-) (/usr/local/texlive/2022/texmf-dist/tex/latex/graphics/graphics.sty
-Package: graphics 2021/03/04 v1.4d Standard LaTeX Graphics (DPC,SPQR)
- (/usr/local/texlive/2022/texmf-dist/tex/latex/graphics/trig.sty
+) (e:/texlive/2022/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2022/03/10 v1.4e Standard LaTeX Graphics (DPC,SPQR)
+ (e:/texlive/2022/texmf-dist/tex/latex/graphics/trig.sty
 Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
-) (/usr/local/texlive/2022/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+) (e:/texlive/2022/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
 File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
 )
 Package graphics Info: Driver file: pdftex.def on input line 107.
- (/usr/local/texlive/2022/texmf-dist/tex/latex/graphics-def/pdftex.def
-File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
+ (e:/texlive/2022/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2022/09/22 v1.2b Graphics/color driver for pdftex
 ))
-\Gin@req@height=\dimen140
-\Gin@req@width=\dimen141
+\Gin@req@height=\dimen142
+\Gin@req@width=\dimen143
 )
 \c@tnote=\count195
 \c@fnote=\count196
@@ -63,51 +63,51 @@ File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
 \c@author=\count199
 \@eadauthor=\toks17
 \c@affn=\count266
-\absbox=\box51
-\elsarticlehighlightsbox=\box52
-\elsarticlegrabsbox=\box53
-\keybox=\box54
-\Columnwidth=\dimen142
-\space@left=\dimen143
-\els@boxa=\box55
-\els@boxb=\box56
-\leftMargin=\dimen144
+\absbox=\box52
+\elsarticlehighlightsbox=\box53
+\elsarticlegrabsbox=\box54
+\keybox=\box55
+\Columnwidth=\dimen144
+\space@left=\dimen145
+\els@boxa=\box56
+\els@boxb=\box57
+\leftMargin=\dimen146
 \@enLab=\toks18
-\@sep=\skip49
-\@@sep=\skip50
- (./progress report.spl) (/usr/local/texlive/2022/texmf-dist/tex/latex/natbib/natbib.sty
+\@sep=\skip50
+\@@sep=\skip51
+ (./progress report.spl) (e:/texlive/2022/texmf-dist/tex/latex/natbib/natbib.sty
 Package: natbib 2010/09/13 8.31b (PWD, AO)
-\bibhang=\skip51
-\bibsep=\skip52
+\bibhang=\skip52
+\bibsep=\skip53
 LaTeX Info: Redefining \cite on input line 694.
 \c@NAT@ctr=\count267
 )
 \splwrite=\write3
 \openout3 = `"progress report.spl"'.
 
-\appnamewidth=\dimen145
-) (/usr/local/texlive/2022/texmf-dist/tex/latex/geometry/geometry.sty
+\appnamewidth=\dimen147
+) (e:/texlive/2022/texmf-dist/tex/latex/geometry/geometry.sty
 Package: geometry 2020/01/02 v5.9 Page Geometry
- (/usr/local/texlive/2022/texmf-dist/tex/generic/iftex/ifvtex.sty
+ (e:/texlive/2022/texmf-dist/tex/generic/iftex/ifvtex.sty
 Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
- (/usr/local/texlive/2022/texmf-dist/tex/generic/iftex/iftex.sty
+ (e:/texlive/2022/texmf-dist/tex/generic/iftex/iftex.sty
 Package: iftex 2022/02/03 v1.0f TeX engine tests
 ))
 \Gm@cnth=\count268
 \Gm@cntv=\count269
 \c@Gm@tempcnt=\count270
-\Gm@bindingoffset=\dimen146
-\Gm@wd@mp=\dimen147
-\Gm@odd@mp=\dimen148
-\Gm@even@mp=\dimen149
-\Gm@layoutwidth=\dimen150
-\Gm@layoutheight=\dimen151
-\Gm@layouthoffset=\dimen152
-\Gm@layoutvoffset=\dimen153
+\Gm@bindingoffset=\dimen148
+\Gm@wd@mp=\dimen149
+\Gm@odd@mp=\dimen150
+\Gm@even@mp=\dimen151
+\Gm@layoutwidth=\dimen152
+\Gm@layoutheight=\dimen153
+\Gm@layouthoffset=\dimen154
+\Gm@layoutvoffset=\dimen155
 \Gm@dimlist=\toks19
-) (/usr/local/texlive/2022/texmf-dist/tex/latex/amsfonts/amssymb.sty
+) (e:/texlive/2022/texmf-dist/tex/latex/amsfonts/amssymb.sty
 Package: amssymb 2013/01/14 v3.01 AMS font symbols
- (/usr/local/texlive/2022/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+ (e:/texlive/2022/texmf-dist/tex/latex/amsfonts/amsfonts.sty
 Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 \@emptytoks=\toks20
 \symAMSa=\mathgroup4
@@ -115,51 +115,61 @@ Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
 LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
 LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 (Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
-)) (/usr/local/texlive/2022/texmf-dist/tex/latex/amscls/amsthm.sty
+)) (e:/texlive/2022/texmf-dist/tex/latex/amscls/amsthm.sty
 Package: amsthm 2020/05/29 v2.20.6
 \thm@style=\toks21
 \thm@bodyfont=\toks22
 \thm@headfont=\toks23
 \thm@notefont=\toks24
 \thm@headpunct=\toks25
-\thm@preskip=\skip53
-\thm@postskip=\skip54
-\thm@headsep=\skip55
+\thm@preskip=\skip54
+\thm@postskip=\skip55
+\thm@headsep=\skip56
 \dth@everypar=\toks26
 LaTeX Info: Redefining \qed on input line 273.
-) (/usr/local/texlive/2022/texmf-dist/tex/latex/amsmath/amsmath.sty
-Package: amsmath 2021/10/15 v2.17l AMS math features
-\@mathmargin=\skip56
+) (e:/texlive/2022/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2022/04/08 v2.17n AMS math features
+\@mathmargin=\skip57
 
 For additional information on amsmath, use the `?' option.
-(/usr/local/texlive/2022/texmf-dist/tex/latex/amsmath/amstext.sty
+(e:/texlive/2022/texmf-dist/tex/latex/amsmath/amstext.sty
 Package: amstext 2021/08/26 v2.01 AMS text
- (/usr/local/texlive/2022/texmf-dist/tex/latex/amsmath/amsgen.sty
+ (e:/texlive/2022/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
 \@emptytoks=\toks27
-\ex@=\dimen154
-)) (/usr/local/texlive/2022/texmf-dist/tex/latex/amsmath/amsbsy.sty
+\ex@=\dimen156
+)) (e:/texlive/2022/texmf-dist/tex/latex/amsmath/amsbsy.sty
 Package: amsbsy 1999/11/29 v1.2d Bold Symbols
-\pmbraise@=\dimen155
-) (/usr/local/texlive/2022/texmf-dist/tex/latex/amsmath/amsopn.sty
-Package: amsopn 2021/08/26 v2.02 operator names
+\pmbraise@=\dimen157
+) (e:/texlive/2022/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2022/04/08 v2.04 operator names
 )
 \inf@bad=\count271
 LaTeX Info: Redefining \frac on input line 234.
 \uproot@=\count272
 \leftroot@=\count273
 LaTeX Info: Redefining \overline on input line 399.
+LaTeX Info: Redefining \colon on input line 410.
 \classnum@=\count274
 \DOTSCASE@=\count275
 LaTeX Info: Redefining \ldots on input line 496.
 LaTeX Info: Redefining \dots on input line 499.
 LaTeX Info: Redefining \cdots on input line 620.
-\Mathstrutbox@=\box57
-\strutbox@=\box58
-\big@size=\dimen156
+\Mathstrutbox@=\box58
+\strutbox@=\box59
+LaTeX Info: Redefining \big on input line 722.
+LaTeX Info: Redefining \Big on input line 723.
+LaTeX Info: Redefining \bigg on input line 724.
+LaTeX Info: Redefining \Bigg on input line 725.
+\big@size=\dimen158
 LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
 \macc@depth=\count276
+LaTeX Info: Redefining \bmod on input line 905.
+LaTeX Info: Redefining \pmod on input line 910.
+LaTeX Info: Redefining \smash on input line 940.
+LaTeX Info: Redefining \relbar on input line 970.
+LaTeX Info: Redefining \Relbar on input line 971.
 \c@MaxMatrixCols=\count277
 \dotsspace@=\muskip16
 \c@parentequation=\count278
@@ -169,96 +179,98 @@ LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
 \column@=\count281
 \maxfields@=\count282
 \andhelp@=\toks29
-\eqnshift@=\dimen157
-\alignsep@=\dimen158
-\tagshift@=\dimen159
-\tagwidth@=\dimen160
-\totwidth@=\dimen161
-\lineht@=\dimen162
+\eqnshift@=\dimen159
+\alignsep@=\dimen160
+\tagshift@=\dimen161
+\tagwidth@=\dimen162
+\totwidth@=\dimen163
+\lineht@=\dimen164
 \@envbody=\toks30
-\multlinegap=\skip57
-\multlinetaggap=\skip58
+\multlinegap=\skip58
+\multlinetaggap=\skip59
 \mathdisplay@stack=\toks31
-LaTeX Info: Redefining \[ on input line 2938.
-LaTeX Info: Redefining \] on input line 2939.
-) (/usr/local/texlive/2022/texmf-dist/tex/latex/setspace/setspace.sty
-Package: setspace 2011/12/19 v6.7a set line spacing
-) (/usr/local/texlive/2022/texmf-dist/tex/latex/graphics/lscape.sty
+LaTeX Info: Redefining \[ on input line 2953.
+LaTeX Info: Redefining \] on input line 2954.
+) (e:/texlive/2022/texmf-dist/tex/latex/setspace/setspace.sty
+Package: setspace 2022/12/04 v6.7b set line spacing
+) (e:/texlive/2022/texmf-dist/tex/latex/graphics/lscape.sty
 Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
-) (/usr/local/texlive/2022/texmf-dist/tex/latex/booktabs/booktabs.sty
+) (e:/texlive/2022/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
-\heavyrulewidth=\dimen163
-\lightrulewidth=\dimen164
-\cmidrulewidth=\dimen165
-\belowrulesep=\dimen166
-\belowbottomsep=\dimen167
-\aboverulesep=\dimen168
-\abovetopsep=\dimen169
-\cmidrulesep=\dimen170
-\cmidrulekern=\dimen171
-\defaultaddspace=\dimen172
+\heavyrulewidth=\dimen165
+\lightrulewidth=\dimen166
+\cmidrulewidth=\dimen167
+\belowrulesep=\dimen168
+\belowbottomsep=\dimen169
+\aboverulesep=\dimen170
+\abovetopsep=\dimen171
+\cmidrulesep=\dimen172
+\cmidrulekern=\dimen173
+\defaultaddspace=\dimen174
 \@cmidla=\count283
 \@cmidlb=\count284
-\@aboverulesep=\dimen173
-\@belowrulesep=\dimen174
+\@aboverulesep=\dimen175
+\@belowrulesep=\dimen176
 \@thisruleclass=\count285
 \@lastruleclass=\count286
-\@thisrulewidth=\dimen175
-) (/usr/local/texlive/2022/texmf-dist/tex/latex/rsfso/rsfso.sty
+\@thisrulewidth=\dimen177
+) (e:/texlive/2022/texmf-dist/tex/latex/rsfso/rsfso.sty
 Package: rsfso 2013/11/02 v1.01 U/rsfso (Michael Sharpe)
- (/usr/local/texlive/2022/texmf-dist/tex/latex/xkeyval/xkeyval.sty
-Package: xkeyval 2020/11/20 v2.8 package option processing (HA)
- (/usr/local/texlive/2022/texmf-dist/tex/generic/xkeyval/xkeyval.tex (/usr/local/texlive/2022/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+ (e:/texlive/2022/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2022/06/16 v2.9 package option processing (HA)
+ (e:/texlive/2022/texmf-dist/tex/generic/xkeyval/xkeyval.tex (e:/texlive/2022/texmf-dist/tex/generic/xkeyval/xkvutils.tex
 \XKV@toks=\toks32
 \XKV@tempa@toks=\toks33
 )
 \XKV@depth=\count287
 File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
-))) (/usr/local/texlive/2022/texmf-dist/tex/latex/xcolor/xcolor.sty
-Package: xcolor 2021/10/31 v2.13 LaTeX color extensions (UK)
- (/usr/local/texlive/2022/texmf-dist/tex/latex/graphics-cfg/color.cfg
+))) (e:/texlive/2022/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2022/06/12 v2.14 LaTeX color extensions (UK)
+ (e:/texlive/2022/texmf-dist/tex/latex/graphics-cfg/color.cfg
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package xcolor Info: Driver file: pdftex.def on input line 227.
-Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1352.
-Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1356.
-Package xcolor Info: Model `RGB' extended on input line 1368.
-Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1370.
-Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1371.
-Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1372.
-Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1373.
-Package xcolor Info: Model `Gray' substituted by `gray' on input line 1374.
-Package xcolor Info: Model `wave' substituted by `hsb' on input line 1375.
-) (/usr/local/texlive/2022/texmf-dist/tex/generic/soul/soul.sty
+ (e:/texlive/2022/texmf-dist/tex/latex/graphics/mathcolor.ltx)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1353.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1357.
+Package xcolor Info: Model `RGB' extended on input line 1369.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1371.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1372.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1373.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1374.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1375.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1376.
+) (e:/texlive/2022/texmf-dist/tex/generic/soul/soul.sty
 Package: soul 2003/11/17 v2.4 letterspacing/underlining (mf)
 \SOUL@word=\toks34
 \SOUL@lasttoken=\toks35
 \SOUL@cmds=\toks36
 \SOUL@buffer=\toks37
 \SOUL@token=\toks38
-\SOUL@spaceskip=\skip59
-\SOUL@ttwidth=\dimen176
-\SOUL@uldp=\dimen177
-\SOUL@ulht=\dimen178
-) (/usr/local/texlive/2022/texmf-dist/tex/latex/lineno/lineno.sty
-Package: lineno 2005/11/02 line numbers on paragraphs v4.41
+\SOUL@spaceskip=\skip60
+\SOUL@ttwidth=\dimen178
+\SOUL@uldp=\dimen179
+\SOUL@ulht=\dimen180
+) (e:/texlive/2022/texmf-dist/tex/latex/lineno/lineno.sty
+Package: lineno 2022/07/30 line numbers on paragraphs v5.0
 \linenopenalty=\count288
 \output=\toks39
 \linenoprevgraf=\count289
-\linenumbersep=\dimen179
-\linenumberwidth=\dimen180
+\linenumbersep=\dimen181
+\linenumberwidth=\dimen182
 \c@linenumber=\count290
 \c@pagewiselinenumber=\count291
 \c@LN@truepage=\count292
 \c@internallinenumber=\count293
 \c@internallinenumbers=\count294
-\quotelinenumbersep=\dimen181
-\bframerule=\dimen182
-\bframesep=\dimen183
-\bframebox=\box59
-LaTeX Info: Redefining \\ on input line 3056.
+\quotelinenumbersep=\dimen183
+\bframerule=\dimen184
+\bframesep=\dimen185
+\bframebox=\box60
+\linenoamsmath@ams@eqpen=\count295
+LaTeX Info: Redefining \\ on input line 3114.
 )
-\c@defn=\count295
+\c@defn=\count296
  (./progress report.aux)
 \openout1 = `"progress report.aux"'.
 
@@ -276,23 +288,23 @@ LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 65.
 LaTeX Font Info:    ... okay on input line 65.
 LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 65.
 LaTeX Font Info:    ... okay on input line 65.
- (/usr/local/texlive/2022/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+ (e:/texlive/2022/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count296
-\scratchdimen=\dimen184
-\scratchbox=\box60
-\nofMPsegments=\count297
-\nofMParguments=\count298
+\scratchcounter=\count297
+\scratchdimen=\dimen186
+\scratchbox=\box61
+\nofMPsegments=\count298
+\nofMParguments=\count299
 \everyMPshowfont=\toks40
-\MPscratchCnt=\count299
-\MPscratchDim=\dimen185
-\MPnumerator=\count300
-\makeMPintoPDFobject=\count301
+\MPscratchCnt=\count300
+\MPscratchDim=\dimen187
+\MPnumerator=\count301
+\makeMPintoPDFobject=\count302
 \everyMPtoPDFconversion=\toks41
-) (/usr/local/texlive/2022/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+) (e:/texlive/2022/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 485.
- (/usr/local/texlive/2022/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+ (e:/texlive/2022/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
 *geometry* driver: auto-detecting
@@ -330,11 +342,11 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
 LaTeX Font Info:    Trying to load font information for U+msa on input line 145.
-(/usr/local/texlive/2022/texmf-dist/tex/latex/amsfonts/umsa.fd
+(e:/texlive/2022/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
 LaTeX Font Info:    Trying to load font information for U+msb on input line 145.
- (/usr/local/texlive/2022/texmf-dist/tex/latex/amsfonts/umsb.fd
+ (e:/texlive/2022/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
 Overfull \hbox (2.61108pt too wide) has occurred while \output is active
@@ -344,51 +356,51 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
 [1
 
 
-{/usr/local/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Trying to load font information for U+rsfso on input line 195.
- (/usr/local/texlive/2022/texmf-dist/tex/latex/rsfso/ursfso.fd
+{e:/texlive/2022/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+LaTeX Font Info:    Trying to load font information for U+rsfso on input line 196.
+ (e:/texlive/2022/texmf-dist/tex/latex/rsfso/ursfso.fd
 File: ursfso.fd 2011/02/13 Fontinst v1.933 font definitions for U/rsfso.
 )
 LaTeX Font Info:    Font shape `U/rsfso/m/n' will be
-(Font)              scaled to size 12.0pt on input line 195.
+(Font)              scaled to size 12.0pt on input line 196.
 LaTeX Font Info:    Font shape `U/rsfso/m/n' will be
-(Font)              scaled to size 8.0pt on input line 195.
+(Font)              scaled to size 8.0pt on input line 196.
 LaTeX Font Info:    Font shape `U/rsfso/m/n' will be
-(Font)              scaled to size 6.0pt on input line 195.
+(Font)              scaled to size 6.0pt on input line 196.
 
-Overfull \hbox (8.73381pt too wide) in paragraph at lines 195--196
+Overfull \hbox (8.73381pt too wide) in paragraph at lines 196--197
 \OT1/cmr/m/n/12 mat-i-cal ex-pres-sion, the fol-low-ing Laplace trans-form will ig-nore the sub-script, de-note $\U/rsfso/m/n/12 L\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 f\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 z\OT1/cmr/m/n/12 )) =
  []
 
 [2] [3]
-Overfull \hbox (10.83878pt too wide) in paragraph at lines 247--249
+Overfull \hbox (10.83878pt too wide) in paragraph at lines 248--250
 \OT1/cmr/m/n/12 Using vari-able trans-for-ma-tion, let $\OML/cmm/m/it/12 y \OT1/cmr/m/n/12 = []$, then $\OML/cmm/m/it/12 z \OT1/cmr/m/n/12 = []([]\OML/cmm/m/it/12 ^^[y\OT1/cmr/m/n/12 )$, and $\OML/cmm/m/it/12 dz \OT1/cmr/m/n/12 = []\OML/cmm/m/it/12 ^^[ []\OT1/cmr/m/n/12 ([]\OML/cmm/m/it/12 ^^[y\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 dy$\OT1/cmr/m/n/12 .
  []
 
 [4]
-Overfull \hbox (37.87819pt too wide) detected at line 272
+Overfull \hbox (37.2879pt too wide) detected at line 273
 []\OML/cmm/m/it/12 `[]\OT1/cmr/m/n/12 ([]) = [] \OML/cmm/m/it/12 ^^N[] []\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 h\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 t[]\OMS/cmsy/m/n/12 j\OT1/cmr/bx/n/12 x[]\OT1/cmr/m/n/12 )) + [] [][] [] [] []
  []
 
-[5]
-Overfull \hbox (11.85341pt too wide) in paragraph at lines 320--321
+[5] [6] [7]
+Overfull \hbox (11.85341pt too wide) in paragraph at lines 366--367
 []\OT1/cmr/m/n/12 We sam-ple the size $\OML/cmm/m/it/12 m[]$ \OT1/cmr/m/n/12 for each $\OML/cmm/m/it/12 i$\OT1/cmr/m/n/12 -th ob-ser-va-tion, $\OML/cmm/m/it/12 x[]; :::; x[]$ \OT1/cmr/m/n/12 from the dis-tri-bu-tion $\OML/cmm/m/it/12 f\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 x[]\OMS/cmsy/m/n/12 j^^A\OT1/cmr/m/n/12 )$,
  []
 
-[6] [7] [8] [9] [10] (./progress report.aux) ) 
+[8] [9] [10] [11] (./progress report.aux) ) 
 Here is how much of TeX's memory you used:
- 5633 strings out of 478268
- 83182 string characters out of 5846348
- 401581 words of memory out of 5000000
- 23744 multiletter control sequences out of 15000+600000
- 481722 words of font info for 76 fonts, out of 8000000 for 9000
+ 5699 strings out of 476093
+ 83622 string characters out of 5795583
+ 1872787 words of memory out of 5000000
+ 25979 multiletter control sequences out of 15000+600000
+ 524750 words of font info for 80 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 70i,13n,76p,650b,265s stack positions out of 10000i,1000n,20000p,200000b,200000s
-{/usr/local/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}</usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti7.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb></usr/local/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
-Output written on "progress report.pdf" (10 pages, 287925 bytes).
+ 70i,13n,76p,617b,273s stack positions out of 10000i,1000n,20000p,200000b,200000s
+{e:/texlive/2022/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}<e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmti7.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb><e:/texlive/2022/texmf-dist/fonts/type1/public/cm-super/sfrm1200.pfb>
+Output written on "progress report.pdf" (11 pages, 297183 bytes).
 PDF statistics:
- 153 PDF objects out of 1000 (max. 8388607)
- 94 compressed objects within 1 object stream
+ 156 PDF objects out of 1000 (max. 8388607)
+ 96 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -58,7 +58,7 @@
 
 %%% Change the date
 \newcommand{\mathcolorbox}[2]{\colorbox{#1}{$\displaystyle #2$}}
-\renewcommand*{\today}{Dec. 18, 2023}
+\renewcommand*{\today}{Mar. 8, 2024}
 
 \journal{Dr. Choi \& Dr. Espin-Garcia}
 
@@ -68,7 +68,7 @@
 
 %% Title, authors and addresses
 
-\title{Jiaqi's Thesis Progress Report (Updated Jan. 28)}
+\title{Jiaqi's Thesis Progress Report (Updated Mar. 8)}
 
 
 %% use optional labels to link authors explicitly to addresses:
@@ -152,11 +152,12 @@
 %% main text
 \section{To Do List}
 \begin{enumerate}
-    \item Correlated frailty - NR-algorithm
-    \item Gibb's Sampling in MCEM \& MI, partition the $\mathbf{X}$
-    \item Multiple imputation - similar imputation step as MCEM
+    \item Preliminary Results table for CCA, MCEM, MI
+    \item Run Multiple imputation in R
+    \item FamEvent updated version - simulation the family structure data
+    \item Indexing
 \end{enumerate}
-\section{Weibull Parametric Approach and MCEM Method}
+\section{Weibull Parametric Approach \hl{(Discussions on why use parametric?)}}
 From the beginning of the discussion, I have obtained the model, i.e., the hazard function is
 \begin{equation}
     h_{ij}(t_{ij}|z_j)=h_0(t_{ij})\exp(\beta_1x_{1,ij}+\beta_2 x_{2,ij})z_j
@@ -264,26 +265,26 @@ where $n$ is number of sample points used, and $x_i$ is the roots of Hermite pol
 \noindent
 Applying Definition~\ref{defn:gausshermite}, the integral of the Laplace transform is then
 \begin{equation}
-    \phi(s)^d=\frac{1}{\sqrt{\pi}}\sum_{\tilde{p}=1}^{N_{\tilde{p}}}\omega_{\tilde{p}}\exp(-s\exp(\sqrt{2}\sigma y_{\tilde{p}}))\exp(\sqrt{2}\sigma y_{\tilde{p}})^d
+    \phi(s)^d=\frac{1}{\sqrt{\pi}}\sum_{q=1}^{N_{q}}\omega_{q}\exp(-s\exp(\sqrt{2}\sigma y_{q}))\exp(\sqrt{2}\sigma y_{q})^d
 \end{equation}
-where $\tilde{p}$ denotes the $\tilde{p}$-th element of Gauss Hermite Quadrature, i.e., $\omega_{\tilde{p}}$ denotes the $\tilde{p}$-th weight, $y_{\tilde{p}}$ denotes the $\tilde{p}$-th node, and $N_{\tilde{p}}$ denotes the total number of quadratures. Thus, substituting into the log-likelihood:
+where $q$ denotes the $q$-th element of Gauss Hermite Quadrature, i.e., $\omega_{q}$ denotes the $q$-th weight, $y_{q}$ denotes the $q$-th node, and $N_{q}$ denotes the total number of quadratures. Thus, substituting into the log-likelihood:
 \begin{equation}
-    \ell_j(\boldsymbol{\theta})=\sum_{i=1}^{n_j}\delta_{ij}\log(h(t_{ij}|\mathbf{x}_{ij}))+\log\Big (\frac{1}{\sqrt{\pi}}\sum_{\tilde{p}=1}^{N_{\tilde{p}}}\left [\omega_{\tilde{p}}\exp(\sqrt{2}\sigma y_{\tilde{p}})^{d_j}\exp\Big (-\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}_{ij})\exp(\sqrt{2}\sigma y_{\tilde{p}})\Big )\right ]\Big )
+    \ell_j(\boldsymbol{\theta})=\sum_{i=1}^{n_j}\delta_{ij}\log(h(t_{ij}|\mathbf{x}_{ij}))+\log\Big (\frac{1}{\sqrt{\pi}}\sum_{q=1}^{N_{q}}\left [\omega_{q}\exp(\sqrt{2}\sigma y_{q})^{d_j}\exp\Big (-\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}_{ij})\exp(\sqrt{2}\sigma y_{q})\Big )\right ]\Big )
 \end{equation}
 Similarly, the ascertainment correction in the log-normal frailty can be written as 
 \begin{align}
     A_j(\boldsymbol{\theta})&=1-\int_{-\infty}^{\infty} \exp(-z H(a_{j_p}|\mathbf{x}_{j_p}))f(z)dz\\
-    &=1-\sum_{\tilde{p}=1}^{N_{\tilde{p}}}\omega_{\tilde{p}} \exp\left (-(\sum_{i=1}^{n_j} H(a_{j_p}|\mathbf{x}_{j_p}))\exp (\sqrt{2}\sigma y_{\tilde{p}_p})\right )
+    &=1-\sum_{q=1}^{N_{q}}\omega_{q} \exp\left (-(\sum_{i=1}^{n_j} H(a_{j_p}|\mathbf{x}_{j_p}))\exp (\sqrt{2}\sigma y_{q_p})\right )
 \end{align}
 
-\section{Missing PRS}
+\section{Missing PRS and MCEM}\label{sec:missingprs}
 
 \subsection{Not Considering the Family Correlations}
 Given that family $j$ has some subjects containing the missing PRS due to the sampling cost (maybe), that not all subjects are being sampled for the PRS calculation. 
 We propose a Monte Carlo sampling method within the MCEM framework in terms of estimating the distribution of the PRS. 
 The PRS was calculated to infer the relationship between a phenotype and multiple genetic loci, while these information were not gained if one was not involved in the original GWAS. 
 Thus, we propose to sample the PRS using the information that we have already known. Denote $\mathbf{X}_{j,1}$ as the PRS scores vector in family $j$, and $\mathbf{X}_{j,2}$ the mutation status vector in family $j$. 
-Take $\mathbf{p}_j$ as the proband indicator in family $j$, $\mathbf{c}_j$ is the current age for patients in family $j$. 
+Take $\mathbf{p}_j$ as the proband indicator vector in family $j$, $\mathbf{c}_j$ is the current age for patients in family $j$. 
 We then define $\mathbf{W}=(\log(\mathbf{t}_j), \boldsymbol{\delta}_j, \log(\mathbf{t}_j)\odot \boldsymbol{\delta}_j, \mathbf{p}_j, \mathbf{c}_j, \mathbf{X}_{j,2})$.
 We can make the assumption on the conditional distribution of the PRS, take $\mathbf{X}_{j,1}|\mathbf{W},\boldsymbol{\psi} \sim MVN (\mathbf{W}\boldsymbol{\psi}+\mathbf{u},\sigma^2\mathbf{I})$. 
 We are interested in modelling the PRS while accounting for the between family variance, so $\mathbf{u}\sim MVN(0, \sigma_u^2\mathbf{I})$. Thus, the E-step for Gamma frailty model with ascertainment correction is then
@@ -302,15 +303,60 @@ This leads to an E-step:
 Similarly, the expectation with respect to the missing PRS in log-normal frailty can be written as
 \begin{align} 
     E_{\mathbf{X}_{j,1,mis}}(\ell(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)}))&=\sum_{j=1}^J\Bigg [\sum_{i=1}^{n_j}\int_{\boldsymbol{X}_{j,1,mis}}(\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}))+ \\ 
-    & + \log\Big (\frac{1}{\sqrt{\pi}}\sum_{\tilde{p}=1}^{N_{\tilde{p}}}\Big [\omega_{\tilde{p}}\exp (\sqrt{2}\sigma y_{\tilde{p}})^{d_j}\exp (-\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}_{ij})\exp(\sqrt{2}\sigma y_{\tilde{p}}))\Big]\Big ) - \\
+    & + \log\Big (\frac{1}{\sqrt{\pi}}\sum_{q=1}^{N_{q}}\Big [\omega_{q}\exp (\sqrt{2}\sigma y_{q})^{d_j}\exp (-\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}_{ij})\exp(\sqrt{2}\sigma y_{q}))\Big]\Big ) - \\
     & - \log(A_j(\boldsymbol{\theta})) + \log f(x_{ij,1,mis}|w_{ij},\boldsymbol{\psi}) dx_{ij,1,mis}\Bigg ]
 \end{align}
+and the E-step:
+\begin{align} 
+    Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)}) &= \sum_{j=1}^J\Bigg [\sum_{i=1}^{n_j}\sum_{m=1}^{M}(\delta_{ij}\log h(t_{ij}|\mathbf{x}^{(m)}_{ij}))+ \\ 
+    & + \log\Big (\frac{1}{\sqrt{\pi}}\sum_{q=1}^{N_{q}}\Big [\omega_{q}\exp (\sqrt{2}\sigma y_{q})^{d_j}\exp (-\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}^{(m)}_{ij})\exp(\sqrt{2}\sigma y_{q}))\Big]\Big ) - \\
+    & - \log(A_j(\boldsymbol{\theta})) + \log f(x_{ij,1,mis}^{(m)}|w_{ij},\boldsymbol{\psi})\Bigg ]
+\end{align}
 \subsection{Considering the Family Correlations}
-Given that family $j$ has some subjects containing the missing PRS due to the sampling cost (maybe), that not all subjects are being sampled for the PRS calculation. 
-Since subjects within one family are correlated in some genetic associations, we intend to sample the missing PRS using a multivariate normal distribution. 
+Given that family $j$ has some subjects containing the missing PRS due to the sampling cost (maybe, need to confirm the previous paper), that not all subjects are being sampled for the PRS calculation. 
+Since subjects within one family are correlated in some genetic associations, we intend to sample the missing PRS using a multivariate normal distribution while accounting for the kinship matrix. 
+Using the same setting for the modelling of the PRS, the only difference is the variance-covariance matrix. 
+Here, $\mathbf{X}_{j,1}|\mathbf{W},\boldsymbol{\psi}\sim MVN(\mathbf{W}\boldsymbol{\psi}+\mathbf{u}, \sigma^2\mathbf{I})$. 
+But, $\mathbf{u}\sim MVN(0, 2\sigma^2_u\mathbf{K})$ where $\mathbf{K}$ is a $\mathbb{R}^{n\times n}$ kinship matrix with a diagonal of $0.5$. 
+The variance can be computed via $\text{Var}(X_{j,1})=2\sigma_u^2\mathbf{K}+\sigma^2\mathbf{I}$ when both the genetic variation and the residual errors contribute to the variance-covariance structure. 
+Therefore, the marginal distribution of the PRS after integrating out the random effects will be $\mathbf{X}_{j,1}\sim MVN(\mathbf{W}\boldsymbol{\psi}, 2\sigma_u^2\mathbf{K}+\sigma^2\mathbf{I})$, and will be the distribution used for the Monte Carlo sampling.
+\hl{M Step, Nelder-Mead, why? Gradient free? Variance?}
 
+\section{Multiple Imputation with Monte Carlo Sampling}
+\subsection{Missing Mechanisms}
+...A discussion on MCAR, MAR, and MNAR... 
+\subsection{Multiple Imputations \hl{(Be sure to report a conceptual statistical definition in the thesis)}}
+In the general framework, denote $\mathbf{X}_{j,1,mis}$ as the element of $\mathbf{X}_{j,1}$ when it's missing.
+Denote $\mathbf{X}_{j,1,obs}$ on the observed element. 
+Adapting the idea from the MCEM, we can draw $\hat{\mathbf{X}}_{j,1,mis}$ from the same assumption of the distribution discussed in the section~\ref{sec:missingprs} for $M$ times.
+But, the missing indicator $\mathbf{R}$ should be addressed to attest the missing mechanism. 
+The conditional distribution can be written as $f(\mathbf{X}_{j,1,mis}|\mathbf{X}_{j,1,obs}, \mathbf{W}, \mathbf{R}_j)$. 
+Under the assumption of the MAR \hl{(Confirm the paper)}, 
+\begin{equation}
+    f(\mathbf{X}_{j,1,mis}|\mathbf{X}_{j,1,obs}, \mathbf{W}, \mathbf{R}_j)=f(\mathbf{X}_{j,1,mis}|\mathbf{X}_{j,1,obs}, \mathbf{W})
+\end{equation}
+This results a series of $M$ complete datasets containing all values observed with the fill of the Monte Carlo samples. 
+Then with these $M$ datasets, we run the analysis individually. 
+Thus, the estimate of $\boldsymbol{\theta}$ can be calculated via 
+\begin{equation}
+    \hat{\boldsymbol{\theta}}_{MI}=\frac{1}{M}\sum_{m=1}^M\hat{\boldsymbol{\theta}}_m
+\end{equation}
+Denote $V$ the variance for $m$-th complete data inference variance, we first calculate the average variance of these analyses to be the within-imputation variance,
+\begin{equation}
+    \hat{\mathbf{W}}=\frac{1}{M}\sum_{m=1}^M\hat{\mathbf{V}}_m 
+\end{equation}
+Under the unbiased variance estimator, the between-imputation variance is
+\begin{equation}
+    \hat{\mathbf{B}}=\frac{1}{M-1}\sum_{m=1}^M (\hat{\boldsymbol{\theta}}_m - \hat{\boldsymbol{\theta}}_{MI})(\hat{\boldsymbol{\theta}}_m - \hat{\boldsymbol{\theta}}_{MI})^{\top}
+\end{equation}
+Combining these \hl{(How? Are there any statistical/mathematical proof of this)}, we obtain the estimate of the variance of $\hat{\boldsymbol{\theta}}_{MI}$,
+\begin{equation}
+    \hat{\mathbf{V}}_{MI}=\hat{\mathbf{W}}+(1+\frac{1}{M})\hat{\mathbf{B}}
+\end{equation}
 
-\section{Monte Carlo EM}
+\hl{Discussions on why MI over MCEM or vise versa after the analysis...}
+
+\section{Monte Carlo EM \hl{(This section needs to be re-written to a definitional MCEM framework, maybe consult papers)}}
 The complete data log-likelihood for family $j$ is $\ell_j(\boldsymbol{\theta}; h_{ij})$
 where $\boldsymbol{\theta}$ consists all baseline parameters, and model coefficients $\beta$'s, as well as the frailty parameter $\phi$. The E-step for complete data is:
 \begin{align} 
@@ -506,7 +552,7 @@ Essentially, the Cholesky Decomposition transforms the multivariate normal to a 
 
 %\section{Stochastic EM?}
 
-\section{Multiple Imputation Method}
+
 
 
 %\newpage
