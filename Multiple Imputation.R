@@ -71,4 +71,4 @@ results_list[[m]] <- optim(par = initial_params, fn = lognormal_single,
       agemin = 18, control = list(maxit = 2000))
 }
 
-check <- imputed_data_list[[2]]
+results_list[[5]]
