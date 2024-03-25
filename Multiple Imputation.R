@@ -37,7 +37,6 @@ imputed_data_list <- list()
 missing_indices <- brca1_prs[which(brca1_prs$miss_index == 1), "indID"]
 missing_indices <- as.vector(missing_indices)$indID
 
-## Multiple imputation 
 for (m in 1:20) {
   brca1_prs_MI_completed <- brca1_prs_MI
   for (i in missing_indices) {
@@ -46,8 +45,8 @@ for (m in 1:20) {
     Sigma_index <- match(indID, kinship_ids)
     Sigma_i <- Sigma[Sigma_index, Sigma_index]
   
-    imputed_value <- mvrnorm(n = 1, mu = mu_PRS, Sigma = matrix(Sigma_i, nrow = 1)) # Make only 1 draw?
-    brca1_prs_MI_completed$PRS_I[brca1_prs_MI_completed$indID == i] <- imputed_value
+    imputed_value <- mvrnorm(n = 1, mu = mu_PRS, Sigma = matrix(Sigma_i, nrow = 1)) # change to family level
+    brca1_prs_MI_completed$PRS_I[brca1_prs_MI_completed$indID == i] <- imputed_value # Gibb's sampling
   }
   brca1_prs_MI_completed <- brca1_prs_MI_completed |>
     mutate(PRS_I = ifelse(is.na(PRS), PRS_I, PRS))

@@ -26,6 +26,7 @@
 \usepackage[scr]{rsfso}
 \usepackage{xcolor}
 \usepackage{soul}
+\usepackage{natbib}
 
 %% The lineno packages adds line numbers. Start line numbering with
 %% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
@@ -277,11 +278,38 @@ Similarly, the ascertainment correction in the log-normal frailty can be written
     &=1-\sum_{q=1}^{N_{q}}\omega_{q} \exp\left (-(\sum_{i=1}^{n_j} H(a_{j_p}|\mathbf{x}_{j_p}))\exp (\sqrt{2}\sigma y_{q_p})\right )
 \end{align}
 
-\section{Missing PRS and MCEM}\label{sec:missingprs}
+\section{Log-Likelihood with Missing Data}
+Recall the completed parametric survival log-likelihood with ascertainment correction:
+\begin{align} 
+    \ell_C(\boldsymbol{\theta})&=\sum_{j=1}^J\sum_{i=1}^{n_j}\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}, z_j) - H(t_{ij}|\mathbf{x}_{ij}, z_j)\\
+    &+\sum_{j=1}^J \log S_{j_p}(a_{j_p}|\mathbf{x}_{j_p}, z_j)
+\end{align}
+When accounting for the frailty and missing data, the E-step is:
+\begin{align} 
+    E(\ell_C(\boldsymbol{\theta})|\boldsymbol{\theta}^{(r)})=&\sum_{j=1}^J\sum_{i=1}^{n_j}\int_{\mathbf{x}_{mis}, z_j}\Big (\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}, z_j) - H(t_{ij}|\mathbf{x}_{ij}, z_j)\Big )\\
+    &\times f(x_{ij,mis}, z_j|W_{ij}, \boldsymbol{\theta}^{(r)})dx_{ij,mis}dz_j\\
+    &+\sum_{j=1}^J \int_{\mathbf{x}_{mis}, z_j} \log S_{j_p}(a_{j_p}|\mathbf{x}_{j_p}, z_j)\\
+    &\times f(x_{ij,mis}, z_j|W_{ij}, \boldsymbol{\theta}^{(r)})dx_{ij,mis}dz_j
+\end{align}
+such that we need to integrate out the joint density of the frailty term and the missing covariate from $f(x_{ij,mis}, z_j|W_{ij}, \boldsymbol{\theta}^{(r)})$. 
+The $W_{ij}=(t_{ij}, \delta_{ij}, p_{ij}, c_{j}, x_{ij,obs})$ is the observed data including proband information and event information. 
+There are selections of the frailty density, such as Gamma distribution, log-normal distribution, and etc. 
+In general, let's write $f(z_j|\upsilon)$ for the frailty distribution may be chosen with some parameters $\upsilon$. 
+Proposed by~\citet{herring2002frailty}, the joint distribution of the frailty and the missing data can be adapted as:
+\begin{align} 
+    f(z_j,x_{mis,ij}|W_{ij}, \boldsymbol{\theta}^{(r)})=f(x_{mis, ij}|W_{ij}, z_j, \boldsymbol{\theta}^{(r)})f(z_j|W_{ij}, \boldsymbol{\theta}^{(r)})
+\end{align}
+while this has a form of efficient sampling, so we can write
+\begin{align} 
+    f(z_j, x_{mis,ij}|W_{ij}, \boldsymbol{\theta}^{(r)})&\propto f(t_{ij}, \delta_{ij}|x_{mis,ij}, x_{obs,ij}, z_j, a_{j_p}, \boldsymbol{\beta}^{(r)})\\
+    &\times f(x_{mis,ij}|W_{ij}, \psi^{(r)})f(z_j|\upsilon^{(r)})
+\end{align}
+Clearly, we know $f(t_{ij}, \delta_{ij}|x_{mis,ij}, x_{obs,ij}, z_j, \boldsymbol{\beta}^{(r)})$ is the likelihood of one single observation $j$ in family $j$, also we know the distribution of $f(x_{ij}|\psi)$, as well as the frailty distribution $f(z_j|\upsilon)$. 
+
+\section{\hl{Missing PRS and MCEM}}\label{sec:missingprs}
 
 \subsection{Not Considering the Family Correlations}
-Given that family $j$ has some subjects containing the missing PRS due to the sampling cost (maybe), that not all subjects are being sampled for the PRS calculation. 
-We propose a Monte Carlo sampling method within the MCEM framework in terms of estimating the distribution of the PRS. 
+We propose an MCEM framework in terms of estimating the distribution of the PRS. 
 The PRS was calculated to infer the relationship between a phenotype and multiple genetic loci, while these information were not gained if one was not involved in the original GWAS. 
 Thus, we propose to sample the PRS using the information that we have already obtained through the study. Denote $\mathbf{x}_{j,1}$ as the PRS scores vector in family $j$, and $\mathbf{x}_{j,2}$ the mutation status vector in family $j$. 
 Take $\mathbf{p}_j$ as the proband indicator vector in family $j$, $\mathbf{c}_j$ is the current age for patients in family $j$. 
@@ -555,7 +583,7 @@ Essentially, the Cholesky Decomposition transforms the multivariate normal to a 
 
 
 
-%\newpage
+\newpage
 
 %\section{References}
 %\label{S.7}
@@ -568,8 +596,9 @@ Essentially, the Cholesky Decomposition transforms the multivariate normal to a 
 
 %% References with bibTeX database:
 
-%\bibliographystyle{model1-num-names}
-%\bibliography{sample.bib}
+%\bibliographystyle{elsarticle-num}
+\bibliographystyle{plainnat}
+\bibliography{progress.bib}
 %% Authors are advised to submit their bibtex database files. They are
 %% requested to list a bibtex style file in the manuscript if they do
 %% not want to use model1-num-names.bst.
