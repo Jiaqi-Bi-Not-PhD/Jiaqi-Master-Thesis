@@ -305,6 +305,11 @@ while this has a form of efficient sampling, so we can write
     &\times f(x_{mis,ij}|W_{ij}, \psi^{(r)})f(z_j|\upsilon^{(r)})
 \end{align}
 Clearly, we know $f(t_{ij}, \delta_{ij}|x_{mis,ij}, x_{obs,ij}, z_j, \boldsymbol{\beta}^{(r)})$ is the likelihood of one single observation $j$ in family $j$, also we know the distribution of $f(x_{ij}|\psi)$, as well as the frailty distribution $f(z_j|\upsilon)$. 
+Therefore, in our case, we can write 
+\begin{align} 
+    f(z_j, x_{mis,ij}|W_{ij}, \boldsymbol{\theta}^{(r)})&\propto f(z_j|\upsilon^{(r)})\Big [ \prod_{i=1}^{n_j} f(x_{mis,ij}|W_{ij}, \psi^{(r)})\\ 
+    &\times h^{(r)}(t_{ij}|x_{ij}, z_j)^{\delta_{ij}}\exp (-H^{(r)}(t_{ij}|x_{ij}, z_j))\Big ]
+\end{align}
 In general, without the specification of the frailty distribution, the E-step in MCEM can be written as 
 \begin{align} 
     Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)})&=\sum_{j=1}^J \frac{1}{M_j}\sum_{m=1}^{M_j}\sum_{i=1}^{n_j} \Big ( \delta_{ij}\log h(t_{ij}|x_{ij}^{(m)}, z_j^{(m)}) - H(t_{ij}|x_{ij}^{(m)}, z_j^{(m)})\Big )\\

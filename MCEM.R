@@ -741,7 +741,7 @@ for (i in 1:ncol(theta_matrix)) {
      
      
      
-     ## M-step: Gamma and log-normal, Nelder-Mead
+     ## M-step: log-normal, Nelder-Mead
      theta_history[[iter + 1]] <- current_theta
      optimized_result <- optim(par = current_theta, objective_function)
      current_theta <- optimized_result$par
