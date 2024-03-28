@@ -282,13 +282,15 @@ Similarly, the ascertainment correction in the log-normal frailty can be written
 Recall the completed parametric survival log-likelihood with ascertainment correction:
 \begin{align} 
     \ell_C(\boldsymbol{\theta})&=\sum_{j=1}^J\sum_{i=1}^{n_j}\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}, z_j) - H(t_{ij}|\mathbf{x}_{ij}, z_j)\\
-    &+\sum_{j=1}^J \log S_{j_p}(a_{j_p}|\mathbf{x}_{j_p}, z_j)
+    &-\sum_{j=1}^J \log (1-S_{j_p}(a_{j_p}|\mathbf{x}_{j_p}, z_j)) \\
+    &= \sum_{j=1}^J\sum_{i=1}^{n_j}\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij})z_j - H(t_{ij}|\mathbf{x}_{ij})z_j \\
+    &- \sum_{j=1}^{n_j} (1- z_j H_{j_p}(a_{j_p}|\mathbf{x}_{j_p}))
 \end{align}
 When accounting for the frailty and missing data, the E-step is:
 \begin{align} 
     E(\ell_C(\boldsymbol{\theta})|\boldsymbol{\theta}^{(r)})=&\sum_{j=1}^J\sum_{i=1}^{n_j}\int_{\mathbf{x}_{mis}, z_j}\Big (\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}, z_j) - H(t_{ij}|\mathbf{x}_{ij}, z_j)\Big )\\
     &\times f(x_{ij,mis}, z_j|W_{ij}, \boldsymbol{\theta}^{(r)})dx_{ij,mis}dz_j\\
-    &+\sum_{j=1}^J \int_{\mathbf{x}_{mis}, z_j} \log S_{j_p}(a_{j_p}|\mathbf{x}_{j_p}, z_j)\\
+    &-\sum_{j=1}^J \int_{\mathbf{x}_{mis}, z_j} \log (1-S_{j_p}(a_{j_p}|\mathbf{x}_{j_p}, z_j))\\
     &\times f(x_{ij,mis}, z_j|W_{ij}, \boldsymbol{\theta}^{(r)})dx_{ij,mis}dz_j
 \end{align}
 such that we need to integrate out the joint density of the frailty term and the missing covariate from $f(x_{ij,mis}, z_j|W_{ij}, \boldsymbol{\theta}^{(r)})$. 
@@ -313,10 +315,10 @@ Therefore, in our case, we can write
 In general, without the specification of the frailty distribution, the E-step in MCEM can be written as 
 \begin{align} 
     Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)})&=\sum_{j=1}^J \frac{1}{M_j}\sum_{m=1}^{M_j}\sum_{i=1}^{n_j} \Big ( \delta_{ij}\log h(t_{ij}|x_{ij}^{(m)}, z_j^{(m)}) - H(t_{ij}|x_{ij}^{(m)}, z_j^{(m)})\Big )\\
-    &+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\log S_{j_p}(a_{j_p}|x_{j_p}^{(m)}, z_j^{(m)})\\
+    &+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\log (1-S_{j_p}(a_{j_p}|x_{j_p}^{(m)}, z_j^{(m)}))\\
     &+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\sum_{i=1}^{n_j}\log f(x_{ij,mis}^{(m)}, z_j^{(m)}|W_{ij}, \boldsymbol{\theta})\\
     &=\sum_{j=1}^J \frac{1}{M_j}\sum_{m=1}^{M_j}\sum_{i=1}^{n_j} \Big ( \delta_{ij}\log h(t_{ij}|x_{ij}^{(m)}, z_j^{(m)}) - H(t_{ij}|x_{ij}^{(m)}, z_j^{(m)})\Big )\\
-    &+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\log S_{j_p}(a_{j_p}|x_{j_p}^{(m)}, z_j^{(m)})\\
+    &+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\log (1-S_{j_p}(a_{j_p}|x_{j_p}^{(m)}, z_j^{(m)}))\\
     &+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\sum_{i=1}^{n_j}\log f(x_{mis,ij}^{(m)}|W_{ij}, \psi)+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\sum_{i=1}^{n_j}\log f(z_j^{(m)}|\upsilon)
 \end{align} 
 
