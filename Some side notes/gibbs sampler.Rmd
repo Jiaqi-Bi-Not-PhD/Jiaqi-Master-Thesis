@@ -1,0 +1,56 @@
+---
+title: "Some notes on Gibb's Sampling"
+output: pdf_document
+date: "2024-03-27"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Two-stage Gibb's sampling
+
+Consider the pair of distributions
+
+$$
+X|\theta\sim Bin(n,\theta);\ \theta\sim Beta(a, b)
+$$
+which will lead to the joint distribution
+
+$$
+f(x,\theta)={n\choose x} \frac{\Gamma (a+b)}{\Gamma (a)\Gamma (b)}\theta^{x+a-1}(1-\theta)^{n-x+b-1}
+$$
+then this can be derived that
+
+$$
+\theta|x\sim Beta(x+a, n-x+b)
+$$
+
+```{r}
+library(ggplot2)
+## Gibb's sampler
+Nsim <- 5000
+n <- 15 # Initial n
+a <- 3 # Initial a
+b <- 7 # Initial b
+X <- T <- array(0, dim = c(Nsim, 1)) # Initial guesses for X and theta, all 0
+T[1] <- rbeta(1, a, b)
+X[1] <- rbinom(1, n, T[1])
+for (i in 2:Nsim) {
+  X[i] <- rbinom(1, n, T[i-1])
+  T[i] <- rbeta(1, a+X[i], n - X[i] + b)
+}
+
+df <- data.frame(X)
+ggplot(df, aes(x=X)) + geom_density(bw = "bcv")
+plot(density(T))
+```
+
+The joint model
+$$
+X_i\sim N(\theta, \sigma^2); ~ \theta\sim N (\theta_0,\tau^2);~ \sigma^2\sim IG(a,b)
+$$
+
+
+
+
