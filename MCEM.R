@@ -674,6 +674,21 @@ for (i in 1:ncol(theta_matrix)) {
  #######  Adapting the missing PRS using the multivariate Normal considering the kinship matrix ############
  ###########################################################################################################
  library(foreach)
+ 
+ gen_z_gamma <- function(fam) {
+   z <- rgamma(20, shape = k, rate = k)
+   logz <- log(z)
+   return(logz)
+ }
+ gen_z_lognormal <- function(fam) {
+   z <- rlnorm(20, meanlog = 0, sdlog = sigma)
+   logz <- log(z)
+   return(logz)
+ }
+ 
+ if (frailty.dis == "lognormal") list_z <- lapply(famID, gen_z_lognormal)
+ else if (frailty.dist == "gamma") list_z <- lapply(famID, gen_z_gamma)
+ 
  mcem_step <- function(data, initial_theta, 
                        design, 
                        m_imputations = 20, tol = 1e-6, 

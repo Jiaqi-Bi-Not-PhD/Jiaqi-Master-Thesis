@@ -59,7 +59,7 @@
 
 %%% Change the date
 \newcommand{\mathcolorbox}[2]{\colorbox{#1}{$\displaystyle #2$}}
-\renewcommand*{\today}{Mar. 8, 2024}
+\renewcommand*{\today}{Mar. 29, 2024}
 
 \journal{Dr. Choi \& Dr. Espin-Garcia}
 
@@ -69,7 +69,7 @@
 
 %% Title, authors and addresses
 
-\title{Jiaqi's Thesis Progress Report (Updated Mar. 8)}
+\title{Jiaqi's Thesis Progress Report (Updated Mar. 29)}
 
 
 %% use optional labels to link authors explicitly to addresses:
@@ -153,10 +153,8 @@
 %% main text
 \section{To Do List}
 \begin{enumerate}
-    \item Preliminary Results table for CCA, MCEM, MI
-    \item Run Multiple imputation in R
-    \item FamEvent updated version - simulation the family structure data
-    \item Indexing
+    \item MCEM - Both univariate and multivariate missing data
+    \item Add a section that talk about when dealing with missing data without using joint distribution of frailty and missing covariate
 \end{enumerate}
 \section{Weibull Parametric Approach \hl{(Discussions on why use parametric?)}}
 From the beginning of the discussion, I have obtained the model, i.e., the hazard function is
@@ -284,43 +282,62 @@ Recall the completed parametric survival log-likelihood with ascertainment corre
     \ell_C(\boldsymbol{\theta})&=\sum_{j=1}^J\sum_{i=1}^{n_j}\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}, z_j) - H(t_{ij}|\mathbf{x}_{ij}, z_j)\\
     &-\sum_{j=1}^J \log (1-S_{j_p}(a_{j_p}|\mathbf{x}_{j_p}, z_j)) \\
     &= \sum_{j=1}^J\sum_{i=1}^{n_j}\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij})z_j - H(t_{ij}|\mathbf{x}_{ij})z_j \\
-    &- \sum_{j=1}^{n_j} (1- z_j H_{j_p}(a_{j_p}|\mathbf{x}_{j_p}))
+    &- \sum_{j=1}^{n_j} \log(1- \exp(z_j H_{j_p}(a_{j_p}|\mathbf{x}_{j_p})))
 \end{align}
 When accounting for the frailty and missing data, the E-step is:
 \begin{align} 
     E(\ell_C(\boldsymbol{\theta})|\boldsymbol{\theta}^{(r)})=&\sum_{j=1}^J\sum_{i=1}^{n_j}\int_{\mathbf{x}_{mis}, z_j}\Big (\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}, z_j) - H(t_{ij}|\mathbf{x}_{ij}, z_j)\Big )\\
-    &\times f(x_{ij,mis}, z_j|W_{ij}, \boldsymbol{\theta}^{(r)})dx_{ij,mis}dz_j\\
-    &-\sum_{j=1}^J \int_{\mathbf{x}_{mis}, z_j} \log (1-S_{j_p}(a_{j_p}|\mathbf{x}_{j_p}, z_j))\\
-    &\times f(x_{ij,mis}, z_j|W_{ij}, \boldsymbol{\theta}^{(r)})dx_{ij,mis}dz_j
+    &\times f(\mathbf{x}_{ij,mis}, z_j|\mathbf{x}_{obs,ij}, \boldsymbol{\theta}^{(r)})d\mathbf{x}_{ij,mis}dz_j\\
+    &-\sum_{j=1}^J \int_{\mathbf{x}_{mis}, z_j} \log(1- \exp(z_j H_{j_p}(a_{j_p}|\mathbf{x}_{j_p})))\\
+    &\times f(\mathbf{x}_{ij,mis}, z_j|\mathbf{x}_{obs,ij}, \boldsymbol{\theta}^{(r)})d\mathbf{x}_{ij,mis}dz_j
 \end{align}
-such that we need to integrate out the joint density of the frailty term and the missing covariate from $f(x_{ij,mis}, z_j|W_{ij}, \boldsymbol{\theta}^{(r)})$. 
-The $W_{ij}=(t_{ij}, \delta_{ij}, p_{ij}, c_{j}, x_{ij,obs})$ is the observed data including proband information and event information. 
+such that we need to integrate out the joint density of the frailty term and the missing covariate from $f(\mathbf{x}_{ij,mis}, z_j|\mathbf{x}_{obs,ij}, \boldsymbol{\theta}^{(r)})$. 
 There are selections of the frailty density, such as Gamma distribution, log-normal distribution, and etc. 
 In general, let's write $f(z_j|\upsilon)$ for the frailty distribution may be chosen with some parameters $\upsilon$. 
 Proposed by~\citet{herring2002frailty}, the joint distribution of the frailty and the missing data can be adapted as:
 \begin{align} 
-    f(z_j,x_{mis,ij}|W_{ij}, \boldsymbol{\theta}^{(r)})=f(x_{mis, ij}|W_{ij}, z_j, \boldsymbol{\theta}^{(r)})f(z_j|W_{ij}, \boldsymbol{\theta}^{(r)})
+    f(z_j,\mathbf{x}_{mis,ij}|\mathbf{x}_{obs,ij}, \boldsymbol{\theta}^{(r)})=f(\mathbf{x}_{mis, ij}|\mathbf{x}_{obs,ij}, z_j, \boldsymbol{\theta}^{(r)})f(z_j|\boldsymbol{\theta}^{(r)})
 \end{align}
 while this has a form of efficient sampling, so we can write
 \begin{align} 
-    f(z_j, x_{mis,ij}|W_{ij}, \boldsymbol{\theta}^{(r)})&\propto f(t_{ij}, \delta_{ij}|x_{mis,ij}, x_{obs,ij}, z_j, a_{j_p}, \boldsymbol{\beta}^{(r)})\\
-    &\times f(x_{mis,ij}|W_{ij}, \psi^{(r)})f(z_j|\upsilon^{(r)})
+    f(z_j, \mathbf{x}_{mis,ij}|\mathbf{x}_{obs,ij}, \boldsymbol{\theta}^{(r)})&\propto f(t_{ij}, \delta_{ij}|\mathbf{x}_{mis,ij}, \mathbf{x}_{obs,ij}, z_j, a_{j_p}, \boldsymbol{\beta}^{(r)})\\
+    &\times f(\mathbf{x}_{mis,ij}|\mathbf{x}_{obs,ij}, \psi^{(r)})f(z_j|\upsilon^{(r)})
 \end{align}
-Clearly, we know $f(t_{ij}, \delta_{ij}|x_{mis,ij}, x_{obs,ij}, z_j, \boldsymbol{\beta}^{(r)})$ is the likelihood of one single observation $j$ in family $j$, also we know the distribution of $f(x_{ij}|\psi)$, as well as the frailty distribution $f(z_j|\upsilon)$. 
+Clearly, we know $f(t_{ij}, \delta_{ij}|\mathbf{x}_{mis,ij}, \mathbf{x}_{obs,ij}, z_j, \boldsymbol{\beta}^{(r)})$ is the likelihood of one single observation $j$ in family $j$, also we know the distribution of $f(\mathbf{x}_{ij}|\psi)$, as well as the frailty distribution $f(z_j|\upsilon)$. 
 Therefore, in our case, we can write 
 \begin{align} 
-    f(z_j, x_{mis,ij}|W_{ij}, \boldsymbol{\theta}^{(r)})&\propto f(z_j|\upsilon^{(r)})\Big [ \prod_{i=1}^{n_j} f(x_{mis,ij}|W_{ij}, \psi^{(r)})\\ 
-    &\times h^{(r)}(t_{ij}|x_{ij}, z_j)^{\delta_{ij}}\exp (-H^{(r)}(t_{ij}|x_{ij}, z_j))\Big ]
+    f(z_j, \mathbf{x}_{mis,ij}|\mathbf{x}_{obs,ij}, \boldsymbol{\theta}^{(r)})&\propto f(z_j|\upsilon^{(r)})\Big [ \prod_{i=1}^{n_j} f(\mathbf{x}_{mis,ij}|\mathbf{x}_{obs,ij}, \psi^{(r)})\\ 
+    &\times h^{(r)}(t_{ij}|\mathbf{x}_{ij}, z_j)^{\delta_{ij}}\exp (-H^{(r)}(t_{ij}|\mathbf{x}_{ij}, z_j))\Big ]
 \end{align}
 In general, without the specification of the frailty distribution, the E-step in MCEM can be written as 
 \begin{align} 
-    Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)})&=\sum_{j=1}^J \frac{1}{M_j}\sum_{m=1}^{M_j}\sum_{i=1}^{n_j} \Big ( \delta_{ij}\log h(t_{ij}|x_{ij}^{(m)}, z_j^{(m)}) - H(t_{ij}|x_{ij}^{(m)}, z_j^{(m)})\Big )\\
-    &+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\log (1-S_{j_p}(a_{j_p}|x_{j_p}^{(m)}, z_j^{(m)}))\\
-    &+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\sum_{i=1}^{n_j}\log f(x_{ij,mis}^{(m)}, z_j^{(m)}|W_{ij}, \boldsymbol{\theta})\\
-    &=\sum_{j=1}^J \frac{1}{M_j}\sum_{m=1}^{M_j}\sum_{i=1}^{n_j} \Big ( \delta_{ij}\log h(t_{ij}|x_{ij}^{(m)}, z_j^{(m)}) - H(t_{ij}|x_{ij}^{(m)}, z_j^{(m)})\Big )\\
-    &+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\log (1-S_{j_p}(a_{j_p}|x_{j_p}^{(m)}, z_j^{(m)}))\\
-    &+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\sum_{i=1}^{n_j}\log f(x_{mis,ij}^{(m)}|W_{ij}, \psi)+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\sum_{i=1}^{n_j}\log f(z_j^{(m)}|\upsilon)
+    Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)})&=\sum_{j=1}^J \frac{1}{M_j}\sum_{m=1}^{M_j}\sum_{i=1}^{n_j} \Big ( \delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}^{(m)}, z_j^{(m)}) - H(t_{ij}|\mathbf{x}_{ij}^{(m)}, z_j^{(m)})\Big )\\
+    &+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\log(1- \exp(z_j H_{j_p}(a_{j_p}|\mathbf{x}_{j_p})))\\
+    &+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\sum_{i=1}^{n_j}\log f(\mathbf{x}_{ij,mis}^{(m)}, z_j^{(m)}|\mathbf{x}_{obs,ij}, \boldsymbol{\theta})\\
+    &=\sum_{j=1}^J \frac{1}{M_j}\sum_{m=1}^{M_j}\sum_{i=1}^{n_j} \Big ( \delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}^{(m)}, z_j^{(m)}) - H(t_{ij}|\mathbf{x}_{ij}^{(m)}, z_j^{(m)})\Big )\\
+    &+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\log(1- \exp(z_j H_{j_p}(a_{j_p}|\mathbf{x}_{j_p})))\\
+    &+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\sum_{i=1}^{n_j}\log f(\mathbf{x}_{mis,ij}^{(m)}|\mathbf{x}_{obs,ij}, \psi)+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\sum_{i=1}^{n_j}\log f(z_j^{(m)}|\upsilon)
 \end{align} 
+where for example, when $x_{mis,ij,1}$ is missing and $x_{obs,ij,2}$ is observed, we take
+\begin{align} 
+    f(x_{mis,ij,1}^{(m)}|x_{obs,ij,2}, \psi)=\frac{1}{\tilde{\psi}\sqrt{2\pi}}\exp \Big (-\frac{1}{2}\Big (\frac{x_{mis,ij,1}^{(m)} - \mu}{\tilde{\psi}}\Big )^2\Big )
+\end{align}
+such that $\hat{\mu}=\psi_0 + \psi_1 x_{obs,ij,2}$, and $\tilde{\psi}$ is the standard error of the conditional normal distribution.
+We can apply the kinship matrix for a family study, that we will deal with a multivariate normal distributed $\mathbf{x}_{mis,j,1}^{(m)}$ for family $j$. 
+
+\begin{align} 
+    f(\mathbf{x}_{mis,j,1}^{(m)}|\mathbf{x}_{obs,j,2}, \psi, K)=(2\pi)^{(-\frac{n_j}{2})}\det (\Sigma)^{(-\frac{1}{2})}\exp \big( -\frac{1}{2}(\mathbf{x}_{mis,j,1}^{(m)}-\boldsymbol{\mu})^{\top}\Sigma^{-1}(\mathbf{x}_{mis,j,1}^{(m)}-\boldsymbol{\mu})\Big )
+\end{align}
+where $\Sigma = \tilde{\psi}_g^2 K + \tilde{\psi}_e^2$, and $K$ is the kinship matrix with diagonals of $1$ and is known. 
+Also, $\hat{\boldsymbol{\mu}}=\boldsymbol{\psi}_0+\boldsymbol{\psi}_1 \mathbf{x}_{obs,j,2}$. Therefore, we may sample from $\mathbf{x}_{mis,j,1}\sim MVN(\boldsymbol{\mu}, \tilde{\psi}_g^2K+\tilde{\psi}_e^2)$. Moreover, we can give the specific distribution of the frailty in the E-step by sampling the frailty term $z_j$, for example, when $z_j$ is assumed to be Gamma distribution, then 
+\begin{equation} 
+    f(z_j^{(m)}|k)=\frac{k^k}{\Gamma (k)}(z_j^{(m)})^{k-1}\exp (-kz_j^{(m)})
+\end{equation}
+When $z_j$ is log-normal distributed with the mean 0, we have 
+\begin{equation}
+    f(z_j^{(m)}|\upsilon)=\frac{1}{z_j^{(m)}\upsilon\sqrt{2\pi}}\exp\Big (-\frac{(\log z_j^{(m)})^2}{2\upsilon^2}\Big )
+\end{equation}
+Thus, the $Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)})$ function will yield a closed form that can be optimized via M-step, with the iterations that update all parameters using Gibb's sampler. 
 
 \section{\hl{Missing PRS and MCEM}}\label{sec:missingprs}
 

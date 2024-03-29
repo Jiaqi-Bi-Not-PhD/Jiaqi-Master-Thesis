@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.9.16)  28 MAR 2024 14:38
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.9.16)  29 MAR 2024 16:10
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -360,54 +360,54 @@ Overfull \hbox (2.61108pt too wide) has occurred while \output is active
 
 
 {/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-LaTeX Font Info:    Try loading font information for U+rsfso on input line 197.
+LaTeX Font Info:    Try loading font information for U+rsfso on input line 195.
  (/usr/local/texlive/2019/texmf-dist/tex/latex/rsfso/ursfso.fd
 File: ursfso.fd 2011/02/13 Fontinst v1.933 font definitions for U/rsfso.
 )
 LaTeX Font Info:    Font shape `U/rsfso/m/n' will be
-(Font)              scaled to size 12.0pt on input line 197.
+(Font)              scaled to size 12.0pt on input line 195.
 LaTeX Font Info:    Font shape `U/rsfso/m/n' will be
-(Font)              scaled to size 8.0pt on input line 197.
+(Font)              scaled to size 8.0pt on input line 195.
 LaTeX Font Info:    Font shape `U/rsfso/m/n' will be
-(Font)              scaled to size 6.0pt on input line 197.
+(Font)              scaled to size 6.0pt on input line 195.
 
-Overfull \hbox (8.73381pt too wide) in paragraph at lines 197--198
+Overfull \hbox (8.73381pt too wide) in paragraph at lines 195--196
 \OT1/cmr/m/n/12 mat-i-cal ex-pres-sion, the fol-low-ing Laplace trans-form will ig-nore the sub-script, de-note $\U/rsfso/m/n/12 L\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 f\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 z\OT1/cmr/m/n/12 )) =
  []
 
 [2] [3]
-Overfull \hbox (10.83878pt too wide) in paragraph at lines 249--251
+Overfull \hbox (10.83878pt too wide) in paragraph at lines 247--249
 \OT1/cmr/m/n/12 Using vari-able trans-for-ma-tion, let $\OML/cmm/m/it/12 y \OT1/cmr/m/n/12 = []$, then $\OML/cmm/m/it/12 z \OT1/cmr/m/n/12 = []([]\OML/cmm/m/it/12 ^^[y\OT1/cmr/m/n/12 )$, and $\OML/cmm/m/it/12 dz \OT1/cmr/m/n/12 = []\OML/cmm/m/it/12 ^^[ []\OT1/cmr/m/n/12 ([]\OML/cmm/m/it/12 ^^[y\OT1/cmr/m/n/12 )\OML/cmm/m/it/12 dy$\OT1/cmr/m/n/12 .
  []
 
 [4]
-Overfull \hbox (37.2879pt too wide) detected at line 274
+Overfull \hbox (37.2879pt too wide) detected at line 272
 \OML/cmm/m/it/12 `[]\OT1/cmr/m/n/12 ([]) = [] \OML/cmm/m/it/12 ^^N[] []\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 h\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 t[]\OMS/cmsy/m/n/12 j\OT1/cmr/bx/n/12 x[]\OT1/cmr/m/n/12 )) + [] [][] [] [] []
  []
 
-[5] [6] [7] [8]
-Overfull \hbox (11.85341pt too wide) in paragraph at lines 410--411
+[5] [6] [7] [8] [9]
+Overfull \hbox (11.85341pt too wide) in paragraph at lines 427--428
 []\OT1/cmr/m/n/12 We sam-ple the size $\OML/cmm/m/it/12 m[]$ \OT1/cmr/m/n/12 for each $\OML/cmm/m/it/12 i$\OT1/cmr/m/n/12 -th ob-ser-va-tion, $\OML/cmm/m/it/12 x[]; :::; x[]$ \OT1/cmr/m/n/12 from the dis-tri-bu-tion $\OML/cmm/m/it/12 f\OT1/cmr/m/n/12 (\OML/cmm/m/it/12 x[]\OMS/cmsy/m/n/12 j^^A\OT1/cmr/m/n/12 )$,
  []
 
-[9] [10] [11]
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 506.
+[10] [11]
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 523.
  (/usr/local/texlive/2019/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 506.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 523.
  [12] [13] (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.bbl) [14] (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.aux) ) 
 Here is how much of TeX's memory you used:
  4733 strings out of 492616
  63549 string characters out of 6129481
- 155059 words of memory out of 5000000
+ 156060 words of memory out of 5000000
  8533 multiletter control sequences out of 15000+600000
  15766 words of font info for 61 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 41i,13n,37p,655b,258s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 41i,13n,37p,655b,262s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmti7.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb>
-Output written on "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.pdf" (14 pages, 279285 bytes).
+Output written on "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.pdf" (14 pages, 281764 bytes).
 PDF statistics:
  138 PDF objects out of 1000 (max. 8388607)
  99 compressed objects within 1 object stream
