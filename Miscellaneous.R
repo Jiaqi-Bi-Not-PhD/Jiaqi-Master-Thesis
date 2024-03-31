@@ -23,6 +23,8 @@ brca1_prs_MCEM <- brca1_prs |>
 brca1_prs_MCEM <- merge(brca1_prs_MCEM, brca1_prs, by = "famID")
 brca1_prs_MCEM <- brca1_prs_MCEM |>
   filter(n_obs != 0)
+brca1_prs_MCEM <- brca1_prs_MCEM |>
+  mutate(z = NA)
 
 ## If CCA is preferred (471 obs)
 brca1_prs_cca <- brca1_prs %>%
