@@ -63,7 +63,7 @@ complete_likelihood <- function(X, Y, theta, cuts=NULL, nbase, data, design, bas
   return(-sloglik)
 }
 
-lognormal_single <- function(X, Y, theta, cuts=NULL, nbase, data, design, base.dist, frailty.dist, agemin, vec=FALSE)
+complete_likelihood <- function(X, Y, theta, cuts=NULL, nbase, data, design, base.dist, frailty.dist, agemin, vec=FALSE)
 {
   
   if(!design %in% c("pop", "pop+"))  stop("Frailty model is only available for POP or POP+ design.")
