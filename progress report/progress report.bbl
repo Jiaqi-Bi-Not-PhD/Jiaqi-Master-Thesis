@@ -1,4 +1,4 @@
-\begin{thebibliography}{5}
+\begin{thebibliography}{6}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -26,6 +26,13 @@ Amanda~N Baraldi and Craig~K Enders.
 Roderick~JA Little and Donald~B Rubin.
 \newblock \emph{Statistical analysis with missing data}, volume 793.
 \newblock John Wiley \& Sons, 2019.
+
+\bibitem[Santos et~al.(2019)Santos, Pereira, Costa, Soares, Santos, and
+  Abreu]{santos2019generating}
+Miriam~Seoane Santos, Ricardo~Cardoso Pereira, Adriana~Fonseca Costa,
+  Jastin~Pompeu Soares, Jo{\~a}o Santos, and Pedro~Henriques Abreu.
+\newblock Generating synthetic missing data: A review by missing mechanism.
+\newblock \emph{IEEE Access}, 7:\penalty0 11651--11667, 2019.
 
 \bibitem[Herring et~al.(2002)Herring, Ibrahim, and Lipsitz]{herring2002frailty}
 Amy~H Herring, Joseph~G Ibrahim, and Stuart~R Lipsitz.

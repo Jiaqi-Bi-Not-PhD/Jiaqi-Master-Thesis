@@ -284,6 +284,7 @@ The missing data problem was firstly brought by~\citet{rubin1976inference}, and 
 Such as the practical book written by~\citet{Rubin1987}, and some comprehensive reviews on current missing data problems by~\citet{baraldi2010introduction}. 
 The missing data mechanism was introduced by~\citet{little2019statistical}. 
 There are three missing data mechanisms, which are Missing Completely at Random (MCAR), Missing at Random (MAR), and Missing Not at Random (MNAR). 
+There are some reviews on the missing data which rigorously present the statistical concept of three types of the missing mechanism~\cite{santos2019generating}.
 \begin{defn}(MCAR)\label{defn:MCAR}
 Denote $Y$ as the complete data matrix, and $M$ as the missing data indicator matrix. 
 Define $y_{ij}$ and $m_{ij}$ as $i$-th row (observation) and $j$-th column (variable) for the matrix $Y$ and $M$. 
@@ -304,10 +305,32 @@ That is, for the parameters of this distribution, $m_i$ does not depend on any o
     Note that $y_i=(y_{i,obs},y_{i,mis})$. 
     The missing component is defined to be MAR if $m$ only dependes on $y_{i,obs}$. 
     That is,
+
     \begin{equation} 
         f(m_i|y_i,\phi)=f(m_i|y_{i,obs}, \phi)
     \end{equation}
 \end{defn}
+\begin{eg}(MAR Example)\label{eg:MARExample}
+    In a psychological study, participants are asked to complete a survey so the scientist can profile their personalities. 
+    One question that asks participants to report their Mood status being good or bad. 
+    Male participants are typically too shy to answer this question, which yields some responses being missing. 
+    This is called the MAR, that the missingness on Mood status depends on the participant's gender, but not on the missing Mood itself.
+\end{eg}
+\begin{defn}(MNAR)\label{defn:MNAR}
+    In the MNAR, the missingness depends on the missing data itself, which is 
+    \begin{equation} 
+        f(m_i|y_i,\phi)=f(m_i|y_{i,mis}, y_{i,obs}, \phi)
+    \end{equation}
+    In this case, the analysis needs to be conducted with caution. 
+    The missingness should be included in the likelihood construction.
+\end{defn}
+\begin{eg}(MNAR Example)\label{eg:MNARExample}
+    There is a study on participants' incomes. 
+    Person A makes \$200,000 per year, so they decide to report this amount without hesitancies. 
+    Person B makes \$10,000 per year, so they are not willing to provide this information, which this response is left as blank. 
+    This type of missing depends on the missing data itself, that Person B refuses to provide the response due to the response being comparatively low. 
+\end{eg}
+\subsection{Log-Likelihood and Missing at Random}
 \subsection{Log-Likelihood and Missing Not at Random}
 Recall the completed parametric survival log-likelihood with ascertainment correction:
 \begin{align} 
