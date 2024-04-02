@@ -35,6 +35,7 @@
 \DeclareMathOperator*{\argminA}{arg\,min}
 \DeclareMathOperator*{\argmaxA}{arg\,max}
 \newtheorem{defn}{Definition}
+\newtheorem{eg}{Example}
 
 %% natbib.sty is loaded by default. However, natbib options can be
 %% provided with \biboptions{...} command. Following options are
@@ -286,6 +287,26 @@ There are three missing data mechanisms, which are Missing Completely at Random 
 \begin{defn}(MCAR)\label{defn:MCAR}
 Denote $Y$ as the complete data matrix, and $M$ as the missing data indicator matrix. 
 Define $y_{ij}$ and $m_{ij}$ as $i$-th row (observation) and $j$-th column (variable) for the matrix $Y$ and $M$. 
+The conditional distribution of the missingness is said to be 
+\begin{equation} 
+    f(m_i|y_i, \phi)=f(m_i|\phi)
+\end{equation}
+That is, for the parameters of this distribution, $m_i$ does not depend on any observed or missing data.
+\end{defn}
+\begin{eg}(MCAR Example)\label{eg:MCARExample}
+    There is a blind box with 500 indexed balls (No. 1 to 500) and their weights are unknown. 
+    We randomly draw 100 balls and measure their weights and record them in the Excel file. 
+    The Excel file contains two columns called Index and Weight, only those randomly selected balls will have Weights being filled. 
+    Those weights of unselected balls are called MCAR. 
+\end{eg}
+\begin{defn}(MAR)\label{defn:MAR}
+    Denote $y_{i,obs}$ as the observed $y$, and $y_{i,mis}$ as the missing $y$. 
+    Note that $y_i=(y_{i,obs},y_{i,mis})$. 
+    The missing component is defined to be MAR if $m$ only dependes on $y_{i,obs}$. 
+    That is,
+    \begin{equation} 
+        f(m_i|y_i,\phi)=f(m_i|y_{i,obs}, \phi)
+    \end{equation}
 \end{defn}
 \subsection{Log-Likelihood and Missing Not at Random}
 Recall the completed parametric survival log-likelihood with ascertainment correction:
