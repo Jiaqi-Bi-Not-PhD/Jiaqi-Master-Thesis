@@ -1,9 +1,31 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{5}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Rubin(1976)]{rubin1976inference}
+Donald~B Rubin.
+\newblock Inference and missing data.
+\newblock \emph{Biometrika}, 63\penalty0 (3):\penalty0 581--592, 1976.
+
+\bibitem[Rubin(1987)]{Rubin1987}
+Donald~B Rubin.
+\newblock \emph{Multiple imputation for nonresponse in surveys}.
+\newblock John Wiley \& Sons, New York, 1987.
+\newblock \doi{10.1002/9780470316696}.
+
+\bibitem[Baraldi and Enders(2010)]{baraldi2010introduction}
+Amanda~N Baraldi and Craig~K Enders.
+\newblock An introduction to modern missing data analyses.
+\newblock \emph{Journal of school psychology}, 48\penalty0 (1):\penalty0 5--37,
+  2010.
+
+\bibitem[Little and Rubin(2019)]{little2019statistical}
+Roderick~JA Little and Donald~B Rubin.
+\newblock \emph{Statistical analysis with missing data}, volume 793.
+\newblock John Wiley \& Sons, 2019.
 
 \bibitem[Herring et~al.(2002)Herring, Ibrahim, and Lipsitz]{herring2002frailty}
 Amy~H Herring, Joseph~G Ibrahim, and Stuart~R Lipsitz.

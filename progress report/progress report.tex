@@ -277,6 +277,17 @@ Similarly, the ascertainment correction in the log-normal frailty can be written
 \end{align}
 
 \section{Log-Likelihood with Missing Data}
+\subsection{Reviews on Missing Data}
+In this subsection, the notations are \textbf{distinct} to all other sections or subsections. 
+The missing data problem was firstly brought by~\citet{rubin1976inference}, and further targetted as a major statistical problem which many methodologists have developed different statistical tools to handle the missing data. 
+Such as the practical book written by~\citet{Rubin1987}, and some comprehensive reviews on current missing data problems by~\citet{baraldi2010introduction}. 
+The missing data mechanism was introduced by~\citet{little2019statistical}. 
+There are three missing data mechanisms, which are Missing Completely at Random (MCAR), Missing at Random (MAR), and Missing Not at Random (MNAR). 
+\begin{defn}(MCAR)\label{defn:MCAR}
+Denote $Y$ as the complete data matrix, and $M$ as the missing data indicator matrix. 
+Define $y_{ij}$ and $m_{ij}$ as $i$-th row (observation) and $j$-th column (variable) for the matrix $Y$ and $M$. 
+\end{defn}
+\subsection{Log-Likelihood and Missing Not at Random}
 Recall the completed parametric survival log-likelihood with ascertainment correction:
 \begin{align} 
     \ell_C(\boldsymbol{\theta})&=\sum_{j=1}^J\sum_{i=1}^{n_j}\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}, z_j) - H(t_{ij}|\mathbf{x}_{ij}, z_j)\\
@@ -630,7 +641,7 @@ Essentially, the Cholesky Decomposition transforms the multivariate normal to a 
 %% References with bibTeX database:
 
 %\bibliographystyle{elsarticle-num}
-\bibliographystyle{plainnat}
+\bibliographystyle{unsrtnat}
 \bibliography{progress.bib}
 %% Authors are advised to submit their bibtex database files. They are
 %% requested to list a bibtex style file in the manuscript if they do
