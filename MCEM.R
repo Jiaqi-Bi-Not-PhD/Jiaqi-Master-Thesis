@@ -686,8 +686,8 @@ for (i in 1:ncol(theta_matrix)) {
    return(logz)
  }
  
- if (frailty.dis == "lognormal") list_z <- lapply(famID, gen_z_lognormal)
- else if (frailty.dist == "gamma") list_z <- lapply(famID, gen_z_gamma)
+ #if (frailty.dis == "lognormal") list_z <- lapply(famID, gen_z_lognormal)
+ #else if (frailty.dist == "gamma") list_z <- lapply(famID, gen_z_gamma)
  
  mcem_step <- function(data, initial_theta, 
                        design, 
