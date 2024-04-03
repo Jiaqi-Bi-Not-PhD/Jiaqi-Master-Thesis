@@ -27,11 +27,21 @@
 \usepackage{xcolor}
 \usepackage{soul}
 \usepackage{natbib}
+%\usepackage{glossaries}
 
 %% The lineno packages adds line numbers. Start line numbering with
 %% \begin{linenumbers}, end it with \end{linenumbers}. Or switch it on
 %% for the whole article with \linenumbers after \end{frontmatter}.
 \usepackage{lineno}
+\usepackage[symbols,nogroupskip,sort=none]{glossaries-extra}
+
+\glsxtrnewsymbol[description={Individual index}]{$i$}{\ensuremath{i}}
+\glsxtrnewsymbol[description={Family (Cluster) index}]{j}{\ensuremath{j}}
+\glsxtrnewsymbol[description={Hazard fucntion}]{h}{\ensuremath{h(\cdot)}}
+\glsxtrnewsymbol[description={Baseline hazard function}]{h_0}{\ensuremath{h_0(\cdot)}}
+\glsxtrnewsymbol[description={Failure/Event or Censored Time}]{t}{\ensuremath{t}}
+\glsxtrnewsymbol[description={Number of individuals}]{$n$}{\ensuremath{n}}
+
 \DeclareMathOperator*{\argminA}{arg\,min}
 \DeclareMathOperator*{\argmaxA}{arg\,max}
 \newtheorem{defn}{Definition}
@@ -63,6 +73,8 @@
 \renewcommand*{\today}{Mar. 29, 2024}
 
 \journal{Dr. Choi \& Dr. Espin-Garcia}
+
+
 
 \begin{document}
 
@@ -157,6 +169,9 @@
     \item MCEM - Both univariate and multivariate missing data
     \item Add a section that talk about when dealing with missing data without using joint distribution of frailty and missing covariate
 \end{enumerate}
+\section{Notations}
+\printunsrtglossary[type=symbols,style=long, title = {List of Notations}]
+
 \section{Weibull Parametric Approach \hl{(Discussions on why use parametric?)}}
 From the beginning of the discussion, I have obtained the model, i.e., the hazard function is
 \begin{equation}
@@ -702,7 +717,6 @@ Essentially, the Cholesky Decomposition transforms the multivariate normal to a 
 %\bibitem{}
 
 %\end{thebibliography}
-
 
 \end{document}
 
