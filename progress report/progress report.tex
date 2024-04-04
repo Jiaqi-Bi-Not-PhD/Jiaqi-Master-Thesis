@@ -35,12 +35,20 @@
 \usepackage{lineno}
 \usepackage[symbols,nogroupskip,sort=none]{glossaries-extra}
 
-\glsxtrnewsymbol[description={Individual index}]{$i$}{\ensuremath{i}}
+\glsxtrnewsymbol[description={Individual index}]{i}{\ensuremath{i}}
 \glsxtrnewsymbol[description={Family (Cluster) index}]{j}{\ensuremath{j}}
 \glsxtrnewsymbol[description={Hazard fucntion}]{h}{\ensuremath{h(\cdot)}}
 \glsxtrnewsymbol[description={Baseline hazard function}]{h_0}{\ensuremath{h_0(\cdot)}}
 \glsxtrnewsymbol[description={Failure/Event or Censored Time}]{t}{\ensuremath{t}}
-\glsxtrnewsymbol[description={Number of individuals}]{$n$}{\ensuremath{n}}
+\glsxtrnewsymbol[description={Number of individuals}]{n}{\ensuremath{n}}
+\glsxtrnewsymbol[description={Number of Families (Clusters)}]{J}{\ensuremath{J}}
+\glsxtrnewsymbol[description={Frailty term}]{z}{\ensuremath{z}}
+\glsxtrnewsymbol[description={Covariates design matrix}]{X}{\ensuremath{\mathbf{x}} or \ensuremath{\mathbf{X}}}
+\glsxtrnewsymbol[description={Model coefficients vector}]{beta}{$\boldsymbol{\beta}$}
+
+
+
+
 
 \DeclareMathOperator*{\argminA}{arg\,min}
 \DeclareMathOperator*{\argmaxA}{arg\,max}
@@ -346,6 +354,27 @@ That is, for the parameters of this distribution, $m_i$ does not depend on any o
     This type of missing depends on the missing data itself, that Person B refuses to provide the response due to the response being comparatively low. 
 \end{eg}
 \subsection{Log-Likelihood and Missing at Random}
+When assuming the data are missing at random, the missingness is only associated to the observed data. 
+The frailty term and the missing data are therefore assumed independent. 
+From the complete log-likelihood:
+\begin{align} 
+    \ell_C(\boldsymbol{\theta})&=\sum_{j=1}^J\sum_{i=1}^{n_j}\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}, z_j) - H(t_{ij}|\mathbf{x}_{ij}, z_j)\\
+    &-\sum_{j=1}^J \log (1-S_{j_p}(a_{j_p}|\mathbf{x}_{j_p}, z_j)) \\
+    &= \sum_{j=1}^J\sum_{i=1}^{n_j}\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij})z_j - H(t_{ij}|\mathbf{x}_{ij})z_j \\
+    &- \sum_{j=1}^{n_j} \log(1- \exp(z_j H_{j_p}(a_{j_p}|\mathbf{x}_{j_p})))
+\end{align}
+We can firstly take the expectations with respect to $z_j$, to derive a closed-form log-likelihood when the frailty term is integrated. 
+We will keep $f(z_j|\upsilon)$ for the frailty distribution in the E-step.
+The E-step can be written as 
+\begin{align} 
+    E(\ell_C(\boldsymbol{\theta})|\boldsymbol{\theta}^{(r)})=&\sum_{j=1}^J\sum_{i=1}^{n_j}\int_{\mathbf{x}_{mis}} \int_{z_j}\Big (\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}, z_j) - H(t_{ij}|\mathbf{x}_{ij}, z_j)\Big )\\
+    &\times f(\mathbf{x}_{ij,mis}|\mathbf{x}_{obs,ij},\psi^{(r)})f(z_j|\upsilon^{(r)})d\mathbf{x}_{ij,mis}dz_j\\
+    &-\sum_{j=1}^J \int_{\mathbf{x}_{mis}} \int_{z_j} \log(1- \exp(z_j H_{j_p}(a_{j_p}|\mathbf{x}_{j_p})))\\
+    &\times f(\mathbf{x}_{ij,mis}|\mathbf{x}_{obs,ij},\psi^{(r)})f(z_j|\upsilon^{(r)})d\mathbf{x}_{ij,mis}dz_j
+\end{align}
+Note that we are able to obtain the integral of the frailty from the above E-step. 
+Then we draw samples from the integral of the missing data. 
+
 \subsection{Log-Likelihood and Missing Not at Random}
 Recall the completed parametric survival log-likelihood with ascertainment correction:
 \begin{align} 
