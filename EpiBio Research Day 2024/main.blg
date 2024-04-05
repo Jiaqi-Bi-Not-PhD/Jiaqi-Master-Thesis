@@ -1,0 +1,49 @@
+This is BibTeX, Version 0.99d (TeX Live 2022)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
+The top-level auxiliary file: main.aux
+The style file: unsrtnat.bst
+Database file #1: ref.bib
+Warning--entry type for "BCCanadaStatistics2023" isn't style-file defined
+--line 21 of file ref.bib
+You've used 11 entries,
+            2481 wiz_defined-function locations,
+            627 strings with 6666 characters,
+and the built_in function-call counts, 4624 in all, are:
+= -- 388
+> -- 247
+< -- 7
++ -- 97
+- -- 74
+* -- 385
+:= -- 741
+add.period$ -- 34
+call.type$ -- 11
+change.case$ -- 22
+chr.to.int$ -- 10
+cite$ -- 11
+duplicate$ -- 215
+empty$ -- 418
+format.name$ -- 89
+if$ -- 964
+int.to.chr$ -- 2
+int.to.str$ -- 12
+missing$ -- 10
+newline$ -- 63
+num.names$ -- 33
+pop$ -- 87
+preamble$ -- 1
+purify$ -- 11
+quote$ -- 0
+skip$ -- 125
+stack$ -- 0
+substring$ -- 265
+swap$ -- 31
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 77
+warning$ -- 0
+while$ -- 43
+width$ -- 0
+write$ -- 150
+(There was 1 warning)

@@ -55,7 +55,7 @@ loglik_frailty_single_gamma <- function(X, Y, theta, cuts=NULL, nbase, data, des
 initial_params <- c(1/41.41327,1,0,0, 1)
 X <- as.matrix(brca1_prs_cca[,c("mgeneI", "PRS")], ncol = 2)
 Y <- as.matrix(brca1_prs_cca[,c("timeBC", "BC")], ncol = 2)
-results <- optim(par = initial_params, fn = loglik_frailty_single_gamma,
+gamma_forgraph <- optim(par = initial_params, fn = loglik_frailty_single_gamma,
       data = brca1_prs_cca, X = X, Y = Y, nbase = 2,
       design = "pop", frailty.dist = "gamma", base.dist = "Weibull",
       agemin = 18, 
@@ -85,15 +85,15 @@ plot_ly(x = ~param1_values, y = ~param1_values, z = ~likelihood_matrix) |>
   add_surface() # 3D plot
 
 ## Plot the log-likelihood, fix baseline
-fixed_param1 <- -4.0376916
-fixed_param2 <- 1.0422499
-fixed_k <- 4.0229869
+fixed_param1 <- -4.101604
+fixed_param2 <- 1.064875
+fixed_k <- 4.354003
 beta1_values <- seq(1, 1.4, by = 0.05)
 beta2_values <- seq(0, 0.4, by = 0.05)
 beta_grid <- expand.grid(beta1 = beta1_values, beta2 = beta2_values)
 likelihood_values <- apply(beta_grid, 1, function(betas) {
   loglik_frailty_single_gamma(X, Y, theta = c(fixed_param1, fixed_param2, betas['beta1'], betas['beta2'], fixed_k), 
-                              nbase = 2, data = brca1_prs_cca1, design = "pop", base.dist = "Weibull", 
+                              nbase = 2, data = brca1_prs_cca, design = "pop", base.dist = "Weibull", 
                               frailty.dist = "gamma", agemin = 18)
 })
 likelihood_values <- -likelihood_values

@@ -373,7 +373,7 @@ The E-step can be written as
     &\times f(\mathbf{x}_{ij,mis}|\mathbf{x}_{obs,ij},\psi^{(r)})f(z_j|\upsilon^{(r)})d\mathbf{x}_{ij,mis}dz_j
 \end{align}
 Note that we are able to obtain the integral of the frailty from the above E-step. 
-Then we draw samples from the integral of the missing data. 
+Then we apply the MCEM on the missing data. 
 
 \subsection{Log-Likelihood and Missing Not at Random}
 Recall the completed parametric survival log-likelihood with ascertainment correction:

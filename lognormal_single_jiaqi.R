@@ -81,7 +81,7 @@ gausshermite <- lognormal_single(X = X, Y = Y, theta = c(1/41.41327,1,0),
                  agemin = 18)
 
 initial_params <- c(1/41.41327,1, 0, 0, 1)
-optim(par = initial_params, fn = lognormal_single,
+log_norm_forgraph <- optim(par = initial_params, fn = lognormal_single,
       data = brca1_prs_cca, X = X, Y = Y, nbase = 2,
       design = "pop", frailty.dist = "lognormal", base.dist = "Weibull",
       agemin = 18, control = list(maxit = 2000))
@@ -99,12 +99,12 @@ optim(par = initial_params, fn = loglik_frailty,
 
 library(plotly)
 param1_values <- seq(from = -7, to = -3, by = 0.1)
-param2_values <- seq(from = 0, to = 4, by = 0.1)
+param2_values <- seq(from = 3, to = 7, by = 0.1)
 param_grid <- expand.grid(param1 = param1_values, param2 = param2_values)
-fixed_beta1 <- 5.428560
-fixed_beta2 <- -7.573826
+fixed_alpha <- -10.910323
+fixed_lambda <- 1.408696
 likelihood_values <- apply(param_grid, 1, function(params) {
-  lognormal_single(X, Y, theta = c(params['param1'], params['param2'], fixed_beta1, fixed_beta2), nbase = 2, data = brca1_prs_cca1, design = "pop", base.dist = "Weibull", frailty.dist = "lognormal", agemin = 18)
+  lognormal_single(X, Y, theta = c(fixed_alpha, fixed_lambda, params['param1'], params['param2']), nbase = 2, data = brca1_prs_cca1, design = "pop", base.dist = "Weibull", frailty.dist = "lognormal", agemin = 18)
 })
 likelihood_values <- -log(likelihood_values)
 likelihood_matrix <- matrix(likelihood_values, nrow = length(param1_values), ncol = length(param2_values))
@@ -114,23 +114,25 @@ filled.contour(x = param1_values, y = param2_values, z = likelihood_matrix,
 plot_ly(x = ~param1_values, y = ~param1_values, z = ~likelihood_matrix) |>
   add_surface()
 
-fixed_param1 <- -5.200079
-fixed_param2 <- 1.021575
-beta1_values <- seq(0, 5, by = 0.1)
-beta2_values <- seq(-30, -20, by = 0.2)
+fixed_param1 <- -10.910323
+fixed_param2 <- 1.408696
+beta1_values <- seq(3, 8, by = 0.01)
+beta2_values <- seq(-7, -2, by = 0.01)
 beta_grid <- expand.grid(beta1 = beta1_values, beta2 = beta2_values)
-beta_grid <- expand.grid(beta1 = beta1_values)
+#beta_grid <- expand.grid(beta1 = beta1_values)
 likelihood_values <- apply(beta_grid, 1, function(betas) {
-  lognormal_single(X, Y, theta = c(fixed_param1, fixed_param2, betas['beta1']), nbase = 2, data = brca1_prs, design = "pop", base.dist = "Weibull", frailty.dist = "lognormal", agemin = 18)
+  lognormal_single(X, Y, theta = c(fixed_param1, fixed_param2, betas['beta1'], betas['beta2']), nbase = 2, data = brca1_prs_cca, design = "pop", base.dist = "Weibull", frailty.dist = "lognormal", agemin = 18)
 })
 likelihood_values <- -likelihood_values
 likelihood_matrix <- matrix(likelihood_values, nrow = length(beta1_values), ncol = length(beta2_values))
+
+
 
 plot(x = beta1_values, y = likelihood_values, type = "l")
 lines(x = 1.7)
 
 filled.contour(x = beta1_values, y = beta2_values, z = likelihood_matrix,
-               xlab = "beta1", ylab = "beta2", main = "Llhd Contour Plot")
+               xlab = "beta1", ylab = "beta2", main = "Log-Normal Frailty Contour Plot")
 plot_ly(x = ~beta1_values, y = ~beta2_values, z = ~likelihood_matrix) |>
   add_surface()
 
