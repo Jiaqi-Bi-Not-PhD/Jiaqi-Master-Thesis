@@ -258,7 +258,7 @@ Let $\boldsymbol{\theta}=(\beta_1, \beta_2, \alpha, \lambda, k)$ for Gamma frail
     &=\sum_{j=1}^J\log\left [h(t_{ij}|\mathbf{x}_{ij})^{\delta_{ij}} \frac{(k+d_j-1)!}{k!k^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}))}{k})^{-k-d_j} \right ]\\
     &=\sum_{j=1}^J\left [\sum_{i=1}^{n_j}(\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij})) + \log\Big (\frac{(k+d_j-1)!}{k!k^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}))}{k})^{-k-d_j}\Big )\right ]
 \end{align}
-For each family $j$, the ascertainment $A_j$ is defined to be the probability of the proband $p$ being ascertained by the age $a_{j_p}$ at examination. Applying the ascertainment correction for the log-likelihood in family $j$: 
+For each family $j$, the ascertainment $A_j$ is defined to be the probability of the proband $p$ being ascertained by the age $a_{j_p}$ at examination, i.e., $A_j=P(T_{p_j} < a_{p_j})$ where $a_{p_j}$ is proband's age at study entry. Applying the ascertainment correction for the log-likelihood in family $j$: 
 \begin{equation}
     \tilde{\ell}_{j}(\boldsymbol{\theta})=\ell_j(\boldsymbol{\theta})-\log A_j(\boldsymbol{\theta})
 \end{equation}
@@ -370,6 +370,7 @@ That is, for the parameters of this distribution, $m_i$ does not depend on any o
 \subsection{Log-Likelihood and Missing at Random}
 When assuming the data are missing at random, the missingness is only associated to the observed data. 
 The frailty term and the missing data are therefore assumed independent. 
+Denote $w_{ij} = (t_{ij}, \delta_{ij})$ be the observed survival data
 From the complete log-likelihood:
 \begin{align} 
     \ell_C(\boldsymbol{\theta})&=\sum_{j=1}^J\sum_{i=1}^{n_j}\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}, z_j) - H(t_{ij}|\mathbf{x}_{ij}, z_j)\\
@@ -379,12 +380,13 @@ From the complete log-likelihood:
 \end{align}
 We can firstly take the expectations with respect to $z_j$, to derive a closed-form log-likelihood when the frailty term is integrated. 
 We will keep $f(z_j|\upsilon)$ for the frailty distribution in the E-step.
+In the MCEM framework, define $\boldsymbol{\theta}^{(r)}$ as $r$-th updates. 
 The E-step can be written as 
 \begin{align} 
     E(\ell_C(\boldsymbol{\theta})|\boldsymbol{\theta}^{(r)})=&\sum_{j=1}^J\sum_{i=1}^{n_j}\int_{\mathbf{x}_{mis}} \int_{z_j}\Big (\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}, z_j) - H(t_{ij}|\mathbf{x}_{ij}, z_j)\Big )\\
-    &\times f(\mathbf{x}_{ij,mis}|\mathbf{x}_{obs,ij},\psi^{(r)})f(z_j|\upsilon^{(r)})d\mathbf{x}_{ij,mis}dz_j\\
+    &\times f(\mathbf{x}_{ij,mis}|\mathbf{x}_{ij,obs},\psi^{(r)})f(z_j|\upsilon^{(r)})d\mathbf{x}_{ij,mis}dz_j\\
     &-\sum_{j=1}^J \int_{\mathbf{x}_{mis}} \int_{z_j} \log(1- \exp(z_j H_{j_p}(a_{j_p}|\mathbf{x}_{j_p})))\\
-    &\times f(\mathbf{x}_{ij,mis}|\mathbf{x}_{obs,ij},\psi^{(r)})f(z_j|\upsilon^{(r)})d\mathbf{x}_{ij,mis}dz_j
+    &\times f(\mathbf{x}_{ij,mis}|\mathbf{x}_{ij,obs},\psi^{(r)})f(z_j|\upsilon^{(r)})d\mathbf{x}_{ij,mis}dz_j
 \end{align}
 Note that we are able to obtain the integral of the frailty from the above E-step. 
 Then we apply the MCEM on the missing data. 
