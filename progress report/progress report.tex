@@ -258,16 +258,16 @@ Let $\boldsymbol{\theta}=(\beta_1, \beta_2, \alpha, \lambda, k)$ for Gamma frail
     &=\sum_{j=1}^J\log\left [h(t_{ij}|\mathbf{x}_{ij})^{\delta_{ij}} \frac{(k+d_j-1)!}{k!k^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}))}{k})^{-k-d_j} \right ]\\
     &=\sum_{j=1}^J\left [\sum_{i=1}^{n_j}(\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij})) + \log\Big (\frac{(k+d_j-1)!}{k!k^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}))}{k})^{-k-d_j}\Big )\right ]
 \end{align}
-For each family $j$, the ascertainment $A_j$ is defined to be the probability of the proband $p$ being ascertained by the age $a_{j_p}$ at examination, i.e., $A_j=P(T_{p_j} < a_{p_j})$ where $a_{p_j}$ is proband's age at study entry. Applying the ascertainment correction for the log-likelihood in family $j$: 
+For each family $j$, the ascertainment $A_j$ is defined to be the probability of the proband $p$ being ascertained by the age $a_{p_j}$ at examination, i.e., $A_j=P(T_{p_j} < a_{p_j})$ where $a_{p_j}$ is proband's age at study entry. Applying the ascertainment correction for the log-likelihood in family $j$: 
 \begin{equation}
     \tilde{\ell}_{j}(\boldsymbol{\theta})=\ell_j(\boldsymbol{\theta})-\log A_j(\boldsymbol{\theta})
 \end{equation}
-where $\tilde{\ell}$ is the log-likelihood with ascertainment correction, and $\ell$ is the crude log-likelihood. Define $\mathbf{x}_{j_p}$ the covariate matrix for proband in family $j$. Note we can still apply Laplace transform here, such that
+where $\tilde{\ell}$ is the log-likelihood with ascertainment correction, and $\ell$ is the crude log-likelihood. Define $\mathbf{x}_{p_j}$ the covariate matrix for proband in family $j$. Note we can still apply Laplace transform here, such that
 \begin{align}
-    A_j(\boldsymbol{\theta})&=1-S_{j_p}(a_{j_p}|\mathbf{x}_{j_p})\\
-    &=1-\int_0^{\infty} S_{j_p}(a_{j_p}|\mathbf{x}_{j_p},z_j)f(z_j)dz_j\\
-    &=1-\int_0^{\infty}\exp(-z_j\cdot H_{j_p}(a_{j_p}|\mathbf{x}_{j_p}))f(z_j)dz_j\\
-    &=1-(1+\frac{H_{j_p}(a_{j_p}|\mathbf{x}_{j_p})}{k})^{-k}
+    A_j(\boldsymbol{\theta})&=1-S_{p_j}(a_{p_j}|\mathbf{x}_{p_j})\\
+    &=1-\int_0^{\infty} S_{p_j}(a_{p_j}|\mathbf{x}_{p_j},z_j)f(z_j)dz_j\\
+    &=1-\int_0^{\infty}\exp(-z_j\cdot H_{p_j}(a_{p_j}|\mathbf{x}_{p_j}))f(z_j)dz_j\\
+    &=1-(1+\frac{H_{p_j}(a_{p_j}|\mathbf{x}_{p_j})}{k})^{-k}
 \end{align}
 \section{Log-Normal Frailty}
 The log-normal frailty is not the power-variance-function (PVF) family, so there is no closed form for Laplace transform or expressions for survivors. But we are able to estimate the Laplace transform using Gauss Hermite Quadrature. We typically standardize the log-normal frailty $Z$ as
@@ -310,8 +310,8 @@ where $q$ denotes the $q$-th element of Gauss Hermite Quadrature, i.e., $\omega_
 \end{equation}
 Similarly, the ascertainment correction in the log-normal frailty can be written as 
 \begin{align}
-    A_j(\boldsymbol{\theta})&=1-\int_{-\infty}^{\infty} \exp(-z H(a_{j_p}|\mathbf{x}_{j_p}))f(z)dz\\
-    &=1-\sum_{q=1}^{N_{q}}\omega_{q} \exp\left (-(\sum_{i=1}^{n_j} H(a_{j_p}|\mathbf{x}_{j_p}))\exp (\sqrt{2}\sigma y_{q_p})\right )
+    A_j(\boldsymbol{\theta})&=1-\int_{-\infty}^{\infty} \exp(-z H(a_{p_j}|\mathbf{x}_{p_j}))f(z)dz\\
+    &=1-\sum_{q=1}^{N_{q}}\omega_{q} \exp\left (-(\sum_{i=1}^{n_j} H(a_{p_j}|\mathbf{x}_{p_j}))\exp (\sqrt{2}\sigma y_{q_p})\right )
 \end{align}
 
 \section{Log-Likelihood with Missing Data}
@@ -370,67 +370,70 @@ That is, for the parameters of this distribution, $m_i$ does not depend on any o
 \subsection{Log-Likelihood and Missing at Random}
 When assuming the data are missing at random, the missingness is only associated to the observed data. 
 The frailty term and the missing data are therefore assumed independent. 
-Denote $w_{ij} = (t_{ij}, \delta_{ij})$ be the observed survival data
+Denote $w_{ij} = (t_{ij}, \delta_{ij})$ be the observed survival data.
 From the complete log-likelihood:
+
 \begin{align} 
     \ell_C(\boldsymbol{\theta})&=\sum_{j=1}^J\sum_{i=1}^{n_j}\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}, z_j) - H(t_{ij}|\mathbf{x}_{ij}, z_j)\\
-    &-\sum_{j=1}^J \log (1-S_{j_p}(a_{j_p}|\mathbf{x}_{j_p}, z_j)) \\
+    &-\sum_{j=1}^J \log (1-S_{p_j}(a_{p_j}|\mathbf{x}_{p_j}, z_j)) \\
     &= \sum_{j=1}^J\sum_{i=1}^{n_j}\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij})z_j - H(t_{ij}|\mathbf{x}_{ij})z_j \\
-    &- \sum_{j=1}^{n_j} \log(1- \exp(z_j H_{j_p}(a_{j_p}|\mathbf{x}_{j_p})))
+    &- \sum_{j=1}^{n_j} \log(1- \exp(z_j H_{p_j}(a_{p_j}|\mathbf{x}_{p_j})))
 \end{align}
-We can firstly take the expectations with respect to $z_j$, to derive a closed-form log-likelihood when the frailty term is integrated. 
-We will keep $f(z_j|\upsilon)$ for the frailty distribution in the E-step.
+
 In the MCEM framework, define $\boldsymbol{\theta}^{(r)}$ as $r$-th updates. 
 The E-step can be written as 
-\begin{align} 
-    E(\ell_C(\boldsymbol{\theta})|\boldsymbol{\theta}^{(r)})=&\sum_{j=1}^J\sum_{i=1}^{n_j}\int_{\mathbf{x}_{mis}} \int_{z_j}\Big (\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}, z_j) - H(t_{ij}|\mathbf{x}_{ij}, z_j)\Big )\\
-    &\times f(\mathbf{x}_{ij,mis}|\mathbf{x}_{ij,obs},\psi^{(r)})f(z_j|\upsilon^{(r)})d\mathbf{x}_{ij,mis}dz_j\\
-    &-\sum_{j=1}^J \int_{\mathbf{x}_{mis}} \int_{z_j} \log(1- \exp(z_j H_{j_p}(a_{j_p}|\mathbf{x}_{j_p})))\\
-    &\times f(\mathbf{x}_{ij,mis}|\mathbf{x}_{ij,obs},\psi^{(r)})f(z_j|\upsilon^{(r)})d\mathbf{x}_{ij,mis}dz_j
-\end{align}
-Note that we are able to obtain the integral of the frailty from the above E-step. 
-Then we apply the MCEM on the missing data. 
 
-\subsection{Log-Likelihood and Missing Not at Random}
-Recall the completed parametric survival log-likelihood with ascertainment correction:
-\begin{align} 
-    \ell_C(\boldsymbol{\theta})&=\sum_{j=1}^J\sum_{i=1}^{n_j}\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}, z_j) - H(t_{ij}|\mathbf{x}_{ij}, z_j)\\
-    &-\sum_{j=1}^J \log (1-S_{j_p}(a_{j_p}|\mathbf{x}_{j_p}, z_j)) \\
-    &= \sum_{j=1}^J\sum_{i=1}^{n_j}\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij})z_j - H(t_{ij}|\mathbf{x}_{ij})z_j \\
-    &- \sum_{j=1}^{n_j} \log(1- \exp(z_j H_{j_p}(a_{j_p}|\mathbf{x}_{j_p})))
-\end{align}
-When accounting for the frailty and missing data, the E-step is:
 \begin{align} 
     E(\ell_C(\boldsymbol{\theta})|\boldsymbol{\theta}^{(r)})=&\sum_{j=1}^J\sum_{i=1}^{n_j}\int_{\mathbf{x}_{mis}, z_j}\Big (\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}, z_j) - H(t_{ij}|\mathbf{x}_{ij}, z_j)\Big )\\
     &\times f(\mathbf{x}_{ij,mis}, z_j|\mathbf{x}_{obs,ij}, \boldsymbol{\theta}^{(r)})d\mathbf{x}_{ij,mis}dz_j\\
-    &-\sum_{j=1}^J \int_{\mathbf{x}_{mis}, z_j} \log(1- \exp(z_j H_{j_p}(a_{j_p}|\mathbf{x}_{j_p})))\\
+    &-\sum_{j=1}^J \int_{\mathbf{x}_{mis}, z_j} \log(1- \exp(z_j H_{p_j}(a_{p_j}|\mathbf{x}_{p_j})))\\
     &\times f(\mathbf{x}_{ij,mis}, z_j|\mathbf{x}_{obs,ij}, \boldsymbol{\theta}^{(r)})d\mathbf{x}_{ij,mis}dz_j
 \end{align}
+
 such that we need to integrate out the joint density of the frailty term and the missing covariate from $f(\mathbf{x}_{ij,mis}, z_j|\mathbf{x}_{obs,ij}, \boldsymbol{\theta}^{(r)})$. 
 There are selections of the frailty density, such as Gamma distribution, log-normal distribution, and etc. 
 In general, let's write $f(z_j|\upsilon)$ for the frailty distribution may be chosen with some parameters $\upsilon$. 
-Proposed by~\citet{herring2002frailty}, the joint distribution of the frailty and the missing data can be adapted as:
+Proposed by~\citet{herring2002frailty}, the joint distribution of the frailty and the missing data can be adapted in our scenario that accounting for the ascertainment:
+
 \begin{align} 
-    f(z_j,\mathbf{x}_{mis,ij}|\mathbf{x}_{obs,ij}, \boldsymbol{\theta}^{(r)})=f(\mathbf{x}_{mis, ij}|\mathbf{x}_{obs,ij}, z_j, \boldsymbol{\theta}^{(r)})f(z_j|\boldsymbol{\theta}^{(r)})
+    f(\mathbf{x}_{mis,ij}, z_j|\mathbf{x}_{obs,ij}, w_{ij}, T_{p_j}<a_{p_j}, \boldsymbol{\theta}^{(r)})&=f(\mathbf{x}_{mis,ij}|\mathbf{x}_{obs,ij}, w_{ij}, z_j, T_{p_j}<a_{p_j}, \boldsymbol{\theta}^{(r)})\\
+    &\times f(z_j|\mathbf{x}_{obs,ij}, w_{ij}, T_{p_j}<a_{p_j}, \boldsymbol{\theta}^{(r)})
 \end{align}
-while this has a form of efficient sampling, so we can write
+
+we define $\Lambda = (\boldsymbol{\beta}, \alpha, \lambda)$, then further we can write
+
 \begin{align} 
-    f(z_j, \mathbf{x}_{mis,ij}|\mathbf{x}_{obs,ij}, \boldsymbol{\theta}^{(r)})&\propto f(t_{ij}, \delta_{ij}|\mathbf{x}_{mis,ij}, \mathbf{x}_{obs,ij}, z_j, a_{j_p}, \boldsymbol{\beta}^{(r)})\\
-    &\times f(\mathbf{x}_{mis,ij}|\mathbf{x}_{obs,ij}, \psi^{(r)})f(z_j|\upsilon^{(r)})
+    &f(\mathbf{x}_{mis,ij}, z_j|\mathbf{x}_{obs,ij}, w_{ij}, T_{p_j}<a_{p_j}, \boldsymbol{\theta}^{(r)})\\
+    &=\frac{f(w_{ij}|\mathbf{x}_{mis,ij}, \mathbf{x}_{obs,ij}, z_j, T_{p_j}<a_{p_j}, \Lambda^{(r)})f(\mathbf{x}_{mis,ij}, \mathbf{x}_{obs,ij}|\psi^{(r)})f(z_j|\upsilon^{(r)})}{\int_{\mathbf{x}_{mis,ij},z_j}f(w_{ij}|\mathbf{x}_{mis,ij}, \mathbf{x}_{obs,ij}, z_j, T_{p_j}<a_{p_j}, \Lambda^{(r)})f(\mathbf{x}_{mis,ij}, \mathbf{x}_{obs,ij}|\psi^{(r)})f(z_j|\upsilon^{(r)})dz_jd\mathbf{x}_{mis,ij}}\\
+    &\propto f(w_{ij}|\mathbf{x}_{mis,ij}, \mathbf{x}_{obs,ij}, z_j, T_{p_j}<a_{p_j}, \Lambda^{(r)})f(\mathbf{x}_{mis,ij}, \mathbf{x}_{obs,ij}|\psi^{(r)})f(z_j|\upsilon^{(r)})
 \end{align}
-Clearly, we know $f(t_{ij}, \delta_{ij}|\mathbf{x}_{mis,ij}, \mathbf{x}_{obs,ij}, z_j, \boldsymbol{\beta}^{(r)})$ is the likelihood of one single observation $j$ in family $j$, also we know the distribution of $f(\mathbf{x}_{ij}|\psi)$, as well as the frailty distribution $f(z_j|\upsilon)$. 
-Therefore, in our case, we can write 
-\begin{align} 
-    f(z_j, \mathbf{x}_{mis,ij}|\mathbf{x}_{obs,ij}, \boldsymbol{\theta}^{(r)})&\propto f(z_j|\upsilon^{(r)})\Big [ \prod_{i=1}^{n_j} f(\mathbf{x}_{mis,ij}|\mathbf{x}_{obs,ij}, \psi^{(r)})\\ 
-    &\times h^{(r)}(t_{ij}|\mathbf{x}_{ij}, z_j)^{\delta_{ij}}\exp (-H^{(r)}(t_{ij}|\mathbf{x}_{ij}, z_j))\Big ]
-\end{align}
+
+Clearly, we know $f(w_{ij}|\mathbf{x}_{mis,ij}, \mathbf{x}_{obs,ij}, z_j, T_{p_j}<a_{p_j}, \boldsymbol{\beta}^{(r)})$ is the likelihood of one single observation $i$ in family $j$, also we know the distribution of $f(\mathbf{x}_{ij}|\psi)$, as well as the frailty distribution $f(z_j|\upsilon)$. 
+Therefore, in our case, we can apply Gibb's sampler where 
+
+\begin{enumerate} 
+    \item We sample the missing data first, which we can obtain that 
+    \begin{align} 
+        f(\mathbf{x}_{mis,ij}|\mathbf{x}_{obs,ij}, w_{ij}, z_j, T_{p_j}<a_{p_j}, \boldsymbol{\theta}^{(r)})&\propto f(w_{ij}|\boldsymbol{x}_{mis,ij}, \boldsymbol{x}_{obs,ij}, z_j, T_{p_j}<a_{p_j}, \Lambda^{(r)})\\
+        &\times f(\mathbf{x}_{mis,ij}|\mathbf{x}_{obs,ij},\psi^{(r)})
+    \end{align}
+    In this case, the missing data will be filled for each iteration $r$, that being said, all data will be ``observed" in this case. 
+    Therefore, we will use $\mathbf{\tilde{x}}_{ij}$ to simply denote complete covariates. 
+    \item In order to approach the joint distribution, we now need to sample the frailty $z_j$ from 
+    \begin{align} 
+        f(z_j|\mathbf{\tilde{x}}_{ij}, w_{ij}, T_{p_j}<a_{p_j}, \boldsymbol{\theta}^{(r)})\propto \prod_{i=1}^{n_j}f(w_{ij}|\mathbf{\tilde{x}}_{ij}, T_{p_j}<a_{p_j}, \Lambda^{(r)})\times f(z_j|\upsilon^{(r)})
+    \end{align}
+    \item The Gibb's sampler has been proven as an efficient sampling method to closely approach the desired joint distribution \cite{gelfand1990sampling}. 
+    We can get a frailty distribution based on what we have sampled for the missing data, and we can obtain the missing data distribution based on what we have sampled from the frailty distribution. 
+\end{enumerate}
+We will obtain $M$ completed dataset based on the Gibb's sampler. 
 In general, without the specification of the frailty distribution, the E-step in MCEM can be written as 
 \begin{align} 
     Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)})&=\sum_{j=1}^J \frac{1}{M_j}\sum_{m=1}^{M_j}\sum_{i=1}^{n_j} \Big ( \delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}^{(m)}, z_j^{(m)}) - H(t_{ij}|\mathbf{x}_{ij}^{(m)}, z_j^{(m)})\Big )\\
-    &+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\log(1- \exp(z_j H_{j_p}(a_{j_p}|\mathbf{x}_{j_p})))\\
+    &+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\log(1- \exp(z_j H_{p_j}(a_{p_j}|\mathbf{x}_{p_j})))\\
     &+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\sum_{i=1}^{n_j}\log f(\mathbf{x}_{ij,mis}^{(m)}, z_j^{(m)}|\mathbf{x}_{obs,ij}, \boldsymbol{\theta})\\
     &=\sum_{j=1}^J \frac{1}{M_j}\sum_{m=1}^{M_j}\sum_{i=1}^{n_j} \Big ( \delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}^{(m)}, z_j^{(m)}) - H(t_{ij}|\mathbf{x}_{ij}^{(m)}, z_j^{(m)})\Big )\\
-    &+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\log(1- \exp(z_j H_{j_p}(a_{j_p}|\mathbf{x}_{j_p})))\\
+    &+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\log(1- \exp(z_j H_{p_j}(a_{p_j}|\mathbf{x}_{p_j})))\\
     &+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\sum_{i=1}^{n_j}\log f(\mathbf{x}_{mis,ij}^{(m)}|\mathbf{x}_{obs,ij}, \psi)+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\sum_{i=1}^{n_j}\log f(z_j^{(m)}|\upsilon)
 \end{align} 
 where for example, when $x_{mis,ij,1}$ is missing and $x_{obs,ij,2}$ is observed, we take
