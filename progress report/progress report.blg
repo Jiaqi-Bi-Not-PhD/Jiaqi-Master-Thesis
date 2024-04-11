@@ -1,46 +1,48 @@
-This is BibTeX, Version 0.99d (TeX Live 2019)
-Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+This is BibTeX, Version 0.99d (TeX Live 2022)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: progress report.aux
 The style file: unsrtnat.bst
 Database file #1: progress.bib
-You've used 7 entries,
+Warning--I didn't find a database entry for "gelfand1990sampling"
+You've used 11 entries,
             2481 wiz_defined-function locations,
-            602 strings with 5521 characters,
-and the built_in function-call counts, 2652 in all, are:
-= -- 228
-> -- 119
-< -- 6
-+ -- 48
-- -- 34
-* -- 206
-:= -- 425
-add.period$ -- 22
-call.type$ -- 7
-change.case$ -- 12
-chr.to.int$ -- 7
-cite$ -- 7
-duplicate$ -- 133
-empty$ -- 250
-format.name$ -- 47
-if$ -- 554
+            631 strings with 6520 characters,
+and the built_in function-call counts, 4408 in all, are:
+= -- 356
+> -- 257
+< -- 7
++ -- 98
+- -- 76
+* -- 363
+:= -- 725
+add.period$ -- 34
+call.type$ -- 11
+change.case$ -- 19
+chr.to.int$ -- 11
+cite$ -- 11
+duplicate$ -- 209
+empty$ -- 389
+format.name$ -- 95
+if$ -- 909
 int.to.chr$ -- 1
-int.to.str$ -- 8
-missing$ -- 9
-newline$ -- 44
-num.names$ -- 21
-pop$ -- 56
+int.to.str$ -- 12
+missing$ -- 14
+newline$ -- 64
+num.names$ -- 33
+pop$ -- 89
 preamble$ -- 1
-purify$ -- 7
+purify$ -- 11
 quote$ -- 0
-skip$ -- 78
+skip$ -- 119
 stack$ -- 0
-substring$ -- 139
-swap$ -- 15
+substring$ -- 213
+swap$ -- 23
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 43
+type$ -- 68
 warning$ -- 0
-while$ -- 24
+while$ -- 38
 width$ -- 0
-write$ -- 100
+write$ -- 151
+(There was 1 warning)

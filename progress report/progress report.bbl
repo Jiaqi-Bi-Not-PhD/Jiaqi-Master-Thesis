@@ -1,9 +1,48 @@
-\begin{thebibliography}{7}
+\begin{thebibliography}{11}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Rudolph et~al.(2018)Rudolph, Cole, and Edwards]{rudolph2018parametric}
+Jacqueline~E Rudolph, Stephen~R Cole, and Jessie~K Edwards.
+\newblock Parametric assumptions equate to hidden observations: comparing the
+  efficiency of nonparametric and parametric models for estimating time to aids
+  or death in a cohort of hiv-positive women.
+\newblock \emph{BMC medical research methodology}, 18:\penalty0 1--5, 2018.
+
+\bibitem[Berger and Casella(2001)]{berger2001statistical}
+Roger~L Berger and George Casella.
+\newblock \emph{Statistical inference}.
+\newblock Duxbury, 2001.
+
+\bibitem[Herring et~al.(2002)Herring, Ibrahim, and Lipsitz]{herring2002frailty}
+Amy~H Herring, Joseph~G Ibrahim, and Stuart~R Lipsitz.
+\newblock Frailty models with missing covariates.
+\newblock \emph{Biometrics}, 58\penalty0 (1):\penalty0 98--109, 2002.
+
+\bibitem[Park et~al.(2015)Park, Lee, Lee, Herold, Hooli, Mullin, Park, Park,
+  Bertram, Lange, et~al.]{park2015adjusting}
+Suyeon Park, Sungyoung Lee, Young Lee, Christine Herold, Basavaraj Hooli,
+  Kristina Mullin, Taesung Park, Changsoon Park, Lars Bertram, Christoph Lange,
+  et~al.
+\newblock Adjusting heterogeneous ascertainment bias for genetic association
+  analysis with extended families.
+\newblock \emph{BMC medical genetics}, 16:\penalty0 1--12, 2015.
+
+\bibitem[Clark et~al.(2005)Clark, Hubisz, Bustamante, Williamson, and
+  Nielsen]{clark2005ascertainment}
+Andrew~G Clark, Melissa~J Hubisz, Carlos~D Bustamante, Scott~H Williamson, and
+  Rasmus Nielsen.
+\newblock Ascertainment bias in studies of human genome-wide polymorphism.
+\newblock \emph{Genome research}, 15\penalty0 (11):\penalty0 1496--1502, 2005.
+
+\bibitem[Balan and Putter(2020)]{balan2020tutorial}
+Theodor~A Balan and Hein Putter.
+\newblock A tutorial on frailty models.
+\newblock \emph{Statistical methods in medical research}, 29\penalty0
+  (11):\penalty0 3424--3454, 2020.
 
 \bibitem[Rubin(1976)]{rubin1976inference}
 Donald~B Rubin.
@@ -33,16 +72,5 @@ Miriam~Seoane Santos, Ricardo~Cardoso Pereira, Adriana~Fonseca Costa,
   Jastin~Pompeu Soares, Jo{\~a}o Santos, and Pedro~Henriques Abreu.
 \newblock Generating synthetic missing data: A review by missing mechanism.
 \newblock \emph{IEEE Access}, 7:\penalty0 11651--11667, 2019.
-
-\bibitem[Herring et~al.(2002)Herring, Ibrahim, and Lipsitz]{herring2002frailty}
-Amy~H Herring, Joseph~G Ibrahim, and Stuart~R Lipsitz.
-\newblock Frailty models with missing covariates.
-\newblock \emph{Biometrics}, 58\penalty0 (1):\penalty0 98--109, 2002.
-
-\bibitem[Gelfand and Smith(1990)]{gelfand1990sampling}
-Alan~E Gelfand and Adrian~FM Smith.
-\newblock Sampling-based approaches to calculating marginal densities.
-\newblock \emph{Journal of the American statistical association}, 85\penalty0
-  (410):\penalty0 398--409, 1990.
 
 \end{thebibliography}
