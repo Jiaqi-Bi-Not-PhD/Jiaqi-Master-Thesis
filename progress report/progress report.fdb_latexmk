@@ -1,12 +1,12 @@
 # Fdb version 3
-["bibtex progress report"] 1712874406 "progress report.aux" "progress report.bbl" "progress report" 1712874406
+["bibtex progress report"] 1712874406 "progress report.aux" "progress report.bbl" "progress report" 1712874849
   "/usr/local/texlive/2019/texmf-dist/bibtex/bst/natbib/unsrtnat.bst" 1233624470 24550 a41a6405f4de768c43e871d9fbce2bc8 ""
   "progress report.aux" 1712874406 4616 31d1dcade77aa85bbad75c4516a61d55 "pdflatex"
-  "progress.bib" 1712815082 3558 ab5b3255fbd00ac48d0b03e38f3825a9 ""
+  "progress.bib" 1712874836 3558 ab5b3255fbd00ac48d0b03e38f3825a9 ""
   (generated)
-  "progress report.bbl"
   "progress report.blg"
-["pdflatex"] 1712874406 "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.tex" "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.pdf" "progress report" 1712874406
+  "progress report.bbl"
+["pdflatex"] 1712874406 "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.tex" "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.pdf" "progress report" 1712874849
   "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.aux" 1712874406 4616 31d1dcade77aa85bbad75c4516a61d55 ""
   "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.tex" 1712874405 50169 6cf72ab5ca735adafeb90718f5910f44 ""
   "/usr/local/texlive/2019/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
@@ -161,9 +161,9 @@
   "progress report.spl" 1712874406 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
   "progress report.tex" 1712874405 50169 6cf72ab5ca735adafeb90718f5910f44 ""
   (generated)
-  "progress report.spl"
-  "progress report.log"
-  "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.pdf"
-  "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.log"
-  "progress report.aux"
   "progress report.pdf"
+  "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.pdf"
+  "progress report.aux"
+  "progress report.spl"
+  "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.log"
+  "progress report.log"
