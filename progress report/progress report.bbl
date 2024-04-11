@@ -1,4 +1,4 @@
-\begin{thebibliography}{11}
+\begin{thebibliography}{12}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -72,5 +72,11 @@ Miriam~Seoane Santos, Ricardo~Cardoso Pereira, Adriana~Fonseca Costa,
   Jastin~Pompeu Soares, Jo{\~a}o Santos, and Pedro~Henriques Abreu.
 \newblock Generating synthetic missing data: A review by missing mechanism.
 \newblock \emph{IEEE Access}, 7:\penalty0 11651--11667, 2019.
+
+\bibitem[Gelfand and Smith(1990)]{gelfand1990sampling}
+Alan~E Gelfand and Adrian~FM Smith.
+\newblock Sampling-based approaches to calculating marginal densities.
+\newblock \emph{Journal of the American statistical association}, 85\penalty0
+  (410):\penalty0 398--409, 1990.
 
 \end{thebibliography}

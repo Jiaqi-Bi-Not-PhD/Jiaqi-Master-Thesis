@@ -43,21 +43,34 @@
 \glsxtrnewsymbol[description={Some Time for the proband}]{a}{\ensuremath{a}}
 \glsxtrnewsymbol[description={Event Time}]{T}{\ensuremath{T}}
 \glsxtrnewsymbol[description={Event indicator for individual $i$ in family $j$}]{delta}{$\delta_{ij}$}
+\glsxtrnewsymbol[description={The observed survival data ($t,\delta$)}]{w}{\ensuremath{w}}
 \glsxtrnewsymbol[description={Number of individuals}]{n}{\ensuremath{n}}
 \glsxtrnewsymbol[description={Number of Families (Clusters)}]{J}{\ensuremath{J}}
+\glsxtrnewsymbol[description={Index of the sampled completed dataset in the MCEM}]{m}{\ensuremath{m}}
+\glsxtrnewsymbol[description={Number of the sampled completed dataset in the MCEM}]{M}{\ensuremath{M}}
 \glsxtrnewsymbol[description={Frailty term}]{z}{\ensuremath{z}}
+\glsxtrnewsymbol[description={$q$-th element of Gauss Hermite Quadrature}]{q}{\ensuremath{q}}
+\glsxtrnewsymbol[description={$q$-th weight of Gauss Hermite Quadrature}]{omega}{\ensuremath{\omega}}
+\glsxtrnewsymbol[description={$q$-th node of Gauss Hermite Quadrature}]{yq}{\ensuremath{y_q}}
+\glsxtrnewsymbol[description={Total number of quadratures}]{Nq}{\ensuremath{N_q}}
 \glsxtrnewsymbol[description={Hazard fucntion}]{h}{\ensuremath{h(\cdot)}}
 \glsxtrnewsymbol[description={Baseline hazard function}]{h_0}{\ensuremath{h_0(\cdot)}}
 \glsxtrnewsymbol[description={Cumulative hazard fucntion}]{H}{\ensuremath{H(\cdot)}}
 \glsxtrnewsymbol[description={Survival fucntion}]{S}{\ensuremath{S(\cdot)}}
 \glsxtrnewsymbol[description={Ascertainment of family $j$ into the study}]{A}{$A_j(\cdot)$}
+\glsxtrnewsymbol[description={Likelihood function}]{L}{$L(\cdot)$}
+\glsxtrnewsymbol[description={Log-likelihood function}]{ell}{$\ell(\cdot)$}
+\glsxtrnewsymbol[description={Laplace transform}]{lap}{$\mathscr{L}(\cdot)$}
 \glsxtrnewsymbol[description={Covariates}]{X}{\ensuremath{\mathbf{x}}}
 \glsxtrnewsymbol[description={Model coefficients vector}]{beta}{$\boldsymbol{\beta}$}
 \glsxtrnewsymbol[description={Parameter vector}]{theta}{$\boldsymbol{\theta}$}
+\glsxtrnewsymbol[description={The combination of $(\boldsymbol{\beta}, \lambda, \alpha)$}]{Lambda}{$\Lambda$}
 \glsxtrnewsymbol[description={Weibull shape parameter}]{lambda}{$\lambda$}
 \glsxtrnewsymbol[description={Weibull scale parameter}]{alpha}{$\alpha$}
+\glsxtrnewsymbol[description={General form of the parameter in an undefined frailty distribution}]{upsilon}{$\upsilon$}
 \glsxtrnewsymbol[description={Gamma shape and rate parameters}]{k}{$k$}
 \glsxtrnewsymbol[description={Log-Normal variance parameter}]{sigma}{$\sigma^2$}
+\glsxtrnewsymbol[description={Missing data distribution parameters}]{psi}{$\psi$}
 
 
 
@@ -190,8 +203,7 @@
 %% main text
 \section{To Do List}
 \begin{enumerate}
-    \item MCEM - Both univariate and multivariate missing data
-    \item Add a section that talk about when dealing with missing data without using joint distribution of frailty and missing covariate
+    \item Gibb's sampler
 \end{enumerate}
 \section{Notations}
 \printunsrtglossary[type=symbols,style=long, title = {List of Notations}]
@@ -214,7 +226,7 @@ where $\lambda$ is the shape parameter and $\alpha$ is the scale parameter. Let 
 \end{equation}
 The survival function $S(t)$ can be obtained through cumulative hazard function $H(t)$
 \begin{align}
-    H(t_{ij}|\mathbf{x}_{ij}, z_j)&=\int_0^{t}h_{ij}(u|x_{ij}, g_{ij}, z_j)du\\
+    H(t_{ij}|\mathbf{x}_{ij}, z_j)&=\int_0^{t}h_{ij}(u|\mathbf{x}_{ij}, z_j)du\\
     &=\alpha\xi_{ij}z_j\lambda\int_0^t u^{\lambda-1}du\\
     &=\alpha\xi_{ij}z_j\lambda\cdot \frac{1}{\lambda} t_{ij}^{\lambda}=\alpha\xi_{ij}z_j t_{ij}^{\lambda}
 \end{align}
@@ -242,14 +254,21 @@ But when the missing data and the frailty both exist in the model, we will need 
 \end{align}
 The following section~\ref{sec:gammafr} and section~\ref{sec:lognormfr} discuss how to handle the frailty within the likelihood when there are no missing data, which are corresponding to the Equation~\ref{eq:frailtyonlyllhd1} and~\ref{eq:frailtyonlyllhd2}. 
 The section~\ref{sec:likeandmissing} will discuss how to handle the frailty and the missing data jointly, which is corresponding to the likelihood equation~\label{eq:frailtyandmissing1} and~\ref{eq:frailtyandmissing2}.
+
 \section{Ascertainment Correction} 
 Within a genetic study, those families are typically selected when there is an affected person called a proband. This will yield a selection bias because this is no long a case-control study, and can potentially defect the statistical power~\cite{park2015adjusting, clark2005ascertainment}.
-It is crucial to address the ascertainment bias. 
+It is crucial to address the ascertainment bias. Consider $A$ as the event of being ascertained, $D$ as the data, we then have $P(D, A|\boldsymbol{\theta})=P(A|D,\boldsymbol{\theta})P(D|\boldsymbol{\theta})$. 
+Also, we know $A$ is included in $D$, from Baye's rule
+\begin{equation} 
+    P(D|\boldsymbol{\theta})= \frac{P(D,A|\boldsymbol{\theta})}{P(A|D, \boldsymbol{\theta})}\propto\frac{L(\boldsymbol{\theta}|D)}{P(A|D,\boldsymbol{\theta})}
+\end{equation}
 For each family $j$, the ascertainment $A_j$ is defined to be the probability of the proband $p$ being ascertained by the age $a_{p_j}$ at examination, i.e., $A_j=P(T_{p_j} < a_{p_j})$ where $a_{p_j}$ is proband's age at study entry. Applying the ascertainment correction for the log-likelihood in family $j$: 
 \begin{equation}
     \tilde{\ell}_{j}(\boldsymbol{\theta})=\ell_j(\boldsymbol{\theta})-\log A_j(\boldsymbol{\theta})
 \end{equation}
-where $\tilde{\ell}$ is the log-likelihood with ascertainment correction, and $\ell$ is the crude log-likelihood. Define $\mathbf{x}_{p_j}$ the covariate matrix for proband in family $j$.
+where $\tilde{\ell}$ is the log-likelihood with ascertainment correction, and $\ell$ is the crude log-likelihood. 
+Define $\mathbf{x}_{p_j}$ the covariates for proband in family $j$, so we can further write the formula for the ascertainment correction within different frailty models. 
+
 \section{Gamma Frailty}\label{sec:gammafr}
 We can obtain the likelihood for Gamma frailty model following the instruction by~\citet{balan2020tutorial}. 
 The Laplace transform of the frailty $z\sim\text{Gamma}(k, k)$, for the simplicity of the mathematical expression, the following Laplace transform will ignore the subscript, denote $\mathscr{L}(f(z))=\phi(s)$ where $s=\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}_{ij})$:
@@ -409,7 +428,7 @@ The E-step can be written as
 \end{align}
 
 such that we need to integrate out the joint density of the frailty term and the missing covariate from $f(\mathbf{x}_{ij,mis}, z_j|\mathbf{x}_{obs,ij}, \boldsymbol{\theta}^{(r)})$. 
-There are selections of the frailty density, such as Gamma distribution, log-normal distribution, and etc. 
+There are selections of the frailty density, such as Gamma distribution, log-normal distribution, and etc which have been discuseed in the previous chapter.  
 In general, let's write $f(z_j|\upsilon)$ for the frailty distribution may be chosen with some parameters $\upsilon$. 
 Proposed by~\citet{herring2002frailty}, the joint distribution of the frailty and the missing data can be adapted in our scenario that accounting for the ascertainment:
 
@@ -436,14 +455,16 @@ Therefore, in our case, we can apply Gibb's sampler where
         &\times f(\mathbf{x}_{mis,ij}|\mathbf{x}_{obs,ij},\psi^{(r)})
     \end{align}
     In this case, the missing data will be filled for each iteration $r$, that being said, all data will be ``observed" in this case. 
-    Therefore, we will use $\mathbf{\tilde{x}}_{ij}$ to simply denote complete covariates. 
+    Therefore, we will use $\mathbf{x}_{ij}$ to simply denote completed covariates. 
     \item In order to approach the joint distribution, we now need to sample the frailty $z_j$ from 
     \begin{align} 
-        f(z_j|\mathbf{\tilde{x}}_{ij}, w_{ij}, T_{p_j}<a_{p_j}, \boldsymbol{\theta}^{(r)})\propto \prod_{i=1}^{n_j}f(w_{ij}|\mathbf{\tilde{x}}_{ij}, T_{p_j}<a_{p_j}, \Lambda^{(r)})\times f(z_j|\upsilon^{(r)})
+        f(z_j|\mathbf{x}_{ij}, w_{ij}, T_{p_j}<a_{p_j}, \boldsymbol{\theta}^{(r)})\propto \prod_{i=1}^{n_j}f(w_{ij}|\mathbf{x}_{ij}, T_{p_j}<a_{p_j}, \Lambda^{(r)})\times f(z_j|\upsilon^{(r)})
     \end{align}
     \item The Gibb's sampler has been proven as an efficient sampling method to closely approach the desired joint distribution \cite{gelfand1990sampling}. 
     We can get a frailty distribution based on what we have sampled for the missing data, and we can obtain the missing data distribution based on what we have sampled from the frailty distribution. 
 \end{enumerate}
+These conditional densities can be explicitly written, such that, for example
+
 We will obtain $M$ completed dataset based on the Gibb's sampler. 
 In general, without the specification of the frailty distribution, the E-step in MCEM can be written as 
 \begin{align} 
