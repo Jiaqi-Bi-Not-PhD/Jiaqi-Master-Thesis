@@ -1,4 +1,4 @@
-\begin{thebibliography}{12}
+\begin{thebibliography}{13}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -78,5 +78,13 @@ Alan~E Gelfand and Adrian~FM Smith.
 \newblock Sampling-based approaches to calculating marginal densities.
 \newblock \emph{Journal of the American statistical association}, 85\penalty0
   (410):\penalty0 398--409, 1990.
+
+\bibitem[Ziyatdinov et~al.(2018)Ziyatdinov, V{\'a}zquez-Santiago, Brunel,
+  Martinez-Perez, Aschard, and Soria]{ziyatdinov2018lme4qtl}
+Andrey Ziyatdinov, Miquel V{\'a}zquez-Santiago, Helena Brunel, Angel
+  Martinez-Perez, Hugues Aschard, and Jose~Manuel Soria.
+\newblock lme4qtl: linear mixed models with flexible covariance structure for
+  genetic studies of related individuals.
+\newblock \emph{BMC bioinformatics}, 19:\penalty0 1--5, 2018.
 
 \end{thebibliography}

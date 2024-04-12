@@ -404,7 +404,7 @@ That is, for the parameters of this distribution, $m_i$ does not depend on any o
     Person B makes \$10,000 per year, so they are not willing to provide this information, which this response is left as blank. 
     This type of missing depends on the missing data itself, that Person B refuses to provide the response due to the response being comparatively low. 
 \end{eg}
-\subsection{Log-Likelihood and Missing at Random}
+\subsection{Without Considering the Kinship Structure}
 When assuming the data are missing at random, the missingness is only associated to the observed data. 
 The frailty term and the missing data are therefore assumed independent. 
 Denote $w_{ij} = (t_{ij}, \delta_{ij})$ be the observed survival data.
@@ -442,7 +442,7 @@ we define $\Lambda = (\boldsymbol{\beta}, \alpha, \lambda)$, then further we can
 \begin{align} 
     &f(\mathbf{x}_{mis,ij}, z_j|\mathbf{x}_{obs,ij}, w_{ij}, T_{p_j}<a_{p_j}, \boldsymbol{\theta}^{(r)})\\
     &=\frac{f(w_{ij}|\mathbf{x}_{mis,ij}, \mathbf{x}_{obs,ij}, z_j, T_{p_j}<a_{p_j}, \Lambda^{(r)})f(\mathbf{x}_{mis,ij}, \mathbf{x}_{obs,ij}|\psi^{(r)})f(z_j|\upsilon^{(r)})}{\int_{\mathbf{x}_{mis,ij},z_j}f(w_{ij}|\mathbf{x}_{mis,ij}, \mathbf{x}_{obs,ij}, z_j, T_{p_j}<a_{p_j}, \Lambda^{(r)})f(\mathbf{x}_{mis,ij}, \mathbf{x}_{obs,ij}|\psi^{(r)})f(z_j|\upsilon^{(r)})dz_jd\mathbf{x}_{mis,ij}}\\
-    &\propto f(w_{ij}|\mathbf{x}_{mis,ij}, \mathbf{x}_{obs,ij}, z_j, T_{p_j}<a_{p_j}, \Lambda^{(r)})f(\mathbf{x}_{mis,ij}, \mathbf{x}_{obs,ij}|\psi^{(r)})f(z_j|\upsilon^{(r)})
+    &\propto f(z_j|\upsilon^{(r)})\prod_{i=1}^{n_j}f(w_{ij}|\mathbf{x}_{mis,ij}, \mathbf{x}_{obs,ij}, z_j, T_{p_j}<a_{p_j}, \Lambda^{(r)})f(\mathbf{x}_{mis,ij}|\mathbf{x}_{obs,ij}, \psi^{(r)})
 \end{align}
 
 Clearly, we know $f(w_{ij}|\mathbf{x}_{mis,ij}, \mathbf{x}_{obs,ij}, z_j, T_{p_j}<a_{p_j}, \boldsymbol{\beta}^{(r)})$ is the likelihood of one single observation $i$ in family $j$, also we know the distribution of $f(\mathbf{x}_{ij}|\psi)$, as well as the frailty distribution $f(z_j|\upsilon)$. 
@@ -463,8 +463,7 @@ Therefore, in our case, we can apply Gibb's sampler where
     \item The Gibb's sampler has been proven as an efficient sampling method to closely approach the desired joint distribution \cite{gelfand1990sampling}. 
     We can get a frailty distribution based on what we have sampled for the missing data, and we can obtain the missing data distribution based on what we have sampled from the frailty distribution. 
 \end{enumerate}
-These conditional densities can be explicitly written, such that, for example
-
+These conditional densities can be explicitly written.
 We will obtain $M$ completed dataset based on the Gibb's sampler. 
 In general, without the specification of the frailty distribution, the E-step in MCEM can be written as 
 \begin{align} 
@@ -475,295 +474,46 @@ In general, without the specification of the frailty distribution, the E-step in
     &+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\log(1- \exp(z_j H_{p_j}(a_{p_j}|\mathbf{x}_{p_j})))\\
     &+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\sum_{i=1}^{n_j}\log f(\mathbf{x}_{mis,ij}^{(m)}|\mathbf{x}_{obs,ij}, \psi)+\sum_{j=1}^J\frac{1}{M_j}\sum_{m=1}^{M_j}\sum_{i=1}^{n_j}\log f(z_j^{(m)}|\upsilon)
 \end{align} 
-where for example, when $x_{mis,ij,1}$ is missing and $x_{obs,ij,2}$ is observed, we take
-\begin{align} 
-    f(x_{mis,ij,1}^{(m)}|x_{obs,ij,2}, \psi)=\frac{1}{\tilde{\psi}\sqrt{2\pi}}\exp \Big (-\frac{1}{2}\Big (\frac{x_{mis,ij,1}^{(m)} - \mu}{\tilde{\psi}}\Big )^2\Big )
-\end{align}
-such that $\hat{\mu}=\psi_0 + \psi_1 x_{obs,ij,2}$, and $\tilde{\psi}$ is the standard error of the conditional normal distribution.
-We can apply the kinship matrix for a family study, that we will deal with a multivariate normal distributed $\mathbf{x}_{mis,j,1}^{(m)}$ for family $j$. 
+Note that in this case, the distribution of the missing data is univariate since we are imputing each individual $i$ in family $j$. 
+However, in a genetic study, some missing covariates may need some considerations of the multivariate structure such as the kinship matrix. 
 
-\begin{align} 
-    f(\mathbf{x}_{mis,j,1}^{(m)}|\mathbf{x}_{obs,j,2}, \psi, K)=(2\pi)^{(-\frac{n_j}{2})}\det (\Sigma)^{(-\frac{1}{2})}\exp \big( -\frac{1}{2}(\mathbf{x}_{mis,j,1}^{(m)}-\boldsymbol{\mu})^{\top}\Sigma^{-1}(\mathbf{x}_{mis,j,1}^{(m)}-\boldsymbol{\mu})\Big )
-\end{align}
-where $\Sigma = \tilde{\psi}_g^2 K + \tilde{\psi}_e^2$, and $K$ is the kinship matrix with diagonals of $1$ and is known. 
-Also, $\hat{\boldsymbol{\mu}}=\boldsymbol{\psi}_0+\boldsymbol{\psi}_1 \mathbf{x}_{obs,j,2}$. Therefore, we may sample from $\mathbf{x}_{mis,j,1}\sim MVN(\boldsymbol{\mu}, \tilde{\psi}_g^2K+\tilde{\psi}_e^2)$. Moreover, we can give the specific distribution of the frailty in the E-step by sampling the frailty term $z_j$, for example, when $z_j$ is assumed to be Gamma distribution, then 
+\subsection{Considering the Kinship Matrix}
+When we want to include the kinship matrix into the consideration, the distribution of the missing data becomes a multivariate distribution for family $j$. 
+Denote $f(\mathbf{x}_{mis,j}|\mathbf{x}_{obs,j},\boldsymbol{\psi})$ as the multivariate distribution of the missing data in family $j$. 
+It is important to obtain the conditional distribution for each individual $i$ conditioning on other individuals $-i$ within family $j$. 
+Assume a $n_j$ dimensional multivariate normal distribution of $\mathbf{x}_{mis}=(\mathbf{x}_{mis,1}, ...,\mathbf{x}_{mis,n_j})$ in family $j$, the index here will ignore the family index since if it's global, it will work too. 
+The multivariate distribution will be assumed a normal, because we are focusing on the missing PRS which has a normal distributed behavior. 
+The mean vector of this multivariate normal distribution can be written as $\boldsymbol{\mu}=(\mu_1,...,\mu_{n_j})$ and the covariance matrix $\boldsymbol{\Sigma}$. 
+Note that $\boldsymbol{\Sigma}=\tilde{\psi}_g^2K+\tilde{\psi}_e^2$ and $K$ is the kinship matrix with the diagonal of 1. $\tilde{\psi}_g^2$ is the genetic variance and $\tilde{\psi}_e^2$ is the residual variance. 
+If we want to find the conditional distribution of each $x_{mis,i}$ in family $j$, given others $X_{-i}$ where $X_{-i}$ is the vector of all other vairables except $x_{mis,i}$. 
+Partition the mean vector and the covariance matrix, suppose $\mathbf{X}=(x_i, X_{-i})$, then partition $\boldsymbol{\mu}$ and $\boldsymbol{\Sigma}$ accordingly: 
 \begin{equation} 
-    f(z_j^{(m)}|k)=\frac{k^k}{\Gamma (k)}(z_j^{(m)})^{k-1}\exp (-kz_j^{(m)})
-\end{equation}
-When $z_j$ is log-normal distributed with the mean 0, we have 
-\begin{equation}
-    f(z_j^{(m)}|\upsilon)=\frac{1}{z_j^{(m)}\upsilon\sqrt{2\pi}}\exp\Big (-\frac{(\log z_j^{(m)})^2}{2\upsilon^2}\Big )
-\end{equation}
-Thus, the $Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)})$ function will yield a closed form that can be optimized via M-step, with the iterations that update all parameters using Gibb's sampler. 
-
-\section{\hl{Missing PRS and MCEM}}\label{sec:missingprs}
-
-\subsection{Not Considering the Family Correlations}
-We propose an MCEM framework in terms of estimating the distribution of the PRS. 
-The PRS was calculated to infer the relationship between a phenotype and multiple genetic loci, while these information were not gained if one was not involved in the original GWAS. 
-Thus, we propose to sample the PRS using the information that we have already obtained through the study. Denote $\mathbf{x}_{j,1}$ as the PRS scores vector in family $j$, and $\mathbf{x}_{j,2}$ the mutation status vector in family $j$. 
-Take $\mathbf{p}_j$ as the proband indicator vector in family $j$, $\mathbf{c}_j$ is the current age for patients in family $j$. 
-So we now have a design matrix when modelling the missing PRS, call it $\mathbf{W}=(\log(\mathbf{t}_j), \boldsymbol{\delta}_j, \log(\mathbf{t}_j)\odot \boldsymbol{\delta}_j, \mathbf{p}_j, \mathbf{c}_j, \mathbf{x}_{j,2})$.
-We can make the assumption on the conditional distribution of the PRS, take $\mathbf{X}_{j,1}|\mathbf{W} \sim MVN (\mathbf{W}\boldsymbol{\psi}+\mathbf{u},\sigma^2\mathbf{I})$. 
-We are interested in modelling the PRS while accounting for the between family variance, so $\mathbf{u}\sim MVN(0, \sigma_u^2\mathbf{I})$. Thus, the E-step for Gamma frailty model with ascertainment correction is then
-\begin{align}
-    E_{\mathbf{X}_{j,1,mis}}(\ell(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)}))&=\sum_{j=1}^J\Bigg [\sum_{i=1}^{n_j}\int_{\boldsymbol{X}_{j,1,mis}}(\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}))+ \\ 
-    & + \log\Big (\frac{(k+d_j-1)!}{k!k^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}))}{k})^{-k-d_j}\Big ) - \\
-    & - \log(A_j(\boldsymbol{\theta})) + \log f(x_{ij,1,mis}|w_{ij},\boldsymbol{\psi}) dx_{ij,1,mis}\Bigg ]
-\end{align}
-Taking a sample of size $M$ when we sample $f(x_{ij,1,mis}|w_{ij}, \boldsymbol{\psi})$ for each subject $i$ in family $j$, $(x_{ij,i,mis}^{(1)}, ..., x_{ij,i,mis}^{(M)})$. 
-This leads to an E-step:
-\begin{align} 
-    Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)})&=\sum_{j=1}^J\Bigg [\sum_{i=1}^{n_j}\sum_{m=1}^M(\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}^{(m)}))+ \\ 
-    & + \log\Big (\frac{(k+d_j-1)!}{k!k^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}^{(m)}))}{k})^{-k-d_j}\Big ) - \\
-    & - \log(A_j(\boldsymbol{\theta})) + \log f(x_{ij,1,mis}^{(m)}|w_{ij},\boldsymbol{\psi}) \Bigg ]
-\end{align}
-Similarly, the expectation with respect to the missing PRS in log-normal frailty can be written as
-\begin{align} 
-    E_{\mathbf{X}_{j,1,mis}}(\ell(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)}))&=\sum_{j=1}^J\Bigg [\sum_{i=1}^{n_j}\int_{\boldsymbol{X}_{j,1,mis}}(\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}))+ \\ 
-    & + \log\Big (\frac{1}{\sqrt{\pi}}\sum_{q=1}^{N_{q}}\Big [\omega_{q}\exp (\sqrt{2}\sigma y_{q})^{d_j}\exp (-\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}_{ij})\exp(\sqrt{2}\sigma y_{q}))\Big]\Big ) - \\
-    & - \log(A_j(\boldsymbol{\theta})) + \log f(x_{ij,1,mis}|w_{ij},\boldsymbol{\psi}) dx_{ij,1,mis}\Bigg ]
-\end{align}
-and the E-step:
-\begin{align} 
-    Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)}) &= \sum_{j=1}^J\Bigg [\sum_{i=1}^{n_j}\sum_{m=1}^{M}(\delta_{ij}\log h(t_{ij}|\mathbf{x}^{(m)}_{ij}))+ \\ 
-    & + \log\Big (\frac{1}{\sqrt{\pi}}\sum_{q=1}^{N_{q}}\Big [\omega_{q}\exp (\sqrt{2}\sigma y_{q})^{d_j}\exp (-\sum_{i=1}^{n_j}H(t_{ij}|\mathbf{x}^{(m)}_{ij})\exp(\sqrt{2}\sigma y_{q}))\Big]\Big ) - \\
-    & - \log(A_j(\boldsymbol{\theta})) + \log f(x_{ij,1,mis}^{(m)}|w_{ij},\boldsymbol{\psi})\Bigg ]
-\end{align}
-\subsection{Considering the Family Correlations}
-Given that family $j$ has some subjects containing the missing PRS due to the sampling cost (maybe, need to confirm the previous paper), that not all subjects are being sampled for the PRS calculation. 
-Since subjects within one family are correlated in some genetic associations, we intend to sample the missing PRS using a multivariate normal distribution while accounting for the kinship matrix. 
-Using the same setting for the modelling of the PRS, the only difference is the variance-covariance matrix. 
-Here, $\mathbf{X}_{j,1}|\mathbf{W},\boldsymbol{\psi}\sim MVN(\mathbf{W}\boldsymbol{\psi}+\mathbf{u}, \sigma^2\mathbf{I})$. 
-But, $\mathbf{u}\sim MVN(0, 2\sigma^2_u\mathbf{K})$ where $\mathbf{K}$ is a $\mathbb{R}^{n\times n}$ kinship matrix with a diagonal of $0.5$. 
-The variance can be computed via $\text{Var}(X_{j,1})=2\sigma_u^2\mathbf{K}+\sigma^2\mathbf{I}$ when both the genetic variation and the residual errors contribute to the variance-covariance structure. 
-Therefore, the marginal distribution of the PRS after integrating out the random effects will be $\mathbf{X}_{j,1}\sim MVN(\mathbf{W}\boldsymbol{\psi}, 2\sigma_u^2\mathbf{K}+\sigma^2\mathbf{I})$, and will be the distribution used for the Monte Carlo sampling.
-\hl{M Step, Nelder-Mead, why? Gradient free? Variance?}
-
-\section{Multiple Imputation with Monte Carlo Sampling}
-\subsection{Missing Mechanisms}
-...A discussion on MCAR, MAR, and MNAR... 
-\subsection{Multiple Imputations \hl{(Be sure to report a conceptual statistical definition in the thesis)}}
-In the general framework, denote $\mathbf{X}_{j,1,mis}$ as the element of $\mathbf{X}_{j,1}$ when it's missing.
-Denote $\mathbf{X}_{j,1,obs}$ on the observed element. 
-Adapting the idea from the MCEM, we can draw $\hat{\mathbf{X}}_{j,1,mis}$ from the same assumption of the distribution discussed in the section~\ref{sec:missingprs} for $M$ times.
-But, the missing indicator $\mathbf{R}$ should be addressed to attest the missing mechanism. 
-The conditional distribution can be written as $f(\mathbf{X}_{j,1,mis}|\mathbf{X}_{j,1,obs}, \mathbf{W}, \mathbf{R}_j)$. 
-Under the assumption of the MAR \hl{(Confirm the paper)}, 
-\begin{equation}
-    f(\mathbf{X}_{j,1,mis}|\mathbf{X}_{j,1,obs}, \mathbf{W}, \mathbf{R}_j)=f(\mathbf{X}_{j,1,mis}|\mathbf{X}_{j,1,obs}, \mathbf{W})
-\end{equation}
-This results a series of $M$ complete datasets containing all values observed with the fill of the Monte Carlo samples. 
-Then with these $M$ datasets, we run the analysis individually. 
-Thus, the estimate of $\boldsymbol{\theta}$ can be calculated via 
-\begin{equation}
-    \hat{\boldsymbol{\theta}}_{MI}=\frac{1}{M}\sum_{m=1}^M\hat{\boldsymbol{\theta}}_m
-\end{equation}
-Denote $V$ the variance for $m$-th complete data inference variance, we first calculate the average variance of these analyses to be the within-imputation variance,
-\begin{equation}
-    \hat{\mathbf{W}}=\frac{1}{M}\sum_{m=1}^M\hat{\mathbf{V}}_m 
-\end{equation}
-Under the unbiased variance estimator, the between-imputation variance is
-\begin{equation}
-    \hat{\mathbf{B}}=\frac{1}{M-1}\sum_{m=1}^M (\hat{\boldsymbol{\theta}}_m - \hat{\boldsymbol{\theta}}_{MI})(\hat{\boldsymbol{\theta}}_m - \hat{\boldsymbol{\theta}}_{MI})^{\top}
-\end{equation}
-Combining these \hl{(How? Are there any statistical/mathematical proof of this)}, we obtain the estimate of the variance of $\hat{\boldsymbol{\theta}}_{MI}$,
-\begin{equation}
-    \hat{\mathbf{V}}_{MI}=\hat{\mathbf{W}}+(1+\frac{1}{M})\hat{\mathbf{B}}
-\end{equation}
-
-\hl{Discussions on why MI over MCEM or vise versa after the analysis...}
-
-\section{Monte Carlo EM \hl{(This section needs to be re-written to a definitional MCEM framework, maybe consult papers)}}
-The complete data log-likelihood for family $j$ is $\ell_j(\boldsymbol{\theta}; h_{ij})$
-where $\boldsymbol{\theta}$ consists all baseline parameters, and model coefficients $\beta$'s, as well as the frailty parameter $\phi$. The E-step for complete data is:
-\begin{align} 
-    Q(\boldsymbol{\theta}|\boldsymbol{\theta}^{(r)})=\int \ell(\boldsymbol{\theta};h_{ij})\cdot f(x_{mis,i}|x_{obs,i},z, \boldsymbol{\theta}^{(r)}, t_{ij}, \delta_{ij}, p_j)dx_{mis,ij}
-\end{align}
-
-We sample the size $m_i$ for each $i$-th observation, $x_{i1}^*,...,x_{im_i}^*$ from the distribution $f(x_{mis,ij}|\cdot)$, and take $M = 1,...,m_i$, such that each $X_{iM}^*$ depends on the iteration number for $r+1$ iterations. In general:
-\begin{align}
-    \hat{Q}(\boldsymbol{\theta}; \boldsymbol{\theta}^{(r)})=\frac{1}{m_i}\sum_{M=1}^{m_i}\ell(x_{iM}^*, x_{obs,ij},t_{ij}, \boldsymbol{\theta},z_j)
-\end{align}
-More specifically, 
-\begin{enumerate}
-    \item We first initialize $m, \theta^{(0)}$, and start the burn-in.
-    \item Also, we set importance weights $w_t=1$ for all $t=1,...,m$.
-    \item At the burn-in iteration $s$, we generate $x_{miss,1}, ..., x_{miss,m}\sim N(\mu_{X}|X_{obs}, \theta^{(s)}, z)$ using MCMC sample.
-    \item In the E-step, we estimate $Q(\theta|\theta^{(s)})$ by using the importance weights:
-    \begin{equation}
-        Q_m(\theta|\hat{\theta}^{(s)})=\frac{\sum_{t=1}^m w_t\log f(X_{obs}, X_{miss,t}|\theta)}{\sum_{r=1}^mw_t}
-    \end{equation}
-    \item Note the numerator is actually a weighted log-likelihood. In the M-step, we maximize $Q_m(\theta|\hat{\theta}^{(s)})$ to obtain $\hat{\theta}^{(s+1)}$. 
-    \item Repeat (3.) - (5.) for $s$ burn-in iterations.
-    \item Then re-initialize $\hat{\theta}^{(0)}=\hat{\theta}^{(s)}$
-    \item We generate $x_{miss,1},...,x_{miss,m}\sim N(\mu_{X}|X_{obs}, \hat{\theta}^{(0)}, z)$ using MCMC sampler. At iteration $r+1$
-    \item Compute the importance weights from the ratio of likelihood
-    \begin{equation}
-        w_t=\frac{L(\hat{\theta}^{(r)}|X_{miss,t}, X_{obs})}{L(\hat{\theta}^{(0)}|X_{miss,t}, X_{obs})}
-    \end{equation}
-    \item Thus, the E-step can be written as 
-    \begin{equation}
-        Q_m(\theta|\hat{\theta}^{(r)})=\frac{\sum_{t=1}^mw_t\log f(X_{miss,t}, X_{obs}|\theta)}{\sum_{t=1}^m w_t}
-    \end{equation}
-    \item Then M-step: we maximize $Q_m(\theta|\hat{\theta}^{(r)})$ to obtain $\hat{\theta}^{(r+1)}$. 
-\end{enumerate}
-This automated MCEM firstly optimizes the importance weights at burn-ins, then performs the actual EM to find $\hat{\theta}$. This importance weight ensures the imputation step of the missing data actually yields to the real distribution. 
-   
-
-
-\section{Correlated Frailty using Kinship Matrix}
-Family members are correlated within one family, that we denote $K$ as the kinship correlation matrix among all observations. This matrix ensures those individuals not from the same family automatically have a correlation of 0. The likelihood construction needs multivariate form. For $\mathbf{Z}\sim\text{MVN}(0,\sigma^2K)$, that $K$ has the diagonal of 1. The likelihood is 
-
-\begin{align}
-    L(\cdot)&=\int_{\mathbb{R}^n}\prod_{i=1}^n(h(t|\mathbf{x}_i, \mathbf{z}_i))^{\delta_i}\exp (-H(t|\mathbf{x}_i, \mathbf{z}_i))f(\mathbf{z})d\mathbf{z}\\
-    &=\int_{\mathbb{R}^n}\prod_{i=1}^n(h(t|\mathbf{x}_i))^{\delta_i}\exp(\mathbf{z}_i)^{\delta_i}\exp(-H(t|\mathbf{x}_i)\exp(\mathbf{z}_i))f(\mathbf{z})d\mathbf{z}\\
-    &=\prod_{i=1}^n(h(t|\mathbf{x}_i))^{\delta_i}\int_{\mathbb{R}^n}\exp(\delta_i\mathbf{z}_i-H(t|\mathbf{x}_i)\exp(\mathbf{z}_i))f(\mathbf{z})d\mathbf{z}
-\end{align}
-Applying the Laplace approximation, and taking the log for the likelihood, we obtain
-\begin{equation}
-    \ell(\cdot)=\sum_{i=1}^n\Big [ \delta_i\log h(t|\mathbf{x}_i)\Big ] + \sum_{i=1}^n\Big [\delta_i \hat{\mathbf{z}}-H(t_i|\mathbf{x}_i)\exp(\hat{\mathbf{z}})\Big ] - \frac{1}{2}\hat{\mathbf{z}}^{\top}\Sigma^{-1}\hat{\mathbf{z}}
-\end{equation}
-such that $\Sigma=\sigma^2 K$. Also, we treat the random effect $\mathbf{z}$ as a vector of parameters, and use outer-loop to search for the $\sigma$, and use inner-loop to search for other parameters (baseline parameters, and $\beta$) including $\mathbf{z}$. The process can be achieved via Newton-Raphson algorithm. For computational efficiency, we can set $\Sigma^{-1}=L^{\top}L$ through Cholesky Decomposition. In this way, 
-$\mathbf{z}L\sim MVN(0,\sigma^2 I)$. In order to apply NR-algorithm, the gradient and the hessian are required. The gradient for parameters is:
-\begin{equation}
-    \frac{\partial\ell}{\partial\boldsymbol{\beta}}=\sum_{i=1}^n\delta_i\mathbf{x}_i+\sum_{i=1}^n-H(t_i|\mathbf{x}_i)\mathbf{x}_i\exp(\mathbf{z})
-\end{equation}
-
-\begin{equation}
-    \frac{\partial\ell}{\partial\mathbf{z}}=\sum_{i=1}^n\delta_i-(t_i|\mathbf{x}_i)\exp(\hat{\mathbf{z}})-\Sigma^{-1}\hat{\mathbf{z}}
-\end{equation}
-
-\begin{equation}
-    \frac{\partial\ell}{\partial\alpha}=\sum_{i=1}^n\frac{\delta_i}{\alpha} + \sum_{i=1}^n-\frac{H(t_i|\mathbf{x}_i)\exp(\hat{\mathbf{z}})}{\alpha}
-\end{equation}
-
-\begin{equation}
-    \frac{\partial\ell}{\partial\lambda}=\sum_{i=1}^n\delta_i(\frac{1}{\lambda}+\log (t_i))+\sum_{i=1}^n-H(t_i|\mathbf{x}_i)\exp(\hat{\mathbf{z}})\log (t_i)
-\end{equation}
-
-The hessian matrix element, i.e., second partial derivative is 
-
-\begin{equation}
-    \frac{\partial^2\ell}{\partial\boldsymbol{\beta}^{\top}\boldsymbol{\beta}}=\sum_{i=1}^n-H(t_i|\mathbf{x}_i)\exp(\hat{\mathbf{z}})x_{ij}x_{ik}
-\end{equation}
-
-\begin{equation}
-    \frac{\partial^2\ell}{\partial\mathbf{z}^{\top}\mathbf{z}}=\sum_{i=1}^n-H(t_i|\mathbf{x}_i)\exp(\hat{\mathbf{z}})-\Sigma^{-1}
-\end{equation}
-
-\begin{equation}
-    \frac{\partial^2\ell}{\partial\alpha^2}=\sum_{i=1}^n-\frac{\delta_i}{\alpha^2}
-\end{equation}
-
-\begin{equation}
-    \frac{\partial^2\ell}{\partial\lambda^2}=\sum_{i=1}^n-\frac{\delta_i}{\lambda^2}-H(t_i|\mathbf{x}_i)\exp(\hat{\mathbf{z}})\log(t_i)^2
-\end{equation}
-
-\subsection{Proof of $\Sigma=LL^{\top}$}
-Every symmetric positive definite matrix $\Sigma$ can be decomposed into $\Sigma=LL^{\top}$, where $L$ is a lower triangular matrix with real and positive diagonal entries. 
-\begin{proof}
-    Set-ups:
-\begin{enumerate}
-    \item Covariance matrix $\boldsymbol{\Sigma}$ is by definition symmetric and positive definite, e.g.
-    \begin{equation}
-        \boldsymbol{\Sigma}=\begin{pmatrix}
-            \sigma_{X_1}^2 & Cov(X_1,X_2)\\
-            Cov(X_1,X_2) & \sigma_{X_2}^2
-        \end{pmatrix}
-    \end{equation}
-    such that $\mathbf{X}\boldsymbol{\Sigma} \mathbf{X}^{\top}>0$ always, and this matrix is symmetric.
-    \item Suppose $\mathbf{X}$ has $n$ observations, then $\Sigma$ is $n\times n$, the first element is $\sigma_{11}>0$ by definition (For simplicity, we use $\sigma_{11}$ rather than it's square to denote the variance). Define $l_{11}=\sqrt{\sigma_{11}}$, to be the first element of $L$. For the first column of $L$, let $l_{j1}=\frac{\sigma_{j1}}{l_{11}}$ for $j=2,...$.
-\end{enumerate}
-Induction step: Assume we have first $k-1$ columns of $L$, consider $k$-th column
-\begin{itemize}
-    \item For the diagonal element $l_{kk}=\sqrt{\sigma_{kk}-\sum_{j=1}^{k-1}l_{kj}^2}$
-    \item For off-diagonals, 
-    \begin{equation}
-        l_{ik}=\frac{\sigma_{ik}-\sum_{j=1}^{k-1}l_{ij}l_{kj}}{l_{kk}}
-    \end{equation}
-    for $i=k+1,...,n$.
-\end{itemize}
-with the repetition for each column $k=2,...,n$, the top-left $k\times k$ submatrix of $LL^{\top}$ matches that of $\boldsymbol{\Sigma}$. For example, when $k=3$, 
-\begin{equation}
-    \boldsymbol{\Sigma}=
-        \begin{pmatrix}
-            \sigma_{11} & & \\
-             & \sigma_{22} & \\
-             & & \sigma_{33}
-        \end{pmatrix}
-\end{equation}
-and
-\begin{equation}
-    L = 
-    \begin{pmatrix}
-        l_{11} & 0 & 0\\
-        l_{21} & l_{22} & 0 \\
-        l_{31} & l_{32} & l_{33}
+    \boldsymbol{\mu}=\begin{pmatrix} 
+        \mu_i \\
+        \boldsymbol{\mu}_{-i}
     \end{pmatrix}
 \end{equation}
-then
-\begin{equation}
-    LL^{\top}=
-    \begin{pmatrix}
-        l_{11} & 0 & 0\\
-        l_{21} & l_{22} & 0 \\
-        l_{31} & l_{32} & l_{33}
-    \end{pmatrix}
-    \begin{pmatrix}
-        l_{11} & l_{21} & l_{31}\\
-        0 & l_{22} & l_{32} \\
-        0 & 0 & l_{33}
-    \end{pmatrix}
-    =
-    \begin{pmatrix}
-        l_{11}^2 & l_{11}l_{21} & l_{11}l_{31} \\ 
-        l_{21}l_{11} & l_{21}^2+l_{22}^2 & l_{21}l_{31} + l_{22}l_{32} \\
-        l_{31}l_{11} & l_{31}l_{21} + l_{32}l_{22} & l_{31}^2+l_{32}^2+l_{33}^2
+and 
+\begin{equation} 
+    \boldsymbol{\Sigma}=\begin{pmatrix} 
+        \Sigma_{ii} & \boldsymbol{\Sigma}_{i,-i} \\
+        \boldsymbol{\Sigma}_{-i,i} & \boldsymbol{\Sigma}_{-i,-i}
     \end{pmatrix}
 \end{equation}
-Take 
-\begin{equation}
-    \Sigma=
-    \begin{pmatrix}
-        4 & 2 & 2\\
-        2 & 3 & 1\\
-        2 & 1 & 3
-    \end{pmatrix}
+where $\Sigma_{ii}$ is actually the variance of $x_i$.  
+$\boldsymbol{\Sigma}_{i,-i}$ and $\boldsymbol{\Sigma}_{-i,i}$ are transpose of each other, and are covariances between $x_i$ and $X_{-i}$. 
+$\boldsymbol{\Sigma}_{-i,-i}$ is the covariance matrix of $X_{-i}$. 
+Also, $\boldsymbol{\mu}$ can be estimated using a linear regression from a multivariate version with flexible covariance matrix introduced by~\citet{ziyatdinov2018lme4qtl}.
+Then we can compute the conditional mean and variance from 
+\begin{equation} 
+    E(x_i|X_{-i})=\mu_i + \boldsymbol{\Sigma}_{i,-i}\boldsymbol{\Sigma}_{-i,-i}^{-1} (\mathbf{x}_{-i} - \boldsymbol{\mu}_{-i})
 \end{equation}
-Then by definition of Cholesky Decomposition, we can calculate $l_{11}^2=\sigma_{11}\implies l_{11}=\sqrt{4}=2$, and $l_{21}=\frac{\sigma_{21}}{l_{11}}=2/2=1$, and $l_{31}=1$. Similarly for $l_{22}, l_{32}, l_{33}$. Therefore, 
-\begin{equation}
-    L=
-    \begin{pmatrix}
-        2 & 0 & 0 \\
-        1 & \sqrt{2} & 0\\
-        1 & 0 & \sqrt{2}
-    \end{pmatrix}
+and the variance 
+\begin{equation} 
+    \text{Var}(x_i|\mathbf{x}_{-i})=\Sigma_{ii} - \boldsymbol{\Sigma}_{i,-i}\boldsymbol{\Sigma}_{-i,-i}^{-1}\boldsymbol{\Sigma}_{-i,i}
 \end{equation}
-which implies
-\begin{equation}
-    LL^{\top}=
-    \begin{pmatrix}
-        2 & 0 & 0 \\
-        1 & \sqrt{2} & 0\\
-        1 & 0 & \sqrt{2}
-    \end{pmatrix}
-    \begin{pmatrix}
-        2 & 1 & 1 \\
-        0 & \sqrt{2} & 0 \\
-        0 & 0 & \sqrt{2}
-    \end{pmatrix}
-    =
-    \begin{pmatrix}
-        4 & 2 & 2\\
-        2 & 3 & 1\\
-        2 & 1 & 3
-    \end{pmatrix}
-    =\Sigma
-\end{equation}
-\end{proof}
-Essentially, the Cholesky Decomposition transforms the multivariate normal to a standard multivariate normal. When $\mathbf{Z}\sim \mathcal{N}(0,\boldsymbol{\Sigma})$, let $\boldsymbol{\Sigma}=\mathbf{L}\mathbf{L}^{\top}$, then $\mathbf{Y}=\mathbf{L}^{-1}\mathbf{Z}\sim \mathcal{N}(0, \mathbf{I})$ that $\mathbf{I}$ is the identity matrix, since $\mathbf{L}^{-1}\boldsymbol{\Sigma}(\mathbf{L}^{-1})^{\top}=\mathbf{L}^{-1}\mathbf{L}\mathbf{L}^{\top}(\mathbf{L}^{-1})^{\top}=\mathbf{I}$. This will simplify the computational process. 
-
+Once we can calculate these statistics, we are able to sample each $x_i$ using a univariate normal distribution while still considering the kinship matrix. 
+The MCEM will then perform using the same idea of the previous subsection. 
 
 
 
