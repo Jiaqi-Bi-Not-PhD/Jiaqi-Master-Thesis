@@ -25,6 +25,13 @@ brca1_prs_MCEM <- brca1_prs_MCEM |>
   filter(n_obs != 0)
 brca1_prs_MCEM <- brca1_prs_MCEM |>
   mutate(z = NA)
+brca1_prs_MCEM <- brca1_prs_MCEM |>
+  mutate(I_PRS = PRS) |>
+  select(c(famID, n_obs, indID, 
+           proband, motherID, fatherID, 
+           mgeneI, mgene, currentage, 
+           BC, timeBC, df1, PRS, I_PRS,
+           z))
 
 ## If CCA is preferred (471 obs)
 brca1_prs_cca <- brca1_prs %>%
