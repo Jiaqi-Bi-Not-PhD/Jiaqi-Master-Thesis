@@ -218,38 +218,38 @@ There are total $n_j$ individuals in family $j$, where $i=1,...,n_j$, and total 
 is the PRS for individual $i$ in family $j$. The frailty term $z_j$, has a pdf of $f(z)$, which can be Gamma, log-normal, or other frailty distributions.
 The support of $f(z)$ is always non-negative. The Weibull baseline hazard function is defined as
 \begin{equation}
-    h_0(t_{ij})=\alpha\lambda t_{ij}^{\lambda-1}
+    h_0(t_{ij})=\alpha^{\lambda}\lambda t_{ij}^{\lambda-1}
 \end{equation}
-where $\lambda$ is the shape parameter and $\alpha$ is the scale parameter. Let $\xi_{ij}=\exp(\beta_1 x_{1,ij}+\beta_2 x_{2,ij})$, the hazard function is 
+where $\lambda$ is the shape parameter and $\alpha$ is the rate parameter. Let $\xi_{ij}=\exp(\beta_1 x_{1,ij}+\beta_2 x_{2,ij})$, the hazard function is 
 \begin{equation}
-    h_{ij}(t_{ij}|\mathbf{x}_{ij}, z_j)=\alpha\lambda t_{ij}^{\lambda-1}\xi_{ij}z_j
+    h_{ij}(t_{ij}|\mathbf{x}_{ij}, z_j)=\alpha^{\lambda}\lambda t_{ij}^{\lambda-1}\xi_{ij}z_j
 \end{equation}
 The survival function $S(t)$ can be obtained through cumulative hazard function $H(t)$
 \begin{align}
     H(t_{ij}|\mathbf{x}_{ij}, z_j)&=\int_0^{t}h_{ij}(u|\mathbf{x}_{ij}, z_j)du\\
-    &=\alpha\xi_{ij}z_j\lambda\int_0^t u^{\lambda-1}du\\
-    &=\alpha\xi_{ij}z_j\lambda\cdot \frac{1}{\lambda} t_{ij}^{\lambda}=\alpha\xi_{ij}z_j t_{ij}^{\lambda}
+    &=\alpha^{\lambda}\xi_{ij}z_j\lambda\int_0^t u^{\lambda-1}du\\
+    &=\alpha^{\lambda}\xi_{ij}z_j\lambda\cdot \frac{1}{\lambda} t_{ij}^{\lambda}=\alpha^{\lambda}\xi_{ij}z_j t_{ij}^{\lambda}
 \end{align}
 and the survival function
 \begin{equation}
-    S(t_{ij}|\mathbf{x}_{ij}, z_j)=\exp(-H(t_{ij}|\mathbf{x}_{ij}, z_j))=\exp(-\alpha\xi_{ij}z_j t_{ij}^{\lambda})
+    S(t_{ij}|\mathbf{x}_{ij}, z_j)=\exp(-H(t_{ij}|\mathbf{x}_{ij}, z_j))=\exp(-\alpha^{\lambda}\xi_{ij}z_j t_{ij}^{\lambda})
 \end{equation}
 Let $\boldsymbol{\theta}=\{\boldsymbol{\beta}, \alpha, \lambda, \upsilon\}$, where $\upsilon$ is the parameter for the frailty distribution of the choice. 
 In our example dataset, $\boldsymbol{\beta}=(\beta_1, \beta_2)$. 
 Therefore, the likelihood assuming missing data and frailties are observed can be written as
 \begin{align}
-    L(\boldsymbol{\theta})&=\prod_{j=1}^J\prod_{i=1}^{n_j}(\alpha\lambda t_{ij}^{\lambda-1}\xi_{ij}z_j)^{\delta_{ij}}\exp(-\alpha\xi_{ij}z_j t_{ij}^{\lambda})\\
+    L(\boldsymbol{\theta})&=\prod_{j=1}^J\prod_{i=1}^{n_j}(\alpha^{\lambda}\lambda t_{ij}^{\lambda-1}\xi_{ij}z_j)^{\delta_{ij}}\exp(-\alpha^{\lambda}\xi_{ij}z_j t_{ij}^{\lambda})\\
     &=\prod_{j=1}^J\prod_{i=1}^{n_j}h(t_{ij}|\mathbf{x}_{ij},z_j)^{\delta_{ij}}\exp(-H(t_{ij}|\mathbf{x}_{ij},z_j))
 \end{align}
 When there is no missing data but frailties are present, the frailty term can be integrated where the likelihood is taken to be the expectation with respect to the frailty $z_j$. 
 The likelihood can be written as 
 \begin{align}
-    L(\boldsymbol{\theta})&=\prod_{j=1}^J\prod_{i=1}^{n_j}\int_{z_j}(\alpha\lambda t_{ij}^{\lambda-1}\xi_{ij}z_j)^{\delta_{ij}}\exp(-\alpha\xi_{ij}z_j t_{ij}^{\lambda})f(z_j)dz_j\label{eq:frailtyonlyllhd1}\\
+    L(\boldsymbol{\theta})&=\prod_{j=1}^J\prod_{i=1}^{n_j}\int_{z_j}(\alpha^{\lambda}\lambda t_{ij}^{\lambda-1}\xi_{ij}z_j)^{\delta_{ij}}\exp(-\alpha^{\lambda}\xi_{ij}z_j t_{ij}^{\lambda})f(z_j)dz_j\label{eq:frailtyonlyllhd1}\\
     &=\prod_{j=1}^J\prod_{i=1}^{n_j}\int_{z_j}h(t_{ij}|\mathbf{x}_{ij},z_j)^{\delta_{ij}}\exp(-H(t_{ij}|\mathbf{x}_{ij},z_j))f(z_j)dz_j\label{eq:frailtyonlyllhd2}
 \end{align}
 But when the missing data and the frailty both exist in the model, we will need to account for their joint distribution within the likelihood according to~\citet{herring2002frailty}. 
 \begin{align} 
-    L(\boldsymbol{\theta})&=\prod_{j=1}^J\prod_{i=1}^{n_j}\int_{z_j,\mathbf{x}_{mis,ij}}(\alpha\lambda t_{ij}^{\lambda-1}\xi_{ij}z_j)^{\delta_{ij}}\exp(-\alpha\xi_{ij}z_j t_{ij}^{\lambda})f(z_j, \mathbf{x}_{mis,ij})dz_jd\mathbf{x}_{mis,ij}\label{eq:frailtyandmissing1}\\
+    L(\boldsymbol{\theta})&=\prod_{j=1}^J\prod_{i=1}^{n_j}\int_{z_j,\mathbf{x}_{mis,ij}}(\alpha^{\lambda}\lambda t_{ij}^{\lambda-1}\xi_{ij}z_j)^{\delta_{ij}}\exp(-\alpha^{\lambda}\xi_{ij}z_j t_{ij}^{\lambda})f(z_j, \mathbf{x}_{mis,ij})dz_jd\mathbf{x}_{mis,ij}\label{eq:frailtyandmissing1}\\
     &=\prod_{j=1}^J\prod_{i=1}^{n_j}\int_{z_j,\mathbf{x}_{mis,ij}}h(t_{ij}|\mathbf{x}_{ij},z_j)^{\delta_{ij}}\exp(-H(t_{ij}|\mathbf{x}_{ij},z_j))f(z_j, \mathbf{x}_{mis,ij})dz_jd\mathbf{x}_{mis,ij}\label{eq:frailtyandmissing2}
 \end{align}
 The following section~\ref{sec:gammafr} and section~\ref{sec:lognormfr} discuss how to handle the frailty within the likelihood when there are no missing data, which are corresponding to the Equation~\ref{eq:frailtyonlyllhd1} and~\ref{eq:frailtyonlyllhd2}. 
@@ -414,7 +414,7 @@ From the complete log-likelihood:
     \ell_C(\boldsymbol{\theta})&=\sum_{j=1}^J\sum_{i=1}^{n_j}\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij}, z_j) - H(t_{ij}|\mathbf{x}_{ij}, z_j)\\
     &-\sum_{j=1}^J \log (1-S_{p_j}(a_{p_j}|\mathbf{x}_{p_j}, z_j)) \\
     &= \sum_{j=1}^J\sum_{i=1}^{n_j}\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij})z_j - H(t_{ij}|\mathbf{x}_{ij})z_j \\
-    &- \sum_{j=1}^{n_j} \log(1- \exp(z_j H_{p_j}(a_{p_j}|\mathbf{x}_{p_j})))
+    &- \sum_{j=1}^{J} \log(1- \exp(z_j H_{p_j}(a_{p_j}|\mathbf{x}_{p_j})))
 \end{align}
 
 In the MCEM framework, define $\boldsymbol{\theta}^{(r)}$ as $r$-th updates. 
@@ -451,7 +451,7 @@ Therefore, in our case, we can apply Gibb's sampler where
 \begin{enumerate} 
     \item We sample the missing data first, which we can obtain that 
     \begin{align} 
-        f(\mathbf{x}_{mis,ij}|\mathbf{x}_{obs,ij}, w_{ij}, z_j, T_{p_j}<a_{p_j}, \boldsymbol{\theta}^{(r)})&\propto f(w_{ij}|\boldsymbol{x}_{mis,ij}, \boldsymbol{x}_{obs,ij}, z_j, T_{p_j}<a_{p_j}, \Lambda^{(r)})\\
+        f(\mathbf{x}_{mis,ij}|\mathbf{x}_{obs,ij}, w_{ij}, z_j, T_{p_j}<a_{p_j}, \boldsymbol{\theta}^{(r)})&\propto f(w_{ij}|\mathbf{x}_{mis,ij}, \mathbf{x}_{obs,ij}, z_j, T_{p_j}<a_{p_j}, \Lambda^{(r)})\\
         &\times f(\mathbf{x}_{mis,ij}|\mathbf{x}_{obs,ij},\psi^{(r)})
     \end{align}
     In this case, the missing data will be filled for each iteration $r$, that being said, all data will be ``observed" in this case. 
