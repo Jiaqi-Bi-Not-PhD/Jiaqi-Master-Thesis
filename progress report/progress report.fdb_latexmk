@@ -1,14 +1,14 @@
 # Fdb version 3
-["bibtex progress report"] 1713137526 "progress report.aux" "progress report.bbl" "progress report" 1713152400
+["bibtex progress report"] 1713398451 "progress report.aux" "progress report.bbl" "progress report" 1713478779
   "/usr/local/texlive/2019/texmf-dist/bibtex/bst/natbib/unsrtnat.bst" 1233624470 24550 a41a6405f4de768c43e871d9fbce2bc8 ""
-  "progress report.aux" 1713152399 3620 d43ba24ba9e8654c93f001173a7c192a "pdflatex"
+  "progress report.aux" 1713398451 3620 d43ba24ba9e8654c93f001173a7c192a "pdflatex"
   "progress.bib" 1713134670 3964 243cf4becbc1006c22ab18dedd5dcfb5 ""
   (generated)
-  "progress report.blg"
   "progress report.bbl"
-["pdflatex"] 1713152398 "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.tex" "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.pdf" "progress report" 1713152400
-  "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.aux" 1713152399 3620 d43ba24ba9e8654c93f001173a7c192a ""
-  "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.tex" 1713152398 34439 c34e02bdfa2d30a2c4a120f39417734a ""
+  "progress report.blg"
+["pdflatex"] 1713398451 "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.tex" "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.pdf" "progress report" 1713478779
+  "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.aux" 1713398451 3620 d43ba24ba9e8654c93f001173a7c192a ""
+  "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.tex" 1713398450 34441 48558466ba90b5bcd56157053b5dcb51 ""
   "/usr/local/texlive/2019/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
   "/usr/local/texlive/2019/texmf-dist/fonts/tfm/jknappen/ec/ectt1000.tfm" 1136768653 1536 06717a2b50de47d4087ac0e6cd759455 ""
   "/usr/local/texlive/2019/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmbsy6.tfm" 1246382020 1124 14ccf5552bc7f77ca02a8a402bea8bfb ""
@@ -153,14 +153,14 @@
   "/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1557342064 3277517 23507ed665b4dd9046f0f2a94bbef2be ""
   "/usr/local/texlive/2019/texmf-var/web2c/pdftex/pdflatex.fmt" 1568672455 4259636 22351f181d8ac690986445ac58be8d4d ""
   "/usr/local/texlive/2019/texmf.cnf" 1557341546 577 d150fef99ac436ad1156e86b0892f6ef ""
-  "progress report.aux" 1713152399 3620 d43ba24ba9e8654c93f001173a7c192a "pdflatex"
-  "progress report.bbl" 1713137526 4076 7d5a59858b280a1df6ccd59b82bae5d1 "bibtex progress report"
-  "progress report.spl" 1713152398 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
-  "progress report.tex" 1713152398 34439 c34e02bdfa2d30a2c4a120f39417734a ""
+  "progress report.aux" 1713398451 3620 d43ba24ba9e8654c93f001173a7c192a "pdflatex"
+  "progress report.bbl" 1713398451 4076 7d5a59858b280a1df6ccd59b82bae5d1 "bibtex progress report"
+  "progress report.spl" 1713398451 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
+  "progress report.tex" 1713398450 34441 48558466ba90b5bcd56157053b5dcb51 ""
   (generated)
+  "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.pdf"
   "progress report.spl"
   "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.log"
   "progress report.log"
-  "progress report.aux"
-  "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.pdf"
   "progress report.pdf"
+  "progress report.aux"

@@ -27,7 +27,7 @@ log_likelihood <- function(X, Y, z, theta, cuts=NULL, nbase, data, design, base.
   H <- bcumhaz*exp(xbeta)*z
   logh <- log(bhaz) + xbeta
   loglik <- status1*logh*z 
-  df <- data$df1[ip]
+  # df <- data$df1[ip] # Events within family
   Hfam <- aggregate(H, list(data$famID), sum)[,2] # Summation over individuals within one family
   hfam <- aggregate(loglik, list(data$famID), sum)[,2] # Summation over individuals within one family
   ## Ascertainment correction (design = pop, pop+) ##
@@ -44,3 +44,5 @@ log_likelihood <- function(X, Y, z, theta, cuts=NULL, nbase, data, design, base.
 
   return(-sloglik)
 }
+
+
