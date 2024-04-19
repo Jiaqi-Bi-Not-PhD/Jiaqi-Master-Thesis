@@ -537,6 +537,7 @@ To sample the frailty using the Gibb's sampler with MH algorithm, the procedure 
     \item Now we are sampling $\tilde{u}\sim \text{Unif}(0,1)$, and we accept $z'$ if $\tilde{u}\leq \gamma$. Otherwise, reject and set $z_j'=z_j$. 
 \end{enumerate}\
 The same idea for missing data. 
+This MH-within-Gibbs is more flexible when log-concavity does not hold for the posterior distribution, also when it's impossible to direct sample from the posterior distribtion. 
 
 
 
