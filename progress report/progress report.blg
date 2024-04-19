@@ -1,46 +1,46 @@
-This is BibTeX, Version 0.99d (TeX Live 2019)
-Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
+This is BibTeX, Version 0.99d (TeX Live 2022)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: progress report.aux
 The style file: unsrtnat.bst
 Database file #1: progress.bib
-You've used 13 entries,
+You've used 16 entries,
             2481 wiz_defined-function locations,
-            644 strings with 6982 characters,
-and the built_in function-call counts, 5249 in all, are:
-= -- 425
-> -- 311
-< -- 8
-+ -- 118
-- -- 92
-* -- 436
-:= -- 863
-add.period$ -- 40
-call.type$ -- 13
-change.case$ -- 23
-chr.to.int$ -- 13
-cite$ -- 13
-duplicate$ -- 247
-empty$ -- 460
-format.name$ -- 115
-if$ -- 1082
+            663 strings with 7491 characters,
+and the built_in function-call counts, 6476 in all, are:
+= -- 539
+> -- 362
+< -- 10
++ -- 138
+- -- 106
+* -- 536
+:= -- 1050
+add.period$ -- 49
+call.type$ -- 16
+change.case$ -- 29
+chr.to.int$ -- 16
+cite$ -- 16
+duplicate$ -- 304
+empty$ -- 577
+format.name$ -- 136
+if$ -- 1343
 int.to.chr$ -- 1
-int.to.str$ -- 14
-missing$ -- 16
-newline$ -- 74
-num.names$ -- 39
-pop$ -- 103
+int.to.str$ -- 17
+missing$ -- 19
+newline$ -- 89
+num.names$ -- 48
+pop$ -- 124
 preamble$ -- 1
-purify$ -- 13
+purify$ -- 16
 quote$ -- 0
-skip$ -- 141
+skip$ -- 175
 stack$ -- 0
-substring$ -- 255
-swap$ -- 27
+substring$ -- 348
+swap$ -- 33
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 82
+type$ -- 103
 warning$ -- 0
-while$ -- 46
+while$ -- 58
 width$ -- 0
-write$ -- 177
+write$ -- 216

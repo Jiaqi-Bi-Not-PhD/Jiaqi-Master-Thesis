@@ -404,7 +404,7 @@ That is, for the parameters of this distribution, $m_i$ does not depend on any o
     Person B makes \$10,000 per year, so they are not willing to provide this information, which this response is left as blank. 
     This type of missing depends on the missing data itself, that Person B refuses to provide the response due to the response being comparatively low. 
 \end{eg}
-\subsection{Without Considering the Kinship Structure}
+\subsection{Without Considering the Kinship Structure}\label{sec:without}
 When assuming the data are missing at random, the missingness is only associated to the observed data. 
 The frailty term and the missing data are therefore assumed independent. 
 Denote $w_{ij} = (t_{ij}, \delta_{ij})$ be the observed survival data.
@@ -517,6 +517,26 @@ and the variance
 Once we can calculate these statistics, we are able to sample each $x_i$ using a univariate normal distribution while still considering the kinship matrix. 
 The MCEM will then perform using the same idea of the previous subsection. 
 
+\section{Detailed Implementations of Gibb's Sampler}
+In section~\ref{sec:without}, the posterior distribution is not easy to sample from. 
+So the Gibb's sampler needs an additional step called Matropolis-Hastings step. 
+In the article by~\citet{herring2002frailty}, the choice of the frailty distribution is multivariate normal, which satisfies the property of log-concavity for adaptive rejection algorithm. 
+However, when the frailty distribution is designed to be Gamma or log-normal distribution, the log-concavity fails. 
+One may use the Metropolis-Hastings (MH) step within Gibbs to determine the acceptance or rejection when sampling the posterior distributions~\cite{griffin2013adaptive}. 
+There are some articles on the MH algorithm and how it works such as by~\citet{10.1214/105051606000000286}, and some articles have discussed how Gibb's sampler are adapted using MCMC methods~\cite{10.1214/11-AAP806}. 
+This section will discuss the MH-within-Gibbs algorithm when sampling the missing data and frailty. 
+To sample the frailty using the Gibb's sampler with MH algorithm, the procedure is 
+\begin{enumerate} 
+    \item We have a proposal sampling distribution $q(z_j'|z_j)$, which represents what we are sampling in the iteration $r$
+    \item We first sample from this $q(z_j'|z_j)$
+    \item For $z_j$, $q(z_j'|z_j)=f(z_j|\upsilon^{(r)})$
+    \item Then calculate the acceptance ratio: 
+          \begin{equation} 
+            \gamma=\min \left (1,\frac{\prod_{i=1}^{n_j}f(w_{ij}|\mathbf{x}_{ij}, z_j', T_{p_j}<a_{p_j}, \Lambda^{(r)})\times q(z_j'|z_j)}{\prod_{i=1}^{n_j}f(w_{ij}|\mathbf{x}_{ij}, z_j, T_{p_j}<a_{p_j}, \Lambda^{(r)})\times q(z_j|z_j')} \right )
+          \end{equation}
+    \item Now we are sampling $\tilde{u}\sim \text{Unif}(0,1)$, and we accept $z'$ if $\tilde{u}\leq \gamma$. Otherwise, reject and set $z_j'=z_j$. 
+\end{enumerate}\
+The same idea for missing data. 
 
 
 

@@ -1,4 +1,4 @@
-\begin{thebibliography}{13}
+\begin{thebibliography}{16}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -86,5 +86,23 @@ Andrey Ziyatdinov, Miquel V{\'a}zquez-Santiago, Helena Brunel, Angel
 \newblock lme4qtl: linear mixed models with flexible covariance structure for
   genetic studies of related individuals.
 \newblock \emph{BMC bioinformatics}, 19:\penalty0 1--5, 2018.
+
+\bibitem[Griffin and Walker(2013)]{griffin2013adaptive}
+Jim~E Griffin and Stephen~G Walker.
+\newblock On adaptive metropolis--hastings methods.
+\newblock \emph{Statistics and Computing}, 23:\penalty0 123--134, 2013.
+
+\bibitem[Andrieu and Moulines(2006)]{10.1214/105051606000000286}
+Christophe Andrieu and {\'E}ric Moulines.
+\newblock {On the ergodicity properties of some adaptive MCMC algorithms}.
+\newblock \emph{The Annals of Applied Probability}, 16\penalty0 (3):\penalty0
+  1462 -- 1505, 2006.
+
+\bibitem[Łatuszyński et~al.(2013)Łatuszyński, Roberts, and
+  Rosenthal]{10.1214/11-AAP806}
+Krzysztof Łatuszyński, Gareth~O. Roberts, and Jeffrey~S. Rosenthal.
+\newblock {Adaptive Gibbs samplers and related MCMC methods}.
+\newblock \emph{The Annals of Applied Probability}, 23\penalty0 (1):\penalty0
+  66 -- 98, 2013.
 
 \end{thebibliography}
