@@ -561,7 +561,8 @@ This simply corresponds to the likelihood
 \begin{equation}\label{eq:bayeslinearnormal}
     f(y|\mathbf{x}, \boldsymbol{\beta}, \sigma^2)\propto (\sigma^2)^{-n/2}\exp \Big (-\frac{1}{2\sigma^2} (y-\mathbf{x}\boldsymbol{\beta})^{\top}(y-\mathbf{x}\boldsymbol{\beta})\Big )
 \end{equation}
-because of the conditional normality of $y$, we can solve that 
+because of the conditional normality of $y$. 
+We can solve that 
 \begin{equation} 
     \hat{\boldsymbol{\beta}}=(\mathbf{x}^{\top}\mathbf{x})^{-1}\mathbf{x}^{\top}y
 \end{equation}
@@ -574,9 +575,64 @@ Note that $(y-\mathbf{x}\boldsymbol{\beta})^{\top}(y-\mathbf{x}\boldsymbol{\beta
 \end{align}
 So Equation~\ref{eq:bayeslinearnormal} will become 
 \begin{equation} 
-    f(y|\mathbf{x}, \boldsymbol{\beta}, \sigma^2)\propto (\sigma^2)^{-v/2}\exp (-\frac{vs^2}{2\sigma^2})(\sigma^2)^{-\frac{n-v}{2}}\exp \Big (-\frac{1}{2\sigma^2}(\boldsymbol{\beta}-\hat{\boldsymbol{\beta}})^{\top}(\mathbf{x}^{\top}\mathbf{x})(\boldsymbol{\beta}-\hat{\boldsymbol{\beta}})\Big )
+    f(y|\mathbf{x}, \boldsymbol{\beta}, \sigma^2)\propto \underbrace{(\sigma^2)^{-v/2}\exp (-\frac{vs^2}{2\sigma^2})}_{f(\sigma)}\underbrace{(\sigma^2)^{-\frac{n-v}{2}}\exp \Big (-\frac{1}{2\sigma^2}(\boldsymbol{\beta}-\hat{\boldsymbol{\beta}})^{\top}(\mathbf{x}^{\top}\mathbf{x})(\boldsymbol{\beta}-\hat{\boldsymbol{\beta}})\Big )}_{f(\boldsymbol{\beta}|\sigma)}
 \end{equation}
-where $vs^2=(\mathbf{y}-\mathbf{x}\hat{\boldsymbol{\beta}})^{\top}(\mathbf{y}-\mathbf{x}\hat{\boldsymbol{\beta}})$
+where $vs^2=(\mathbf{y}-\mathbf{x}\hat{\boldsymbol{\beta}})^{\top}(\mathbf{y}-\mathbf{x}\hat{\boldsymbol{\beta}})=SSE$, such that $v=n_{obs}-p$. 
+Then $f(\sigma^2)$ can be written as a proportional density to the inverse gamma distribution,
+\begin{equation} 
+    f(\sigma^2)\propto (\sigma^2)^{-\frac{v}{2}-1}\exp (-\frac{vs^2}{2\sigma^2})=(\sigma^2)^{-\frac{v}{2}-1}\exp (-\frac{SSE}{2\sigma^2})
+\end{equation}
+In this $\sigma^2\sim \text{Inverse-Gamma}(\alpha, \phi)$, we have $\alpha = \frac{v}{2}=\frac{n_{obs}-p}{2}$ and $\phi = \frac{1}{2}vs^2=\frac{SSE}{2}$.
+From the inverse-gamma property, when 
+\begin{equation} 
+    \sigma^2\sim \text{Inverse-Gamma}(\frac{n_{obs}-p}{2}, \frac{SSE}{2})
+\end{equation}
+and $\exists\lambda$ such that 
+\begin{equation} 
+    \sigma^2=\frac{SSE}{2}/\lambda
+\end{equation}
+then $\lambda$ can be transformed 
+\begin{equation} 
+    \lambda = \frac{\chi^2_{n_{obs}-p}}{2}
+\end{equation}
+since $\chi^2_{df}=\text{Gamma}(\frac{df}{2},2)$, so 
+\begin{equation} 
+    \sigma^2=\frac{\frac{SSE}{2}}{\frac{\chi^2_{n_{obs}-p}}{2}}=\frac{SSE}{\chi^2_{n_{obs}-p}}
+\end{equation}
+Thus, we can sample the standard deviation of the missing data distribution from 
+\begin{equation} 
+    \sigma^*=\hat{\sigma}\sqrt{\frac{SSE}{\chi^2_{n_{obs}-p}}}=\hat{\sigma}\sqrt{\frac{SSE}{g}}
+\end{equation}
+from sampling $g\sim \chi^2_{n_{obs}-p}$. 
+Moreover, we know 
+\begin{equation} 
+    \text{Var}(\hat{\boldsymbol{\beta}})=\sigma^2(\mathbf{x}^{\top}\mathbf{x}^{-1})=\mathbf{V}
+\end{equation}
+so the marginal distribution for $\boldsymbol{\beta}$, 
+\begin{equation}\label{eq:betadistmi}
+    \boldsymbol{\beta}\sim N(\hat{\boldsymbol{\beta}}, \sigma^2(\mathbf{x}^{\top}\mathbf{x})^{-1})
+\end{equation}
+Note that when a random variable $T\sim N(\mathbf{m}, \mathbf{c})$, then $T$ can be generated from a standard normal variable $\mathbf{u}$ with 
+\begin{equation} 
+    T=\mathbf{m}+\mathbf{L}\mathbf{u}
+\end{equation}
+where $\mathbf{L}$ is the cholesky decomposition of $\mathbf{c}$ such that $\mathbf{c}=\mathbf{L}\mathbf{L}^{\top}$.
+For $\boldsymbol{\beta}$, from~\ref{eq:betadistmi}, it can be derived as 
+\begin{align} 
+    \boldsymbol{\beta}&=\hat{\boldsymbol{\beta}}+\sigma (\mathbf{x}^{\top}\mathbf{x})^{-1/2}\mathbf{u}_1\\
+    &=\hat{\boldsymbol{\beta}}+\mathbf{u}_1\mathbf{V}^{-1/2}
+\end{align}
+Adjusting for $\sigma^*$ to make sure $\boldsymbol{\beta}$ matches the variability implied by the random draw of $\sigma^*$, 
+\begin{equation} 
+    \boldsymbol{\beta}^*=\hat{\boldsymbol{\beta}}+\frac{\sigma^*}{\hat{\sigma}}\mathbf{u}_1\mathbf{V}^{-1/2}
+\end{equation}
+such that $\mathbf{u}_1$ is a row vector of $p$ independent draws from a standard normal distribution, $u_{1k}\stackrel{iid}{\sim} N(0,1)$, and $k=1,...,p$. 
+The imputation for $y_i^*$ is computed as 
+\begin{equation} 
+    y_i^*=\boldsymbol{\beta}^*\mathbf{x}_i+u_{2i}\sigma^*,~ s.t.~ u_{2i}\sim N(0,1)
+\end{equation}
+where $u_{2i}$ adds the uncertainty to the imputation as well to ensure the imputation is not solely based on the predicted value of $y_i^*$. 
+This prevents the underestimation of the variability. 
 
 %\section{Stochastic EM?}
 
