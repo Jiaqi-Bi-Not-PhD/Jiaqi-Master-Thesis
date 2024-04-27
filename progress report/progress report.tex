@@ -538,8 +538,45 @@ To sample the frailty using the Gibb's sampler with MH algorithm, the procedure 
 \end{enumerate}\
 The same idea for missing data. 
 This MH-within-Gibbs is more flexible when log-concavity does not hold for the posterior distribution, also when it's impossible to direct sample from the posterior distribtion. 
+\section{Multiple Imputation}
+In the MCEM, the likelihood is explicitly written out and it ``automatically'' solves the missing data and complete data within an iterative process to make the inference of model parameters. 
+However, there are several disadvantages such as a highly costly computational time, since parameters are estimated all at once based on the likelihood equation. 
+Moreover, there are arguments that during the MCEM, the precision is questionable because there is no distinction between the observed and imputed data, although their weights are evaluated in the E-step since the integral was broken down to a summation~\cite{van2011multiple}. 
+There are also selections of multiple imputation methods, which the most common way is to use the linear regression using Bayesian framework to make imputations on continuous variables, same idea of using logistic regression for binary variables~\cite{Rubin1987}. 
 
-
+\subsection{Multiple Imputation for the Continuous Variable without Considering the Family Structure}
+Again, to avoid overuse of mathematical notations, this subsection will not follow the previously defined notations. 
+When making the imputation on the continuous variable, one easy way is to assume a conditionally normal model. 
+Suppose $y$ is the variable contains missing values, $\mathbf{x}$ are other variables are fuly observed. 
+We assume there are total $p$ parameters being estimated in this linear regression. 
+The conditionally normal model (linear regression) can be written as 
+\begin{equation} 
+    y|\mathbf{x},\boldsymbol{\beta}\sim N(\boldsymbol{\beta}\mathbf{x}, \sigma^2)
+\end{equation}
+In the linear regression setting, 
+\begin{equation} 
+    y=\mathbf{x}\boldsymbol{\beta}+\epsilon,~ \epsilon\sim N(0, \sigma^2)
+\end{equation}
+This simply corresponds to the likelihood 
+\begin{equation}\label{eq:bayeslinearnormal}
+    f(y|\mathbf{x}, \boldsymbol{\beta}, \sigma^2)\propto (\sigma^2)^{-n/2}\exp \Big (-\frac{1}{2\sigma^2} (y-\mathbf{x}\boldsymbol{\beta})^{\top}(y-\mathbf{x}\boldsymbol{\beta})\Big )
+\end{equation}
+because of the conditional normality of $y$, we can solve that 
+\begin{equation} 
+    \hat{\boldsymbol{\beta}}=(\mathbf{x}^{\top}\mathbf{x})^{-1}\mathbf{x}^{\top}y
+\end{equation}
+In the Bayesian framework, we need to find the prior, which is the joint distribution $f(\sigma^2,\boldsymbol{\beta})$. 
+Note that $(y-\mathbf{x}\boldsymbol{\beta})^{\top}(y-\mathbf{x}\boldsymbol{\beta})$ can be written as 
+\begin{align} 
+    (y-\mathbf{x}\boldsymbol{\beta})^{\top}(y-\mathbf{x}\boldsymbol{\beta})&=\big ((y-\mathbf{x}\boldsymbol{\beta})+(\mathbf{x}\hat{\boldsymbol{\beta}}-\mathbf{x}\boldsymbol{\beta})\big )^{\top}\big ((y-\mathbf{x}\boldsymbol{\beta})+(\mathbf{x}\hat{\boldsymbol{\beta}}-\mathbf{x}\boldsymbol{\beta})\big )\\
+    &=(y-\mathbf{x}\boldsymbol{\beta})^{\top}(y-\mathbf{x}\boldsymbol{\beta}) + (\boldsymbol{\beta}-\hat{\boldsymbol{\beta}})^{\top}(\mathbf{x}^{\top}\mathbf{x})(\boldsymbol{\beta}-\hat{\boldsymbol{\beta}})+2(\mathbf{x}\hat{\boldsymbol{\beta}}-\mathbf{x}\boldsymbol{\beta})\\
+    &=(y-\mathbf{x}\boldsymbol{\beta})^{\top}(y-\mathbf{x}\boldsymbol{\beta}) + (\boldsymbol{\beta}-\hat{\boldsymbol{\beta}})^{\top}(\mathbf{x}^{\top}\mathbf{x})(\boldsymbol{\beta}-\hat{\boldsymbol{\beta}})
+\end{align}
+So Equation~\ref{eq:bayeslinearnormal} will become 
+\begin{equation} 
+    f(y|\mathbf{x}, \boldsymbol{\beta}, \sigma^2)\propto (\sigma^2)^{-v/2}\exp (-\frac{vs^2}{2\sigma^2})(\sigma^2)^{-\frac{n-v}{2}}\exp \Big (-\frac{1}{2\sigma^2}(\boldsymbol{\beta}-\hat{\boldsymbol{\beta}})^{\top}(\mathbf{x}^{\top}\mathbf{x})(\boldsymbol{\beta}-\hat{\boldsymbol{\beta}})\Big )
+\end{equation}
+where $vs^2=(\mathbf{y}-\mathbf{x}\hat{\boldsymbol{\beta}})^{\top}(\mathbf{y}-\mathbf{x}\hat{\boldsymbol{\beta}})$
 
 %\section{Stochastic EM?}
 

@@ -1,4 +1,4 @@
-\begin{thebibliography}{16}
+\begin{thebibliography}{17}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -104,5 +104,11 @@ Krzysztof Łatuszyński, Gareth~O. Roberts, and Jeffrey~S. Rosenthal.
 \newblock {Adaptive Gibbs samplers and related MCMC methods}.
 \newblock \emph{The Annals of Applied Probability}, 23\penalty0 (1):\penalty0
   66 -- 98, 2013.
+
+\bibitem[Van~Buuren(2011)]{van2011multiple}
+Stef Van~Buuren.
+\newblock Multiple imputation of multilevel data.
+\newblock In \emph{Handbook of advanced multilevel analysis}, pages 173--196.
+  Routledge, 2011.
 
 \end{thebibliography}
