@@ -545,7 +545,7 @@ Moreover, there are arguments that during the MCEM, the precision is questionabl
 There are also selections of multiple imputation methods, which the most common way is to use the linear regression using Bayesian framework to make imputations on continuous variables, same idea of using logistic regression for binary variables~\cite{Rubin1987}. 
 
 \subsection{Multiple Imputation for the Continuous Variable without Considering the Family Structure}
-Again, to avoid overuse of mathematical notations, this subsection will not follow the previously defined notations. 
+Again, to avoid overloaded mathematical notations, this subsection will not follow the previously defined notations. 
 When making the imputation on the continuous variable, one easy way is to assume a conditionally normal model. 
 Suppose $y$ is the variable contains missing values, $\mathbf{x}$ are other variables are fuly observed. 
 We assume there are total $p$ parameters being estimated in this linear regression. 
@@ -633,6 +633,13 @@ The imputation for $y_i^*$ is computed as
 \end{equation}
 where $u_{2i}$ adds the uncertainty to the imputation as well to ensure the imputation is not solely based on the predicted value of $y_i^*$. 
 This prevents the underestimation of the variability. 
+Therefore, the comprehensive steps of the multiple imputation on the continuous missing data can be concluded to the following steps: 
+\begin{enumerate} 
+    \item Calculate $\hat{y}=\hat{\boldsymbol{\beta}}\mathbf{x}$ using $y_{obs}$, and $\hat{\boldsymbol{\beta}}$ can be obtained easily, as well as $\hat{\sigma}$, and $\text{Var}(\hat{\boldsymbol{\beta}})=\mathbf{V}$
+    \item Draw $g\sim \chi^2_{n_{obs}-p}$ for one random draw 
+    \item Calculate $\sigma^*=\hat{\sigma}/\sqrt{SSE/g}$
+    \item Draw a $p$ dimensional vector $\mathbf{u}_1$ such that $u_{1k}\stackrel{iid}{\sim} N(0,1)$ and $k=1,...,p$
+\end{enumerate}
 
 %\section{Stochastic EM?}
 
