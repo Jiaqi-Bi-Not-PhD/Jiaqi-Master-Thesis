@@ -71,3 +71,104 @@ results_list[[m]] <- optim(par = initial_params, fn = lognormal_single,
 }
 
 results_list[[5]]
+
+###############################################################################################
+########### Multiple Imputation without Considering Family Structure ##########################
+###############################################################################################
+
+## Step 1 - Empirical estimates
+imp_model <- lm(PRS ~ log(timeBC)*BC + mgeneI + proband, data = brca1_prs) 
+summary(imp_model)
+betas <- coef(imp_model)
+sigmahat <- sigma(imp_model)
+V <- vcov(imp_model)
+SSE <- sum((imp_model$residuals)^2)
+
+brca1_prs_imp <- list()
+for (i in 1:20) {
+  ## Step 2 - g ~ chi^2 nobs-p
+  g <- rchisq(n = 1, df = 497)
+  
+  ## Step 3 - sigma star
+  sigmastar <- sigmahat/(SSE/g)
+  
+  ## Step 4 - u1
+  u1 <- c()
+  u1 <- rnorm(n = length(betas), mean = 0, sd = 1)
+  
+  ## Step 5
+  betastar <- betas + (sigmastar/sigmahat) * u1 %*% chol(V)
+  
+  ## Step 6
+  #num_miss <- sum(is.na(brca1_prs$PRS))
+  #u2i <- rnorm(n = 1, mean = 0, sd = 1)
+  
+  ## Step 7
+  brca1_prs_imp[[i]] <- brca1_prs |>
+    mutate(PRS_I = ifelse(is.na(PRS), betastar[,1] + betastar[,2]*log(timeBC) + betastar[,3]*BC + betastar[,4]*mgeneI + betastar[,5]*proband + betastar[,6]*log(timeBC)*BC + rnorm(n = 1, mean = 0, sd = 1)*sigmastar, PRS))
+}
+
+## Analysis log-normal
+log_norm_results <- list()
+for (i in 1:20) {
+  X <- as.matrix(data.frame(brca1_prs_imp[[i]]$mgeneI, brca1_prs_imp[[i]]$PRS_I), 
+                 nrow=nrow(brca1_prs_imp[[i]]), 
+                 ncol = 2)
+  Y <- as.matrix(data.frame(brca1_prs_imp[[i]]$timeBC, brca1_prs_imp[[i]]$BC), 
+                 nrow = nrow(brca1_prs_imp[[i]]), 
+                 ncol = 2)
+  
+  initial_params <- c(1/41.41327,1, 0, 0, 1)
+  log_norm_forgraph <- optim(par = initial_params, fn = lognormal_single,
+                             data = brca1_prs_imp[[i]], X = X, Y = Y, nbase = 2,
+                             design = "pop", frailty.dist = "lognormal", base.dist = "Weibull",
+                             agemin = 18, control = list(maxit = 2000))
+  log_norm_results[[i]] <- log_norm_forgraph$par
+}
+
+mean(sapply(log_norm_results, function(x) x[1]))
+mean(sapply(log_norm_results, function(x) x[2]))
+mean(sapply(log_norm_results, function(x) x[3]))
+mean(sapply(log_norm_results, function(x) x[4]))
+mean(sapply(log_norm_results, function(x) x[5]))
+
+
+## Analysis Gamma
+gamma_results <- list()
+for (i in 1:20) {
+  initial_params <- c(1/41.41327,1,0,0, 1)
+  X <- as.matrix(brca1_prs_imp[[i]][,c("mgeneI", "PRS_I")], ncol = 2)
+  Y <- as.matrix(brca1_prs_imp[[i]][,c("timeBC", "BC")], ncol = 2)
+  gamma_forgraph <- optim(par = initial_params, fn = loglik_frailty_single_gamma,
+                          data = brca1_prs_imp[[i]], X = X, Y = Y, nbase = 2,
+                          design = "pop", frailty.dist = "gamma", base.dist = "Weibull",
+                          agemin = 18, 
+                          control = list(maxit = 2000))
+  gamma_results[[i]] <- gamma_forgraph$par
+}
+
+mean(sapply(gamma_results, function(x) x[1]))
+mean(sapply(gamma_results, function(x) x[2]))
+mean(sapply(gamma_results, function(x) x[3]))
+mean(sapply(gamma_results, function(x) x[4]))
+mean(sapply(gamma_results, function(x) x[5]))
+
+## Analysis coxph
+coxph_results <- list()
+for (i in 1:20) {
+  m <- coxph(Surv(timeBC, BC) ~ mgeneI + PRS_I + frailty(famID, distribution = "gamma"), data = brca1_prs_imp[[i]])
+  coxph_results[[i]] <- m$coefficients
+}
+
+mean(sapply(coxph_results, function(x) x[1]))
+mean(sapply(coxph_results, function(x) x[2]))
+
+## Analysis coxme
+coxme_results <- list()
+for (i in 1:20) {
+  m <- coxme(Surv(timeBC, BC) ~ mgeneI + PRS_I + (1|famID), data = brca1_prs_imp[[i]])
+  coxme_results[[i]] <- m$coefficients
+}
+
+mean(sapply(coxme_results, function(x) x[1]))
+mean(sapply(coxme_results, function(x) x[2]))

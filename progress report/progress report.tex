@@ -633,12 +633,16 @@ The imputation for $y_i^*$ is computed as
 \end{equation}
 where $u_{2i}$ adds the uncertainty to the imputation as well to ensure the imputation is not solely based on the predicted value of $y_i^*$. 
 This prevents the underestimation of the variability. 
-Therefore, the comprehensive steps of the multiple imputation on the continuous missing data can be concluded to the following steps: 
+Therefore, the comprehensive steps of the multiple imputation on the continuous missing data can be summarized to the following steps: 
 \begin{enumerate} 
     \item Calculate $\hat{y}=\hat{\boldsymbol{\beta}}\mathbf{x}$ using $y_{obs}$, and $\hat{\boldsymbol{\beta}}$ can be obtained easily, as well as $\hat{\sigma}$, and $\text{Var}(\hat{\boldsymbol{\beta}})=\mathbf{V}$
     \item Draw $g\sim \chi^2_{n_{obs}-p}$ for one random draw 
     \item Calculate $\sigma^*=\hat{\sigma}/\sqrt{SSE/g}$
     \item Draw a $p$ dimensional vector $\mathbf{u}_1$ such that $u_{1k}\stackrel{iid}{\sim} N(0,1)$ and $k=1,...,p$
+    \item Calculate $\boldsymbol{\beta}^*=\hat{\boldsymbol{\beta}}+\frac{\sigma^*}{\hat{\sigma}}\mathbf{u}_1\mathbf{V}^{1/2}$ such that $\mathbf{V}^{1/2}$ is the cholesky decomposition of $\mathbf{V}$
+    \item Draw $u_{2i}\sim N(0,1)$ 
+    \item Impute $y_{mis,i}=\boldsymbol{\beta}^*\mathbf{x}_i+u_{2i}\sigma^*$ 
+    \item Repeat 2. to 7. for $M$ times to obtain $M$ complete datasets
 \end{enumerate}
 
 %\section{Stochastic EM?}
