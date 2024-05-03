@@ -652,8 +652,28 @@ In order to account for the kinship correlations, the conditional normal distrib
 \end{equation}
 where in the linear mixed effect regression form with flexible covariance matrix, the model can be written as 
 \begin{equation} 
-    \mathbf{y}=\mathbf{x}\boldsymbol{\beta}
+    \mathbf{y}=\mathbf{x}\boldsymbol{\beta}+\mathbf{u}+\mathbf{e}
 \end{equation}
+where $\mathbf{u}\sim MVN(0,\sigma_g^2K)$, and $\mathbf{e}\sim MVN(0,\sigma_e^2I)$, such that $K$ is the kinship matrix with the diagonal of 1 and $I$ is the identity matrix. 
+Denote that $\boldsymbol{\Sigma}=\sigma_g^2K+\sigma_e^2$. 
+So in this multivariate version of linear mixed effects model. 
+With unknown mean and covariance matrix, the prior of the covariance matrix can be selected as an Inverse Wishart distribution with some degrees of freedom and the scale parameter. 
+However, in this case, the covariance matrix is not fully unknown. 
+Therefore, some steps of this multiple imputation will be based on the empirical estimates rather than the prior distributions. 
+The step can be concluded as follows: 
+\begin{enumerate} 
+    \item Obtain the kinship matrix $K$ among all individuals 
+    \item Calculate the estimates of $\hat{y}=\mathbf{x}\boldsymbol{\beta}$, obtain estimates of $\hat{\boldsymbol{\beta}}$, $\hat{\sigma_g}^2$, $\hat{\sigma_e}^2$, $\text{Var}(\hat{\boldsymbol{\beta}})=\mathbf{V}$. In this step, naturally, $\boldsymbol{\hat{\Sigma}}$ is obtained.
+    \item Obtain the conditional variance of $y_i$, 
+    \begin{equation} 
+        \text{Var}(y_i|\mathbf{y}_{-i})=\hat{\Sigma}_{ii}-\hat{\boldsymbol{\Sigma}}_{i,-i}\hat{\boldsymbol{\Sigma}}_{-i,-i}^{-1}\hat{\boldsymbol{\Sigma}}_{-i,i}=\hat{\sigma_i}^2
+    \end{equation}
+    \item Draw $p$-dimensional vector $w_1$ such that $w_{1k}\stackrel{iid}{\sim} N(0,1)$ where $k=1,...,p$
+    \item Calculate $\boldsymbol{\beta}^*=\hat{\boldsymbol{\beta}}+w_1\mathbf{V}^{1/2}$ such that $\mathbf{V}^{1/2}$ is the cholesky decomposition of $\mathbf{V}$
+    \item Draw $w_{2i}\sim N(0,1)$
+    \item Impute $y_{mis,i}=\boldsymbol{\beta}^*\mathbf{x}_i + w_{2i}\hat{\sigma}_i$
+    \item Repeat 3. to 7. for $M$ times to obtain $M$ complete datasets.
+\end{enumerate}
 %\section{Stochastic EM?}
 
 
