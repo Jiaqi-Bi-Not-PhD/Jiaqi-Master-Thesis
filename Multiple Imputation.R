@@ -235,7 +235,7 @@ for (m in 1:20) {
   
   ## Step 7
   brca1_prs_imp_fam[[m]] <- brca1_prs |>
-    mutate(PRS_I = ifelse(is.na(PRS), betastar[,1] + betastar[,2]*proband + betastar[,3]*mgeneI + betastar[,4]*log(timeBC) + betastar[,5]*BC + betastar[,6]*log(timeBC)*BC + rnorm(n = 1, mean = 0, sd = 1) + sqrt(cond_var), PRS))
+    mutate(PRS_I = ifelse(is.na(PRS), betastar[,1] + betastar[,2]*proband + betastar[,3]*mgeneI + betastar[,4]*log(timeBC) + betastar[,5]*BC + betastar[,6]*log(timeBC)*BC + rnorm(n = 1, mean = 0, sd = 1) * sqrt(cond_var), PRS))
 }
 
 ## Analysis log-normal
