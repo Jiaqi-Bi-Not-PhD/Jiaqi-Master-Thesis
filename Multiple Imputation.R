@@ -172,3 +172,139 @@ for (i in 1:20) {
 
 mean(sapply(coxme_results, function(x) x[1]))
 mean(sapply(coxme_results, function(x) x[2]))
+
+###############################################################################################
+########### Multiple Imputation Considering Family Structure ##################################
+###############################################################################################
+library(lme4qtl)
+library(kinship2)
+library(Matrix)
+library(MASS)
+library(lmerTest)
+library(parallel)
+
+brca1_prs <- brca1_prs |>
+  mutate(index = seq(1, 2650, 1))
+
+## Step 1 - Kinship matrix
+kinship_mat <- with(brca1_prs, kinship(id = indID, dadid = fatherID, momid = motherID,
+                                       sex = rep(2,nrow(brca1_prs))))
+kinship_mat_sparse <- Matrix(kinship_mat, sparse = TRUE)
+kinship_mat_sparse <- 2 * kinship_mat_sparse
+kinship_mat <- as.matrix(kinship_mat_sparse)
+
+## Step 2 - empirical estimates
+model_test <- relmatLmer(PRS ~ proband + mgeneI + log(timeBC) * BC + (1|indID), 
+                         data = brca1_prs, relmat = list(indID = kinship_mat))
+summary(model_test)
+
+#betas <- coef(model_test)
+betas <- c(0.37399, 0.08875, -0.24676, -0.12997, -0.68395, 0.19251)
+sigma_g_2 <- attr(VarCorr(model_test)$indID, "stddev")^2 # genetic variance
+sigma_e_2 <- attr(VarCorr(model_test), "sc")^2 # residual variance
+Sigma <- sigma_g_2*kinship_mat_sparse + sigma_e_2 # Sparse
+Sigma_mat <- as.matrix(Sigma) # Non-sparse
+
+V <- vcov(model_test)
+
+## Step 3 - conditional variance
+num_cores <- detectCores() - 2 # 6 cores
+cl <- makeCluster(num_cores)
+clusterExport(cl, varlist = c("Sigma")) 
+clusterEvalQ(cl, library(Matrix))
+
+cond_var <- function(i) {
+  conditional_var <- Sigma[i,i] - Sigma[i,-i] %*% solve(Sigma[-i,-i]) %*% Sigma[-i,i]
+  return(conditional_var)
+}
+conditional_variances <- parSapply(cl, 1:nrow(brca1_prs), cond_var)
+conditional_variances_temp <- as.vector(do.call(rbind, conditional_variances))
+
+## Imputation steps
+brca1_prs <- brca1_prs |>
+  mutate(cond_var = conditional_variances_temp)
+brca1_prs_imp_fam <- list() 
+for (m in 1:20) {
+  ## Step 4
+  w_1 <- rnorm(n = length(betas), mean = 0, sd = 1)
+  
+  ## Step 5
+  betastar <- betas + w_1 %*% chol(V)
+  
+  ## Step 6
+  
+  ## Step 7
+  brca1_prs_imp_fam[[m]] <- brca1_prs |>
+    mutate(PRS_I = ifelse(is.na(PRS), betastar[,1] + betastar[,2]*proband + betastar[,3]*mgeneI + betastar[,4]*log(timeBC) + betastar[,5]*BC + betastar[,6]*log(timeBC)*BC + rnorm(n = 1, mean = 0, sd = 1) + sqrt(cond_var), PRS))
+}
+
+## Analysis log-normal
+log_norm_results <- list()
+for (i in 1:20) {
+  X <- as.matrix(data.frame(brca1_prs_imp_fam[[i]]$mgeneI, brca1_prs_imp_fam[[i]]$PRS_I), 
+                 nrow=nrow(brca1_prs_imp_fam[[i]]), 
+                 ncol = 2)
+  Y <- as.matrix(data.frame(brca1_prs_imp_fam[[i]]$timeBC, brca1_prs_imp_fam[[i]]$BC), 
+                 nrow = nrow(brca1_prs_imp_fam[[i]]), 
+                 ncol = 2)
+  
+  initial_params <- c(-4.769505,  0.8507999,  2.422078,  0.3768629,  2.689579)
+  log_norm_forgraph <- optim(par = initial_params, fn = lognormal_single,
+                             data = brca1_prs_imp_fam[[i]], X = X, Y = Y, nbase = 2,
+                             design = "pop", frailty.dist = "lognormal", base.dist = "Weibull",
+                             agemin = 18, control = list(maxit = 2000))
+  log_norm_results[[i]] <- log_norm_forgraph$par
+}
+
+mean(sapply(log_norm_results, function(x) x[1]))
+mean(sapply(log_norm_results, function(x) x[2]))
+mean(sapply(log_norm_results, function(x) x[3]))
+mean(sapply(log_norm_results, function(x) x[4]))
+mean(sapply(log_norm_results, function(x) x[5]))
+
+
+## Analysis Gamma
+gamma_results <- list()
+for (i in 1:20) {
+  initial_params <- c(-4.101604,  1.064875,  1.260023,  0.229735,  4.354003)
+  X <- as.matrix(brca1_prs_imp_fam[[i]][,c("mgeneI", "PRS_I")], ncol = 2)
+  Y <- as.matrix(brca1_prs_imp_fam[[i]][,c("timeBC", "BC")], ncol = 2)
+  gamma_forgraph <- optim(par = initial_params, fn = loglik_frailty_single_gamma,
+                          data = brca1_prs_imp_fam[[i]], X = X, Y = Y, nbase = 2,
+                          design = "pop", frailty.dist = "gamma", base.dist = "Weibull",
+                          agemin = 18, 
+                          control = list(maxit = 2000))
+  gamma_results[[i]] <- gamma_forgraph$par
+}
+
+mean(sapply(gamma_results, function(x) x[1]))
+mean(sapply(gamma_results, function(x) x[2]))
+mean(sapply(gamma_results, function(x) x[3]))
+mean(sapply(gamma_results, function(x) x[4]))
+mean(sapply(gamma_results, function(x) x[5]))
+
+## Analysis coxph
+coxph_results <- list()
+for (i in 1:20) {
+  m <- coxph(Surv(timeBC, BC) ~ mgeneI + PRS_I + frailty(famID, distribution = "gamma"), data = brca1_prs_imp_fam[[i]])
+  coxph_results[[i]] <- m$coefficients
+}
+
+mean(sapply(coxph_results, function(x) x[1]))
+mean(sapply(coxph_results, function(x) x[2]))
+
+## Analysis coxme
+coxme_results <- list()
+for (i in 1:20) {
+  m <- coxme(Surv(timeBC, BC) ~ mgeneI + PRS_I + (1|famID), data = brca1_prs_imp_fam[[i]])
+  coxme_results[[i]] <- m$coefficients
+}
+
+mean(sapply(coxme_results, function(x) x[1]))
+mean(sapply(coxme_results, function(x) x[2]))
+
+
+#######################
+s <- Sigma[3,3] - Sigma[3, -3] %*% solve(Sigma[-3, -3]) %*% Sigma[-3, 3] # Test
+Sigma_test <- Sigma[1:6, 1:6]
+Sigma_test[3,3] - Sigma_test[3, -3] %*% solve(Sigma_test[-3, -3]) %*% Sigma_test[-3, 3]

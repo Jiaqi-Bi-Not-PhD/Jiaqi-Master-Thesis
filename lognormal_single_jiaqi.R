@@ -80,11 +80,11 @@ gausshermite <- lognormal_single(X = X, Y = Y, theta = c(1/41.41327,1,0),
                  design = "pop", base.dist = "Weibull", frailty.dist = "lognormal",
                  agemin = 18)
 
-initial_params <- c(1/41.41327,1, 0, 0, 1)
+initial_params <- c(-4.101604,  1.064875,  1.260023,  0.229735,  4.354003)
 log_norm_forgraph <- optim(par = initial_params, fn = lognormal_single,
       data = brca1_prs_cca, X = X, Y = Y, nbase = 2,
       design = "pop", frailty.dist = "lognormal", base.dist = "Weibull",
-      agemin = 18, control = list(maxit = 2000))
+      agemin = 18, control = list(maxit = 10000))
 
 
 X1 <- as.matrix(data.frame(brca1_prs_cca$mgeneI), 

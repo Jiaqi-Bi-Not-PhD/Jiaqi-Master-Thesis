@@ -547,7 +547,7 @@ There are also selections of multiple imputation methods, which the most common 
 \subsection{Multiple Imputation for the Continuous Variable without Considering the Family Structure}
 Again, to avoid overloaded mathematical notations, this subsection will not follow the previously defined notations. 
 When making the imputation on the continuous variable, one easy way is to assume a conditionally normal model. 
-Suppose $y$ is the variable contains missing values, $\mathbf{x}$ are other variables are fuly observed. 
+Suppose $y$ is the variable contains missing values, $\mathbf{x}$ are other variables are fully observed. 
 We assume there are total $p$ parameters being estimated in this linear regression. 
 The conditionally normal model (linear regression) can be written as 
 \begin{equation} 
@@ -645,6 +645,15 @@ Therefore, the comprehensive steps of the multiple imputation on the continuous 
     \item Repeat 2. to 7. for $M$ times to obtain $M$ complete datasets
 \end{enumerate}
 
+\subsection{Multiple Imputation for the Continuous Variable Considering the Family Structure}
+In order to account for the kinship correlations, the conditional normal distribution needs to be adjusted where the variable contains the missing components are said to be multivariate 
+\begin{equation} 
+    \mathbf{y}|\mathbf{x},\boldsymbol{\beta}\sim MVN(\boldsymbol{\beta}\mathbf{x}, \sigma_g^2K+\sigma_e^2)
+\end{equation}
+where in the linear mixed effect regression form with flexible covariance matrix, the model can be written as 
+\begin{equation} 
+    \mathbf{y}=\mathbf{x}\boldsymbol{\beta}
+\end{equation}
 %\section{Stochastic EM?}
 
 
