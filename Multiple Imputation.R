@@ -202,7 +202,7 @@ summary(model_test)
 betas <- c(0.37399, 0.08875, -0.24676, -0.12997, -0.68395, 0.19251)
 sigma_g_2 <- attr(VarCorr(model_test)$indID, "stddev")^2 # genetic variance
 sigma_e_2 <- attr(VarCorr(model_test), "sc")^2 # residual variance
-Sigma <- sigma_g_2*kinship_mat_sparse + sigma_e_2 # Sparse
+Sigma <- sigma_g_2*kinship_mat_sparse + sigma_e_2 # Sparse- Identity matrix using sparse
 Sigma_mat <- as.matrix(Sigma) # Non-sparse
 
 V <- vcov(model_test)
@@ -283,6 +283,8 @@ mean(sapply(gamma_results, function(x) x[3]))
 mean(sapply(gamma_results, function(x) x[4]))
 mean(sapply(gamma_results, function(x) x[5]))
 
+colMeans(do.call(rbind, gamma_results))
+
 ## Analysis coxph
 coxph_results <- list()
 for (i in 1:20) {
@@ -293,6 +295,8 @@ for (i in 1:20) {
 mean(sapply(coxph_results, function(x) x[1]))
 mean(sapply(coxph_results, function(x) x[2]))
 
+colMeans(do.call(rbind, coxph_results))
+
 ## Analysis coxme
 coxme_results <- list()
 for (i in 1:20) {
@@ -302,6 +306,8 @@ for (i in 1:20) {
 
 mean(sapply(coxme_results, function(x) x[1]))
 mean(sapply(coxme_results, function(x) x[2]))
+
+colMeans(do.call(rbind, coxme_results))
 
 
 #######################
