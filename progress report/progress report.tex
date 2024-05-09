@@ -452,7 +452,8 @@ Therefore, in our case, we can apply Gibb's sampler where
     \item We sample the missing data first, which we can obtain that 
     \begin{align} 
         f(\mathbf{x}_{mis,ij}|\mathbf{x}_{obs,ij}, w_{ij}, z_j, T_{p_j}<a_{p_j}, \boldsymbol{\theta}^{(r)})&\propto f(w_{ij}|\mathbf{x}_{mis,ij}, \mathbf{x}_{obs,ij}, z_j, T_{p_j}<a_{p_j}, \Lambda^{(r)})\\
-        &\times f(\mathbf{x}_{mis,ij}|\mathbf{x}_{obs,ij},\psi^{(r)})
+        &\times f(\mathbf{x}_{mis,ij}|\mathbf{x}_{obs,ij},\psi^{(r)}, T_{p_j}<a_{p_j})\\
+        &\times P(T_{p_j}<a_{p_j})
     \end{align}
     In this case, the missing data will be filled for each iteration $r$, that being said, all data will be ``observed" in this case. 
     Therefore, we will use $\mathbf{x}_{ij}$ to simply denote completed covariates. 
