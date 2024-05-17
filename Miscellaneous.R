@@ -25,13 +25,6 @@ brca1_prs_MCEM <- brca1_prs_MCEM |>
   filter(n_obs != 0)
 brca1_prs_MCEM <- brca1_prs_MCEM |>
   mutate(z = NA)
-brca1_prs_MCEM <- brca1_prs_MCEM |>
-  mutate(I_PRS = PRS) |>
-  select(c(famID, n_obs, indID, 
-           proband, motherID, fatherID, 
-           mgeneI, mgene, currentage, 
-           BC, timeBC, df1, PRS, I_PRS,
-           z))
 
 ## If CCA is preferred (471 obs)
 brca1_prs_cca <- brca1_prs %>%
@@ -69,6 +62,36 @@ ped_fam1 <- pedigree(id = first_family$indID,
                      sex = first_family$gender,
                      famid = first_family$famID, 
                      affected = cbind(first_family$affect, first_family$PRS_exist, first_family$proband))
+
+## First family pedigree tree to visualize the missing PRS information
+ped_toplot <- ped_fam1['10000001']
+plot.pedigree(ped_toplot)
+######################################################################
+
+brca1_pedtree_test <- brca1_prs[1:6,] %>%
+  mutate(gender = "female", 
+         PRS_exist = ifelse(is.na(PRS), 0, 1),
+         indID = as.character(indID), 
+         famID = as.character(famID),
+         fatherID = as.character(fatherID),
+         motherID = as.character(motherID))
+
+unique_fatherID <- unique(na.omit(brca1_pedtree_test$fatherID))
+rows_to_add <- data.frame(indID = unique_fatherID, gender = "male",
+                          famID = brca1_pedtree_test$famID, proband = 0,
+                          BC = 0, PRS_exist = 0, mgeneI = 0)
+first_family <- bind_rows(brca1_pedtree_test, rows_to_add)[-1]
+first_family <- first_family %>%
+  distinct(indID, .keep_all = TRUE) %>%
+  dplyr::select(c(indID, gender, famID, proband, BC, PRS_exist, mgeneI, fatherID, motherID)) 
+
+library(kinship2)
+ped_fam1 <- pedigree(id = first_family$indID,
+                     dadid = first_family$fatherID,
+                     momid = first_family$motherID,
+                     sex = first_family$gender,
+                     famid = first_family$famID, 
+                     affected = cbind(first_family$BC, first_family$PRS_exist, first_family$proband, first_family$mgeneI))
 
 ## First family pedigree tree to visualize the missing PRS information
 ped_toplot <- ped_fam1['10000001']
