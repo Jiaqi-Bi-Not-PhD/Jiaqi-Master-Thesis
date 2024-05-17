@@ -194,8 +194,7 @@ kinship_mat_sparse <- 2 * kinship_mat_sparse
 kinship_mat <- as.matrix(kinship_mat_sparse)
 
 ## Step 2 - empirical estimates
-model_test <- relmatLmer(PRS ~ proband + mgeneI + log(timeBC) * BC + (1|indID), 
-                         data = brca1_prs, relmat = list(indID = kinship_mat))
+model_test <- relmatLmer(PRS ~ proband + currentage + mgeneI + log(timeBC):BC + BC + (1|indID), data = brca1_prs, relmat = list(indID = kinship_mat))
 summary(model_test)
 
 #betas <- coef(model_test)
@@ -296,6 +295,11 @@ mean(sapply(coxph_results, function(x) x[1]))
 mean(sapply(coxph_results, function(x) x[2]))
 
 colMeans(do.call(rbind, coxph_results))
+
+cca <- coxph(Surv(timeBC, BC) ~ mgeneI + PRS + frailty(famID, distribution = "gamma"), data = brca1_prs_cca1)
+summary(cca)
+brca1_prs_cca1 <- brca1_prs_cca |>
+  mutate(proband = 0)
 
 ## Analysis coxme
 coxme_results <- list()
