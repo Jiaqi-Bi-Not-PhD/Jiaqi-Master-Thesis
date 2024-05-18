@@ -671,9 +671,11 @@ The step can be concluded as follows:
     \end{equation}
     \item Draw $p$-dimensional vector $w_1$ such that $w_{1k}\stackrel{iid}{\sim} N(0,1)$ where $k=1,...,p$
     \item Calculate $\boldsymbol{\beta}^*=\hat{\boldsymbol{\beta}}+w_1\mathbf{V}^{1/2}$ such that $\mathbf{V}^{1/2}$ is the cholesky decomposition of $\mathbf{V}$
+    \item Obtain $\mu_i^*=\boldsymbol{\beta}^*\mathbf{x}_i$
+    \item Obtain $E(y_{mis,i}|\mathbf{y}_{-i})=\mu_i^*+\hat{\boldsymbol{\Sigma}}_{i,-i}\hat{\boldsymbol{\Sigma}}_{-i,-i}^{-1}(\mathbf{x}_{-i}-\boldsymbol{\mu}^*_{-i})$
     \item Draw $w_{2i}\sim N(0,1)$
-    \item Impute $y_{mis,i}=\boldsymbol{\beta}^*\mathbf{x}_i + w_{2i}\hat{\sigma}_i$
-    \item Repeat 3. to 7. for $M$ times to obtain $M$ complete datasets.
+    \item Impute $y_{mis,i}=E(y_{mis,i}|\mathbf{y}_{-i}) + w_{2i}\hat{\sigma}_i$
+    \item Repeat 3. to 9. for $M$ times to obtain $M$ complete datasets.
 \end{enumerate}
 %\section{Stochastic EM?}
 

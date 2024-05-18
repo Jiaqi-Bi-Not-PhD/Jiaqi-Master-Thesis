@@ -182,6 +182,7 @@ library(Matrix)
 library(MASS)
 library(lmerTest)
 library(parallel)
+library(tidyverse)
 
 brca1_prs <- brca1_prs |>
   mutate(index = seq(1, 2650, 1))
@@ -193,15 +194,19 @@ kinship_mat_sparse <- Matrix(kinship_mat, sparse = TRUE)
 kinship_mat_sparse <- 2 * kinship_mat_sparse
 kinship_mat <- as.matrix(kinship_mat_sparse)
 
+Iden_mat <- diag(nrow = nrow(brca1_prs)) # Identity matrix n*n
+Iden_mat_sparse <- Matrix(Iden_mat, sparse = TRUE)
+
 ## Step 2 - empirical estimates
-model_test <- relmatLmer(PRS ~ proband + currentage + mgeneI + log(timeBC):BC + BC + (1|indID), data = brca1_prs, relmat = list(indID = kinship_mat))
+model_test <- relmatLmer(PRS ~ proband + proband:currentage + mgeneI + log(timeBC):BC + BC + (1|indID), data = brca1_prs, relmat = list(indID = kinship_mat))
 summary(model_test)
 
 #betas <- coef(model_test)
-betas <- c(0.37399, 0.08875, -0.24676, -0.12997, -0.68395, 0.19251)
+betas <- c(-0.158267, 0.205328, -0.211337, -0.431375, -0.002690, 0.129443)
 sigma_g_2 <- attr(VarCorr(model_test)$indID, "stddev")^2 # genetic variance
 sigma_e_2 <- attr(VarCorr(model_test), "sc")^2 # residual variance
-Sigma <- sigma_g_2*kinship_mat_sparse + sigma_e_2 # Sparse- Identity matrix using sparse
+
+Sigma <- sigma_g_2*kinship_mat_sparse + sigma_e_2*Iden_mat_sparse # Sparse matrix for Sigma
 Sigma_mat <- as.matrix(Sigma) # Non-sparse
 
 V <- vcov(model_test)
@@ -218,6 +223,10 @@ cond_var <- function(i) {
 }
 conditional_variances <- parSapply(cl, 1:nrow(brca1_prs), cond_var)
 conditional_variances_temp <- as.vector(do.call(rbind, conditional_variances))
+
+## Step 3 - Conditional expectations
+brca1_prs1 <- brca1_prs |>
+  mutate(mu_prs = predict(model_test, newdata = brca1_prs, re.form = NA))
 
 ## Imputation steps
 brca1_prs <- brca1_prs |>
