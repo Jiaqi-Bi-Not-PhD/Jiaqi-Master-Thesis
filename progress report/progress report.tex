@@ -299,12 +299,15 @@ Let $\boldsymbol{\theta}=(\beta_1, \beta_2, \alpha, \lambda, k)$ for Gamma frail
     &=\sum_{j=1}^J\log\left [h(t_{ij}|\mathbf{x}_{ij})^{\delta_{ij}} \frac{(k+d_j-1)!}{k!k^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}))}{k})^{-k-d_j} \right ]\\
     &=\sum_{j=1}^J\left [\sum_{i=1}^{n_j}(\delta_{ij}\log h(t_{ij}|\mathbf{x}_{ij})) + \log\Big (\frac{(k+d_j-1)!}{k!k^{d_j-1}}(1+\frac{\sum_{i=1}^{n_j}(H(t_{ij}|\mathbf{x}_{ij}))}{k})^{-k-d_j}\Big )\right ]
 \end{align}
+ Not all probands in their study entry ages are affected, so it is crucial to apply a ascertainment correction accordingly. 
+ Denote $I(T_{p_j}<a_{p_j})$ as an indicator of the proband was affected before their entry to the study.
  Note we can still apply Laplace transform for the ascertainment correction, such that
 \begin{align}
-    A_j(\boldsymbol{\theta})&=1-S_{p_j}(a_{p_j}|\mathbf{x}_{p_j})\\
-    &=1-\int_0^{\infty} S_{p_j}(a_{p_j}|\mathbf{x}_{p_j},z_j)f(z_j)dz_j\\
-    &=1-\int_0^{\infty}\exp(-z_j\cdot H_{p_j}(a_{p_j}|\mathbf{x}_{p_j}))f(z_j)dz_j\\
-    &=1-(1+\frac{H_{p_j}(a_{p_j}|\mathbf{x}_{p_j})}{k})^{-k}
+    A_j(\boldsymbol{\theta})&=\Big [1-S_{p_j}(a_{p_j}|\mathbf{x}_{p_j})\Big ]^{I(T_{p_j}<a_{p_j})}S_{p_j}\Big [(a_{p_j}|\mathbf{x}_{p_j})\Big ]^{1-I(T_{p_j}<a_{p_j})}\\
+    &=\Big [1-\int_0^{\infty} S_{p_j}(a_{p_j}|\mathbf{x}_{p_j},z_j)f(z_j)dz_j\Big ]^{I(T_{p_j}<a_{p_j})}\Big [\int_0^{\infty} S_{p_j}(a_{p_j}|\mathbf{x}_{p_j},z_j)f(z_j)dz_j\Big ]^{1-I(T_{p_j}<a_{p_j})}\\
+    &=\Big [1-\int_0^{\infty}\exp(-z_j\cdot H_{p_j}(a_{p_j}|\mathbf{x}_{p_j}))f(z_j)dz_j\Big ]^{I(T_{p_j}<a_{p_j})} \\
+    &\times \Big [ \int_0^{\infty}\exp(-z_j\cdot H_{p_j}(a_{p_j}|\mathbf{x}_{p_j}))f(z_j)dz_j\Big ]^{1-I(T_{p_j}<a_{p_j})}\\
+    &=\Big [1-(1+\frac{H_{p_j}(a_{p_j}|\mathbf{x}_{p_j})}{k})^{-k}\Big ]^{I(T_{p_j}<a_{p_j})}\Big [ (1+\frac{H_{p_j}(a_{p_j}|\mathbf{x}_{p_j})}{k})^{-k}\Big ]^{1-I(T_{p_j}<a_{p_j})}
 \end{align}
 \section{Log-Normal Frailty}\label{sec:lognormfr}
 The log-normal frailty is not the power-variance-function (PVF) family, so there is no closed form for Laplace transform or expressions for survivors. But we are able to estimate the Laplace transform using Gauss Hermite Quadrature. We typically standardize the log-normal frailty $Z$ as
@@ -347,8 +350,9 @@ where $q$ denotes the $q$-th element of Gauss Hermite Quadrature, i.e., $\omega_
 \end{equation}
 Similarly, the ascertainment correction in the log-normal frailty can be written as 
 \begin{align}
-    A_j(\boldsymbol{\theta})&=1-\int_{-\infty}^{\infty} \exp(-z H(a_{p_j}|\mathbf{x}_{p_j}))f(z)dz\\
-    &=1-\sum_{q=1}^{N_{q}}\omega_{q} \exp\left (-(\sum_{i=1}^{n_j} H(a_{p_j}|\mathbf{x}_{p_j}))\exp (\sqrt{2}\sigma y_{q_p})\right )
+    A_j(\boldsymbol{\theta})&=\Big [1-\int_{-\infty}^{\infty} \exp(-z H(a_{p_j}|\mathbf{x}_{p_j}))f(z)dz\Big ]^{I(T_{p_j}<a_{p_j})}\Big [ \int_{-\infty}^{\infty} \exp(-z H(a_{p_j}|\mathbf{x}_{p_j}))f(z)dz\Big ]^{1-I(T_{p_j}<a_{p_j})}\\
+    &=\Big [1-\sum_{q=1}^{N_{q}}\omega_{q} \exp\left (-(\sum_{i=1}^{n_j} H(a_{p_j}|\mathbf{x}_{p_j}))\exp (\sqrt{2}\sigma y_{q_p})\right )\Big ]^{I(T_{p_j}<a_{p_j})}\\
+    &\times \Big [ \sum_{q=1}^{N_{q}}\omega_{q} \exp\left (-(\sum_{i=1}^{n_j} H(a_{p_j}|\mathbf{x}_{p_j}))\exp (\sqrt{2}\sigma y_{q_p}) \right ) \Big ]^{1-I(T_{p_j}<a_{p_j})}
 \end{align}
 
 \section{Likelihood and Missing Data}\label{sec:likeandmissing}
@@ -672,10 +676,13 @@ The step can be concluded as follows:
     \item Draw $p$-dimensional vector $w_1$ such that $w_{1k}\stackrel{iid}{\sim} N(0,1)$ where $k=1,...,p$
     \item Calculate $\boldsymbol{\beta}^*=\hat{\boldsymbol{\beta}}+w_1\mathbf{V}^{1/2}$ such that $\mathbf{V}^{1/2}$ is the cholesky decomposition of $\mathbf{V}$
     \item Obtain $\mu_i^*=\boldsymbol{\beta}^*\mathbf{x}_i$
-    \item Obtain $E(y_{mis,i}|\mathbf{y}_{-i})=\mu_i^*+\hat{\boldsymbol{\Sigma}}_{i,-i}\hat{\boldsymbol{\Sigma}}_{-i,-i}^{-1}(\mathbf{x}_{-i}-\boldsymbol{\mu}^*_{-i})$
+    \item Obtain the conditional expectations 
+    \begin{equation}
+        E(y_{mis,i}|\mathbf{y}_{-i})=\mu_i^*+\hat{\boldsymbol{\Sigma}}_{i,-i}\hat{\boldsymbol{\Sigma}}_{-i,-i}^{-1}(\mathbf{y}_{-i}-\boldsymbol{\mu}^*_{-i})
+    \end{equation}
     \item Draw $w_{2i}\sim N(0,1)$
     \item Impute $y_{mis,i}=E(y_{mis,i}|\mathbf{y}_{-i}) + w_{2i}\hat{\sigma}_i$
-    \item Repeat 3. to 9. for $M$ times to obtain $M$ complete datasets.
+    \item Repeat 4. to 9. for $M$ times to obtain $M$ complete datasets.
 \end{enumerate}
 %\section{Stochastic EM?}
 

@@ -24,6 +24,7 @@ loglik_frailty_single_gamma <- function(X, Y, theta, cuts=NULL, nbase, data, des
   h_eachfam <- status * logh
   
   ip <- data$proband == 1
+  I_Tp_j.ap_j <- data$I_Tp_j.ap_j[ip]
   df <- subset(data, data$proband == 1)
   d <- aggregate(Y[,2], list(data$famID), sum)[,2]
   Hfam <- aggregate(H, list(data$famID), sum)[,2]
@@ -43,7 +44,7 @@ loglik_frailty_single_gamma <- function(X, Y, theta, cuts=NULL, nbase, data, des
   bcumhaz.p <- cumhaz(base.dist, cagep, bparms, cuts=cuts0)
   H.p <- bcumhaz.p*exp(xbeta.p)
   
-  logasc <- log(1-(1+H.p/k)^(-k))
+  logasc <- I_Tp_j.ap_j * log(1-(1+H.p/k)^(-k)) + (1-I_Tp_j.ap_j) * log((1+H.p/k)^(-k))
   slogasc <- sum(logasc[logasc!=-Inf], na.rm = T)
   
   cloglik <- sum(loglik[loglik!=-Inf], na.rm=T) + total_loglik - slogasc
@@ -53,10 +54,10 @@ loglik_frailty_single_gamma <- function(X, Y, theta, cuts=NULL, nbase, data, des
 
 ############## Test Zone ################
 initial_params <- c(1/41.41327,1,0,0, 1)
-X <- as.matrix(brca1_prs_cca[,c("mgeneI", "PRS")], ncol = 2)
-Y <- as.matrix(brca1_prs_cca[,c("timeBC", "BC")], ncol = 2)
+X <- as.matrix(brca1_prs[,c("mgeneI", "PRS")], ncol = 2)
+Y <- as.matrix(brca1_prs[,c("timeBC", "BC")], ncol = 2)
 gamma_forgraph <- optim(par = initial_params, fn = loglik_frailty_single_gamma,
-      data = brca1_prs_cca, X = X, Y = Y, nbase = 2,
+      data = brca1_prs, X = X, Y = Y, nbase = 2,
       design = "pop", frailty.dist = "gamma", base.dist = "Weibull",
       agemin = 18, 
       control = list(maxit = 2000))

@@ -35,6 +35,10 @@ brca1_prs_cca <- brca1_prs %>%
 ## or (503 obs)
 brca1_prs_cca <- brca1_prs %>%
   filter(!is.na(PRS)) 
+
+## Indicator for proband T_{p_j} < a_{p_j}
+brca1_prs <- brca1_prs |>
+  mutate(I_Tp_j.ap_j = ifelse(proband == 1 & timeBC < currentage, 1, 0))
 ##################################################################
 ####### Pedigree tree - who is present who is missing (PRS) ######
 ##################################################################

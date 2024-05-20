@@ -183,6 +183,7 @@ library(MASS)
 library(lmerTest)
 library(parallel)
 library(tidyverse)
+library(survival)
 
 brca1_prs <- brca1_prs |>
   mutate(index = seq(1, 2650, 1))
@@ -198,11 +199,12 @@ Iden_mat <- diag(nrow = nrow(brca1_prs)) # Identity matrix n*n
 Iden_mat_sparse <- Matrix(Iden_mat, sparse = TRUE)
 
 ## Step 2 - empirical estimates
-model_test <- relmatLmer(PRS ~ proband + proband:currentage + mgeneI + log(timeBC):BC + BC + (1|indID), data = brca1_prs, relmat = list(indID = kinship_mat))
+model_test <- relmatLmer(PRS ~ proband + proband:currentage + mgeneI + log(timeBC)*BC + (1|indID), data = brca1_prs, relmat = list(indID = kinship_mat))
 summary(model_test)
+X <- model.matrix( ~ proband + proband:currentage + mgeneI + log(timeBC)*BC, data = brca1_prs) 
 
 #betas <- coef(model_test)
-betas <- c(-0.158267, 0.205328, -0.211337, -0.431375, -0.002690, 0.129443)
+betas <- c(0.309458, 0.190865, -0.238208, -0.115634, -0.835923, -0.002240, 0.233941)
 sigma_g_2 <- attr(VarCorr(model_test)$indID, "stddev")^2 # genetic variance
 sigma_e_2 <- attr(VarCorr(model_test), "sc")^2 # residual variance
 
@@ -224,13 +226,10 @@ cond_var <- function(i) {
 conditional_variances <- parSapply(cl, 1:nrow(brca1_prs), cond_var)
 conditional_variances_temp <- as.vector(do.call(rbind, conditional_variances))
 
-## Step 3 - Conditional expectations
-brca1_prs1 <- brca1_prs |>
-  mutate(mu_prs = predict(model_test, newdata = brca1_prs, re.form = NA))
-
 ## Imputation steps
 brca1_prs <- brca1_prs |>
   mutate(cond_var = conditional_variances_temp)
+  
 brca1_prs_imp_fam <- list() 
 for (m in 1:20) {
   ## Step 4
@@ -240,10 +239,40 @@ for (m in 1:20) {
   betastar <- betas + w_1 %*% chol(V)
   
   ## Step 6
+  mu_star <- X %*% as.vector(betastar)
   
   ## Step 7
+  PRS <- brca1_prs$PRS
+  num_cores <- detectCores() - 2 # 6 cores
+  cl <- makeCluster(num_cores)
+  clusterExport(cl, varlist = c("Sigma", "PRS", "mu_star")) 
+  clusterEvalQ(cl, library(Matrix))
+  E_cond <- function(i) {
+    y_minus_i <- PRS[-i]
+    mu_star_minus_i <- mu_star[-i]
+    non_NA <- which(!is.na(y_minus_i))
+    y_minus_i <- y_minus_i[non_NA]
+    mu_star_minus_i <- mu_star_minus_i[non_NA]
+    
+    conditional_Expect <- mu_star[i] + Sigma[i,-i][non_NA] %*% solve(Sigma[-i,-i][non_NA, non_NA]) %*% (y_minus_i - mu_star_minus_i)
+    return(conditional_Expect)
+  }
+  conditional_expectations <- parSapply(cl, 1:nrow(brca1_prs), E_cond)
+  conditional_expectations <- as.vector(do.call(rbind, conditional_expectations))
+  
+  conditional_vars <- brca1_prs$cond_var
+  
+  ## Step 8
+  w2i <- rnorm(n = sum(is.na(brca1_prs$PRS)), mean = 0, sd = 1)
+  
+  ## Step 9
+  PRS_star <- conditional_expectations + w2i * conditional_vars
   brca1_prs_imp_fam[[m]] <- brca1_prs |>
-    mutate(PRS_I = ifelse(is.na(PRS), betastar[,1] + betastar[,2]*proband + betastar[,3]*mgeneI + betastar[,4]*log(timeBC) + betastar[,5]*BC + betastar[,6]*log(timeBC)*BC + rnorm(n = 1, mean = 0, sd = 1) * sqrt(cond_var), PRS))
+    mutate(PRS_I = PRS_star) |>
+    mutate(PRS_I = ifelse(!is.na(PRS), PRS, PRS_I))
+  ## Step 9*
+  #brca1_prs_imp_fam[[m]] <- brca1_prs |>
+  #  mutate(PRS_I = ifelse(is.na(PRS), betastar[,1] + betastar[,2]*proband + betastar[,3]*mgeneI + betastar[,4]*log(timeBC) + betastar[,5]*BC + betastar[,6]*log(timeBC)*BC + rnorm(n = 1, mean = 0, sd = 1) * sqrt(cond_var), PRS))
 }
 
 ## Analysis log-normal
