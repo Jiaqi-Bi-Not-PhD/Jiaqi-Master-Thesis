@@ -1,0 +1,39 @@
+import(survival)
+export(simfam, simfam2, summary.simfam, summary.simfam2,
+plot.simfam, penplot, penmodel, 
+print.penmodel, print.summary.penmodel, penetrance, fampower,
+summary.penmodel,plot.penmodel, carrierprob, penmodelEM,
+simfam_cmp, summary.simfam_cmp, plot.simfam_cmp, penplot_cmp, 
+penmodel_cmp, print.penmodel_cmp, print.summary.penmodel_cmp, 
+penetrance_cmp, summary.penmodel_cmp, plot.penmodel_cmp)
+S3method(summary, simfam)
+S3method(summary, simfam2)
+S3method(summary, simfam_cmp)
+S3method(summary, penmodel)
+S3method(summary, penmodel_cmp)
+S3method(plot, simfam)
+S3method(plot, simfam_cmp)
+S3method(plot, penmodel)
+S3method(plot, penmodel_cmp)
+S3method(print, penmodel)
+S3method(print, penmodel_cmp)
+S3method(print, summary.penmodel)
+S3method(print, summary.penmodel_cmp)
+importFrom("grDevices", "dev.off")
+importFrom("graphics", "legend", "lines", "par", "plot", "title")
+importFrom("stats","symnum","coef","pt","aggregate", "dgamma", "dnorm", 
+	 "nlm", "pgamma", ".getXlevels", "model.extract", "model.matrix",
+   	 "optim", "qnorm", "sd", "terms", "pnorm", "quantile", "rgamma", 
+	 "rnorm", "runif", "uniroot", "var", "rbinom", "integrate")
+importFrom(truncnorm, rtruncnorm)
+importFrom(eha, hpch)
+importFrom(eha, Hpch)
+importFrom(pracma, hessian)
+importFrom(pracma, jacobian)
+importFrom(kinship2, pedigree)
+importFrom(kinship2, pedigree.legend)
+importFrom(kinship2, plot.pedigree)
+importFrom(kinship2, kinship)
+importFrom(MASS, mvrnorm)
+importFrom(matrixcalc, is.positive.definite)
+importFrom(cmprsk, cuminc)

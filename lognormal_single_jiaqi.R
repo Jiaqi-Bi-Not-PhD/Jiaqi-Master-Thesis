@@ -42,7 +42,8 @@ lognormal_single <- function(X, Y, theta, cuts=NULL, nbase, data, design, base.d
   #logdL <- gh(g = Hfam, d = df, p = sigma)
   # Ascertainment correction (design = pop, pop+)
   
-  cagep <- data$currentage[ip]-agemin
+  #cagep <- data$currentage[ip]-agemin
+  cagep <- data$currentage[ip]
   xbeta.p <- xbeta[ip]
   bcumhaz.p <- cumhaz(base.dist, cagep, bparms1, cuts=cuts0)
   
@@ -83,11 +84,23 @@ gausshermite <- lognormal_single(X = X, Y = Y, theta = c(1/41.41327,1,0),
                  design = "pop", base.dist = "Weibull", frailty.dist = "lognormal",
                  agemin = 18)
 
-initial_params <- c(-4.101604,  1.064875,  1.260023,  0.229735,  4.354003)
+initial_params <- c(1/41.41327,1, 0, 0, 1)
 log_norm_forgraph <- optim(par = initial_params, fn = lognormal_single,
       data = brca1_prs, X = X, Y = Y, nbase = 2,
       design = "pop", frailty.dist = "lognormal", base.dist = "Weibull",
-      agemin = 18, control = list(maxit = 10000))
+      agemin = 18, control = list(maxit = 10000), hessian = TRUE)
+
+nomiss_lognormal_hessian <- log_norm_forgraph$hessian
+nomiss_lognormal_hessian <- as.matrix(nearPD(nomiss_lognormal_hessian)$mat)
+vcov_mat <- solve(nomiss_lognormal_hessian)
+param_est <- log_norm_forgraph$par
+standard_errors <- sqrt(diag(vcov_mat))
+z_scores <- param_est/standard_errors
+p_values <- 2*(1-pnorm(abs(z_scores)))
+final_results <- list( Estimates = param_est, 
+                       Std.Error = standard_errors, 
+                       Z = z_scores, 
+                       p_val = p_values) # p-value
 
 
 X1 <- as.matrix(data.frame(brca1_prs_cca$mgeneI), 

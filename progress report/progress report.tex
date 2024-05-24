@@ -645,7 +645,7 @@ Therefore, the comprehensive steps of the multiple imputation on the continuous 
     \item Calculate $\sigma^*=\hat{\sigma}/\sqrt{SSE/g}$
     \item Draw a $p$ dimensional vector $\mathbf{u}_1$ such that $u_{1k}\stackrel{iid}{\sim} N(0,1)$ and $k=1,...,p$
     \item Calculate $\boldsymbol{\beta}^*=\hat{\boldsymbol{\beta}}+\frac{\sigma^*}{\hat{\sigma}}\mathbf{u}_1\mathbf{V}^{1/2}$ such that $\mathbf{V}^{1/2}$ is the cholesky decomposition of $\mathbf{V}$
-    \item Draw $u_{2i}\sim N(0,1)$ 
+    \item Draw $u_{2i}\stackrel{iid}{\sim} N(0,1)$ 
     \item Impute $y_{mis,i}=\boldsymbol{\beta}^*\mathbf{x}_i+u_{2i}\sigma^*$ 
     \item Repeat 2. to 7. for $M$ times to obtain $M$ complete datasets
 \end{enumerate}
@@ -684,6 +684,12 @@ The step can be concluded as follows:
     \item Impute $y_{mis,i}=E(y_{mis,i}|\mathbf{y}_{-i}) + w_{2i}\hat{\sigma}_i$
     \item Repeat 4. to 9. for $M$ times to obtain $M$ complete datasets.
 \end{enumerate}
+
+\section{Simulation Study (Temporary)}
+\subsection{Generating Missing at Random}
+From the MICE (Multivariate Imputation by Chained Equations) package in R authored by~\citet{van2011mice}, there is one function add-on that is very helpful in generating the missingness of a data while considering the missing mechanism. 
+The function was introduced by~\citet{schouten2018generating} that on the opposite of imputation, the amputation is designed to simulate the missing data. 
+
 %\section{Stochastic EM?}
 
 

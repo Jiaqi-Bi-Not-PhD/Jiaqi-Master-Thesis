@@ -11,7 +11,7 @@ apply(cbind(d, g), 1, function(x) sum(wk*yk^x[1]*exp(-x[2]*yk))/sqrt(pi) )
 }
 
 gh <- function(g,d,p){
-  gpts <- statmod::gauss.quad(25, kind = "hermite")
+  gpts <- statmod::gauss.quad(20, kind = "hermite")
   xk <- gpts$nodes
   wk <- gpts$weights
   yk <- exp(sqrt(2)*sqrt(p)*xk)

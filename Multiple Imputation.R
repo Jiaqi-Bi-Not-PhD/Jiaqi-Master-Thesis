@@ -216,7 +216,7 @@ V <- vcov(model_test)
 ## Step 3 - conditional variance
 num_cores <- detectCores() - 2 # 6 cores
 cl <- makeCluster(num_cores)
-clusterExport(cl, varlist = c("Sigma")) 
+clusterExport(cl, varlist = c("Sigma", "PRS", "mu_star")) 
 clusterEvalQ(cl, library(Matrix))
 
 cond_var <- function(i) {
@@ -225,6 +225,8 @@ cond_var <- function(i) {
 }
 conditional_variances <- parSapply(cl, 1:nrow(brca1_prs), cond_var)
 conditional_variances_temp <- as.vector(do.call(rbind, conditional_variances))
+
+stopCluster(cl) # Free up memory after everything
 
 ## Imputation steps
 brca1_prs <- brca1_prs |>
@@ -243,10 +245,12 @@ for (m in 1:20) {
   
   ## Step 7
   PRS <- brca1_prs$PRS
+  
   num_cores <- detectCores() - 2 # 6 cores
   cl <- makeCluster(num_cores)
   clusterExport(cl, varlist = c("Sigma", "PRS", "mu_star")) 
   clusterEvalQ(cl, library(Matrix))
+  
   E_cond <- function(i) {
     y_minus_i <- PRS[-i]
     mu_star_minus_i <- mu_star[-i]
@@ -263,13 +267,15 @@ for (m in 1:20) {
   conditional_vars <- brca1_prs$cond_var
   
   ## Step 8
-  w2i <- rnorm(n = sum(is.na(brca1_prs$PRS)), mean = 0, sd = 1)
+  w2i <- rnorm(n = nrow(brca1_prs), mean = 0, sd = 1)
   
   ## Step 9
   PRS_star <- conditional_expectations + w2i * conditional_vars
   brca1_prs_imp_fam[[m]] <- brca1_prs |>
     mutate(PRS_I = PRS_star) |>
     mutate(PRS_I = ifelse(!is.na(PRS), PRS, PRS_I))
+  
+  stopCluster(cl)
   ## Step 9*
   #brca1_prs_imp_fam[[m]] <- brca1_prs |>
   #  mutate(PRS_I = ifelse(is.na(PRS), betastar[,1] + betastar[,2]*proband + betastar[,3]*mgeneI + betastar[,4]*log(timeBC) + betastar[,5]*BC + betastar[,6]*log(timeBC)*BC + rnorm(n = 1, mean = 0, sd = 1) * sqrt(cond_var), PRS))
@@ -285,7 +291,7 @@ for (i in 1:20) {
                  nrow = nrow(brca1_prs_imp_fam[[i]]), 
                  ncol = 2)
   
-  initial_params <- c(-4.769505,  0.8507999,  2.422078,  0.3768629,  2.689579)
+  initial_params <- initial_params <- c(1/41.41327,1,0,0, 1)
   log_norm_forgraph <- optim(par = initial_params, fn = lognormal_single,
                              data = brca1_prs_imp_fam[[i]], X = X, Y = Y, nbase = 2,
                              design = "pop", frailty.dist = "lognormal", base.dist = "Weibull",
@@ -299,11 +305,13 @@ mean(sapply(log_norm_results, function(x) x[3]))
 mean(sapply(log_norm_results, function(x) x[4]))
 mean(sapply(log_norm_results, function(x) x[5]))
 
+colMeans(do.call(rbind, log_norm_results))
+
 
 ## Analysis Gamma
 gamma_results <- list()
 for (i in 1:20) {
-  initial_params <- c(-4.101604,  1.064875,  1.260023,  0.229735,  4.354003)
+  initial_params <- c(1/41.41327,1,0,0, 1)
   X <- as.matrix(brca1_prs_imp_fam[[i]][,c("mgeneI", "PRS_I")], ncol = 2)
   Y <- as.matrix(brca1_prs_imp_fam[[i]][,c("timeBC", "BC")], ncol = 2)
   gamma_forgraph <- optim(par = initial_params, fn = loglik_frailty_single_gamma,

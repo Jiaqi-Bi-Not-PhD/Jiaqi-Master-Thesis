@@ -9,7 +9,7 @@ loglik_frailty_single_gamma <- function(X, Y, theta, cuts=NULL, nbase, data, des
   
   nx <- dim(X)[2]
   xbeta <- c(X %*% theta[(nbase+1):(nbase+nx)])
-  k <- theta[length(theta)]
+  k <- exp(theta[length(theta)])
   
   time0 <- Y[,1] - agemin
   cuts0 <- cuts - agemin
@@ -33,13 +33,16 @@ loglik_frailty_single_gamma <- function(X, Y, theta, cuts=NULL, nbase, data, des
   
   
   ## Terms with Gamma params within the likelihood ##
-  term_Gamma <- log(((factorial(k + d - 1))/(factorial(k)*k^(d-1))) * ((1 + Hfam/k)^(-k-d)))
+  #term_Gamma <- log(((factorial(k + d - 1))/(factorial(k)*k^(d-1))) * ((1 + Hfam/k)^(-k-d)))
+  term_Gamma <- lfactorial(k + d - 1) - lfactorial(k) - (d - 1) * log(k) - (k + d) * log(1 + Hfam/k)
+  #term_Gamma <-  log((gamma(k + d) / (gamma(k + 1) * k^(d - 1))) * ((1 + Hfam / k)^(-k - d)))
   total <- first_term + term_Gamma 
   #print(total)
   total_loglik <- sum(total, na.rm = TRUE)
   
   ## Ascertainment correction ##
-  cagep <- data$currentage[ip]-agemin
+  #cagep <- data$currentage[ip]-agemin
+  cagep <- data$currentage[ip]
   xbeta.p <- xbeta[ip]
   bcumhaz.p <- cumhaz(base.dist, cagep, bparms, cuts=cuts0)
   H.p <- bcumhaz.p*exp(xbeta.p)
@@ -60,7 +63,23 @@ gamma_forgraph <- optim(par = initial_params, fn = loglik_frailty_single_gamma,
       data = brca1_prs, X = X, Y = Y, nbase = 2,
       design = "pop", frailty.dist = "gamma", base.dist = "Weibull",
       agemin = 18, 
-      control = list(maxit = 2000))
+      control = list(maxit = 2000), hessian = TRUE)
+
+
+nomiss_gamma_hessian <- gamma_forgraph$hessian
+nomiss_gamma_hessian <- as.matrix(nearPD(nomiss_gamma_hessian)$mat)
+vcov_mat <- solve(nomiss_gamma_hessian)
+param_est <- gamma_forgraph$par
+standard_errors <- sqrt(diag(vcov_mat))
+z_scores <- param_est/standard_errors
+p_values <- 2*(1-pnorm(abs(z_scores)))
+final_results <- list( Estimates = param_est, 
+                       Std.Error = standard_errors, 
+                       Z = z_scores, 
+                       p_val = p_values) # p-value
+
+cox_model <- coxph(Surv(timeBC, BC) ~ mgene + PRS + frailty(famID, distribution = "gamma"), data = brca1_prs)
+summary(cox_model)
 
 loglik_frailty_single_gamma(X, Y, theta = c(log(2), log(2), 0, 0), nbase = 2, data = brca1_prs_cca, design = "pop", base.dist = "Weibull", frailty.dist = "gamma", agemin = 18, k = 1)
 

@@ -3,44 +3,44 @@ Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: progress report.aux
 The style file: unsrtnat.bst
 Database file #1: progress.bib
-You've used 17 entries,
+You've used 19 entries,
             2481 wiz_defined-function locations,
-            670 strings with 7621 characters,
-and the built_in function-call counts, 6958 in all, are:
-= -- 590
-> -- 369
-< -- 12
-+ -- 142
-- -- 108
-* -- 560
-:= -- 1113
-add.period$ -- 53
-call.type$ -- 17
-change.case$ -- 31
-chr.to.int$ -- 17
-cite$ -- 17
-duplicate$ -- 336
-empty$ -- 628
-format.name$ -- 139
-if$ -- 1460
+            682 strings with 8002 characters,
+and the built_in function-call counts, 7748 in all, are:
+= -- 662
+> -- 405
+< -- 13
++ -- 156
+- -- 118
+* -- 624
+:= -- 1236
+add.period$ -- 59
+call.type$ -- 19
+change.case$ -- 35
+chr.to.int$ -- 19
+cite$ -- 19
+duplicate$ -- 374
+empty$ -- 702
+format.name$ -- 153
+if$ -- 1627
 int.to.chr$ -- 1
-int.to.str$ -- 18
-missing$ -- 20
-newline$ -- 94
-num.names$ -- 51
-pop$ -- 136
+int.to.str$ -- 20
+missing$ -- 22
+newline$ -- 104
+num.names$ -- 57
+pop$ -- 150
 preamble$ -- 1
-purify$ -- 17
+purify$ -- 19
 quote$ -- 0
-skip$ -- 197
+skip$ -- 219
 stack$ -- 0
-substring$ -- 382
-swap$ -- 44
+substring$ -- 433
+swap$ -- 48
 text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 110
+type$ -- 124
 warning$ -- 0
-while$ -- 63
+while$ -- 71
 width$ -- 0
-write$ -- 230
+write$ -- 256
