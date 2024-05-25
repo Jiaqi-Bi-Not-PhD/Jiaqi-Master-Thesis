@@ -77,7 +77,7 @@ results_list[[5]]
 ###############################################################################################
 
 ## Step 1 - Empirical estimates
-imp_model <- lm(PRS ~ log(timeBC)*BC + mgeneI + proband, data = brca1_prs) 
+imp_model <- lm(PRS ~ proband + proband:currentage + mgeneI + log(timeBC)*BC, data = brca1_prs) 
 summary(imp_model)
 betas <- coef(imp_model)
 sigmahat <- sigma(imp_model)
@@ -105,7 +105,7 @@ for (i in 1:20) {
   
   ## Step 7
   brca1_prs_imp[[i]] <- brca1_prs |>
-    mutate(PRS_I = ifelse(is.na(PRS), betastar[,1] + betastar[,2]*log(timeBC) + betastar[,3]*BC + betastar[,4]*mgeneI + betastar[,5]*proband + betastar[,6]*log(timeBC)*BC + rnorm(n = 1, mean = 0, sd = 1)*sigmastar, PRS))
+    mutate(PRS_I = ifelse(is.na(PRS), betastar[,1] + betastar[,2]*proband + betastar[,3]*mgeneI + betastar[,4]*log(timeBC) + betastar[,5]*BC + betastar[,6]*proband*currentage + betastar[,7]*log(timeBC)*BC + rnorm(n = 1, mean = 0, sd = 1)*sigmastar, PRS))
 }
 
 ## Analysis log-normal
@@ -152,6 +152,8 @@ mean(sapply(gamma_results, function(x) x[2]))
 mean(sapply(gamma_results, function(x) x[3]))
 mean(sapply(gamma_results, function(x) x[4]))
 mean(sapply(gamma_results, function(x) x[5]))
+
+colMeans(do.call(rbind, gamma_results))
 
 ## Analysis coxph
 coxph_results <- list()
@@ -216,7 +218,7 @@ V <- vcov(model_test)
 ## Step 3 - conditional variance
 num_cores <- detectCores() - 2 # 6 cores
 cl <- makeCluster(num_cores)
-clusterExport(cl, varlist = c("Sigma", "PRS", "mu_star")) 
+clusterExport(cl, varlist = c("Sigma")) 
 clusterEvalQ(cl, library(Matrix))
 
 cond_var <- function(i) {
@@ -238,7 +240,7 @@ for (m in 1:20) {
   w_1 <- rnorm(n = length(betas), mean = 0, sd = 1)
   
   ## Step 5
-  betastar <- betas + w_1 %*% chol(V)
+  betastar <- betas + w_1 %*% chol(V) # w_1 ~ N(0,1) always?
   
   ## Step 6
   mu_star <- X %*% as.vector(betastar)
@@ -276,9 +278,6 @@ for (m in 1:20) {
     mutate(PRS_I = ifelse(!is.na(PRS), PRS, PRS_I))
   
   stopCluster(cl)
-  ## Step 9*
-  #brca1_prs_imp_fam[[m]] <- brca1_prs |>
-  #  mutate(PRS_I = ifelse(is.na(PRS), betastar[,1] + betastar[,2]*proband + betastar[,3]*mgeneI + betastar[,4]*log(timeBC) + betastar[,5]*BC + betastar[,6]*log(timeBC)*BC + rnorm(n = 1, mean = 0, sd = 1) * sqrt(cond_var), PRS))
 }
 
 ## Analysis log-normal
@@ -328,7 +327,7 @@ mean(sapply(gamma_results, function(x) x[3]))
 mean(sapply(gamma_results, function(x) x[4]))
 mean(sapply(gamma_results, function(x) x[5]))
 
-colMeans(do.call(rbind, gamma_results))
+gamma_mi_kinship <- colMeans(do.call(rbind, gamma_results))
 
 ## Analysis coxph
 coxph_results <- list()

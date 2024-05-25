@@ -12,7 +12,7 @@ library(mice)
 set.seed(123)
 famx <- simfam(N.fam = 20, design = "pop", variation = "frailty", 
                base.dist = "Weibull", frailty.dist = "gamma", interaction = FALSE,
-               add.x = TRUE, x.dist = "normal", x.parms = c(0, 1),  depend = 50, 
+               add.x = TRUE, x.dist = "normal", x.parms = c(0, 1),  depend = 2, 
                base.parms = c(0.016,3), vbeta = c(1, 3, 3)) # Number of family = 10
 IBDmatrix <- diag(1, dim(famx)[1])
 kinship_mat <- with(famx, kinship(id = indID, dadid = fatherID, momid = motherID,
@@ -20,8 +20,8 @@ kinship_mat <- with(famx, kinship(id = indID, dadid = fatherID, momid = motherID
 kinship_mat <- 2*kinship_mat
 inputdata <- famx[, !names(famx) %in%c("time", "status", "ageonset", "fsize", "naff")]
 
-fam2 <- simfam2(design = "pop", variation = "kinship", 
-                depend = 50, base.dist="Weibull", base.parms =c(0.016, 3),
+fam2 <- simfam2(design = "pop", variation = c("kinship", "IBD"),
+                depend = c(2, 2), base.dist="Weibull", base.parms =c(0.016, 3),
                 var_names = c("gender", "mgene", "newx"), vbeta = c(1, 3, 3),
                 agemin=20, inputdata=inputdata, IBD=kinship_mat) # covariates are gender, mgene, newx
 
@@ -33,7 +33,7 @@ fam2 <- fam2 |>
   mutate(I_Tp_j.ap_j = ifelse(proband == 1 & time < currentage, 1, 0))
 
 ## Gamma frailty optimization test (No missing data)
-initial_params <- c(1/41.41327,1,0, 0, 1)
+initial_params <- c(1/41.41327,1,0,0,1)
 X <- as.matrix(fam2[,c("mgene", "newx")], ncol = 2)
 Y <- as.matrix(fam2[,c("time", "status")], ncol = 2)
 nomiss_gamma <- optim(par = initial_params, fn = loglik_frailty_single_gamma,
@@ -63,8 +63,8 @@ ampute_test$mech
 ampute_test$weights
 reasonable_weights <- ampute_test$weights
 reasonable_weights[1,] <- c(0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0)
-ampute_test <- ampute(data = fam2, prop = 0.2, patterns = miss_pattern, 
-                      mech = "MAR", weights = reasonable_weights)
+ampute_test <- ampute(data = fam2, prop = 0.4, patterns = miss_pattern, 
+                      mech = "MAR", weights = reasonable_weights) # Missing proportions
 miss20_fam2 <- ampute_test$amp
 ## CCA 
 initial_params <- c(1/41.41327,1,0, 0, 1)
@@ -105,7 +105,7 @@ summary(model_test)
 X <- model.matrix( ~ gender + proband + mgene + log(time) + status, data = miss20_fam2) 
 
 #betas <- coef(model_test)
-betas <- c(0.2507, -0.1037, 0.7321, -0.2032, -0.0412, 0.1648)
+betas <- c(1.96808, -0.04012, 0.05765, -0.25335, -0.61984, 1.22873)
 sigma_g_2 <- attr(VarCorr(model_test)$indID, "stddev")^2 # genetic variance
 sigma_e_2 <- attr(VarCorr(model_test), "sc")^2 # residual variance
 
@@ -135,11 +135,6 @@ miss20_fam2 <- miss20_fam2 |>
 
 newx <- miss20_fam2$newx
 
-num_cores <- detectCores() - 2 # 6 cores
-cl <- makeCluster(num_cores)
-clusterExport(cl, varlist = c("Sigma", "newx", "mu_star")) 
-clusterEvalQ(cl, library(Matrix))
-
 
 fam2_newx_imp_fam <- list() 
 for (m in 1:20) {
@@ -153,6 +148,11 @@ for (m in 1:20) {
   mu_star <- X %*% as.vector(betastar)
   
   ## Step 7
+  num_cores <- detectCores() - 2 # 6 cores
+  cl <- makeCluster(num_cores)
+  clusterExport(cl, varlist = c("Sigma", "newx", "mu_star")) 
+  clusterEvalQ(cl, library(Matrix))
+  
   E_cond <- function(i) {
     y_minus_i <- newx[-i]
     mu_star_minus_i <- mu_star[-i]
@@ -177,12 +177,10 @@ for (m in 1:20) {
     mutate(newx_I = newx_star) |>
     mutate(newx_I = ifelse(!is.na(newx), newx, newx_I))
   
-  ## Step 9*
-  #brca1_prs_imp_fam[[m]] <- brca1_prs |>
-  #  mutate(PRS_I = ifelse(is.na(PRS), betastar[,1] + betastar[,2]*proband + betastar[,3]*mgeneI + betastar[,4]*log(timeBC) + betastar[,5]*BC + betastar[,6]*log(timeBC)*BC + rnorm(n = 1, mean = 0, sd = 1) * sqrt(cond_var), PRS))
+  stopCluster(cl)
 }
 
-stopCluster(cl)
+
 
 ## Analysis Gamma
 gamma_results <- list()
@@ -199,6 +197,7 @@ for (i in 1:20) {
 }
 
 results1 <- colMeans(do.call(rbind, gamma_results))
+results_coxme <- coxme(Surv(time, status) ~ mgene + newx , varlist = )
 
 
 ###############################################################################################
@@ -237,7 +236,7 @@ for (i in 1:20) {
     mutate(newx_I = ifelse(is.na(newx), betastar[,1] + betastar[,2]*gender + betastar[,3]*proband + betastar[,4]*mgene + betastar[,5]*log(time) + betastar[,6]*status + rnorm(n = 1, mean = 0, sd = 1)*sigmastar, newx))
 }
 
-gamma_results <- list()
+gamma_results_nofamstruc <- list()
 for (i in 1:20) {
   initial_params <- c(1/41.41327,1, 0, 0, 1)
   X <- as.matrix(fam2_imp[[i]][,c("mgene", "newx_I")], ncol = 2)
@@ -247,7 +246,10 @@ for (i in 1:20) {
                           design = "pop", frailty.dist = "gamma", base.dist = "Weibull",
                           agemin = 20, 
                           control = list(maxit = 2000))
-  gamma_results[[i]] <- gamma_forgraph$par
+  gamma_results_nofamstruc[[i]] <- gamma_forgraph$par
 }
 
-results2 <- colMeans(do.call(rbind, gamma_results))
+results2 <- colMeans(do.call(rbind, gamma_results_nofamstruc))
+nomiss_gamma$par
+miss20_gamma_CCA$par
+results1

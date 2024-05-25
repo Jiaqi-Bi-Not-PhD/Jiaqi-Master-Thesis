@@ -16,8 +16,8 @@ cuts0 <- cuts - agemin
 status <- Y[,2]
 ip <- data$proband == 1
 
-wt <- data$weight
-wt.p <- wt[ip]
+wt <- 1
+wt.p <- 1
 
 bhaz <- hazards(base.dist, time0, bparms, cuts=cuts0)
 bcumhaz <- cumhaz(base.dist, time0, bparms, cuts=cuts0)
@@ -26,7 +26,7 @@ H <- bcumhaz*exp(xbeta)
 logh <- log(bhaz) + xbeta
 loglik <-  wt * (status*logh )
 
-df <- data$df[ip]
+df <- data$df1[ip]
 s <- aggregate(H, list(data$famID), sum)[,2]
 logdL <- wt.p*log( dlaplace(frailty.dist, g=s, d=df, k=kappa) )
 
@@ -45,3 +45,15 @@ logdL <- wt.p*log( dlaplace(frailty.dist, g=s, d=df, k=kappa) )
   else  return(-sloglik)
   
 }
+
+X <- as.matrix(data.frame(brca1_prs$mgeneI, brca1_prs$PRS), 
+               nrow=nrow(brca1_prs), 
+               ncol = 2)
+Y <- as.matrix(data.frame(brca1_prs$timeBC, brca1_prs$BC), 
+               nrow = nrow(brca1_prs), 
+               ncol = 2)
+initial_params <- c(1/41.41327,1, 0, 0, 1)
+log_norm_forgraph <- optim(par = initial_params, fn = loglik_frailty,
+                           data = brca1_prs, X = X, Y = Y, nbase = 2,
+                           design = "pop", frailty.dist = "lognormal", base.dist = "Weibull",
+                           agemin = 18, control = list(maxit = 2000))

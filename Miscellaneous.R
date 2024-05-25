@@ -110,3 +110,21 @@ brca1_prs <- brca1_prs |>
 model_miss <- glm(miss_index ~ mgeneI + log(timeBC) + currentage + proband, data = brca1_prs, family = binomial)
 summary(model_miss)
 
+brca1_prs_test1 <- brca1_prs |>
+  mutate(gender = PRS)
+
+######################
+
+pen_model <- penmodel(Surv(time, status) ~ mgene + newx + gender, cluster = "famID", gvar = "mgene", data = famx, base.dist = "Weibull", frailty.dist = "lognormal", agemin = 20, design = "pop", parms = c(1/41.41327,1,0,0, 0, 1))
+
+# Family data simulated from population-based design using a Weibull baseline hazard 
+
+set.seed(4321)
+fam <- simfam(N.fam = 200, design = "pop+", variation = "none", base.dist = "Weibull", 
+              base.parms = c(0.01, 3), vbeta = c(-1.13, 2.35), agemin = 20, allelefreq = 0.02)
+
+# Penetrance model fit for simulated family data
+
+fit <- penmodel(Surv(time, status) ~ gender + mgene, cluster = "famID", design = "pop+",
+                parms = c(0.01, 3, -1.13, 2.35, 1), data = fam, base.dist = "Weibull", frailty.dist = "lognormal")
+summary(fit)
