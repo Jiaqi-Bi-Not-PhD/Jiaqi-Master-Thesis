@@ -9,4 +9,5 @@ else if(dist=="logBurr") haz <- (parms[1]^parms[2])*parms[2]*parms[3]*t^(parms[2
 else if(dist=="piecewise") haz <- hpch(t, cuts=cuts, levels=parms)
 else stop("Unrecognized baseline distribution")
  haz
- }
+}
+

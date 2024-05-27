@@ -20,7 +20,8 @@ loglik_frailty_single_gamma <- function(X, Y, theta, cuts=NULL, nbase, data, des
   
   H <- bcumhaz*exp(xbeta) # Cumulative Hazard
   logh <- log(bhaz) + xbeta
-  loglik <- status*logh - H
+  #loglik <- status*logh - H
+  loglik <- status*logh 
   h_eachfam <- status * logh
   
   ip <- data$proband == 1
@@ -33,8 +34,8 @@ loglik_frailty_single_gamma <- function(X, Y, theta, cuts=NULL, nbase, data, des
   
   
   ## Terms with Gamma params within the likelihood ##
-  #term_Gamma <- log(((factorial(k + d - 1))/(factorial(k)*k^(d-1))) * ((1 + Hfam/k)^(-k-d)))
-  term_Gamma <- lfactorial(k + d - 1) - lfactorial(k) - (d - 1) * log(k) - (k + d) * log(1 + Hfam/k)
+  term_Gamma <- log(((factorial(k + d - 1))/(factorial(k)*k^(d-1))) * ((1 + Hfam/k)^(-k-d)))
+  #term_Gamma <- lfactorial(k + d - 1) - lfactorial(k) - (d - 1) * log(k) - (k + d) * log(1 + Hfam/k)
   #term_Gamma <-  log((gamma(k + d) / (gamma(k + 1) * k^(d - 1))) * ((1 + Hfam / k)^(-k - d)))
   total <- first_term + term_Gamma 
   #print(total)

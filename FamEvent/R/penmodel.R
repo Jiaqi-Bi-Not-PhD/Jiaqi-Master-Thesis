@@ -102,7 +102,6 @@ penmodel <- function(formula, cluster="famID", gvar="mgene", parms, cuts=NULL, d
       fsize <- aggregate(Y[,2], list(data$famID), length)[,2]
       data$df <- rep(df, fsize)
     }
-    
     est1 <- optim(c(log(parms[1:nbase]), vbeta, log(kappa)), loglik_frailty, X=X, Y=Y, 
                   cuts=cuts, nbase=nbase, data=data, design=design, base.dist=base.dist, 
                   frailty.dist=frailty.dist, agemin=agemin, vec=FALSE,

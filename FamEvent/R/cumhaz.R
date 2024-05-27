@@ -9,4 +9,4 @@ else if(dist=="logBurr") chaz <- parms[3]*log(1+(parms[1]*t)^parms[2]/parms[3])
 else if(dist=="piecewise") chaz <- Hpch(t, cuts=cuts, levels=parms)
 else stop("Unrecognized baseline distribution")
  chaz
- }
+}
