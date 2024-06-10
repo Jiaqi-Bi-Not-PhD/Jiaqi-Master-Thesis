@@ -1,12 +1,12 @@
 # Fdb version 3
-["bibtex progress report"] 1717991594 "progress report.aux" "progress report.bbl" "progress report" 1717991921
+["bibtex progress report"] 1717991594 "progress report.aux" "progress report.bbl" "progress report" 1718063735
   "/usr/local/texlive/2019/texmf-dist/bibtex/bst/natbib/unsrtnat.bst" 1233624470 24550 a41a6405f4de768c43e871d9fbce2bc8 ""
   "progress report.aux" 1717991920 4437 75231a34b2fd399a94e57ba666346580 "pdflatex"
   "progress.bib" 1717991325 6577 0a39969f45eecb0aa75f7985217fd811 ""
   (generated)
   "progress report.blg"
   "progress report.bbl"
-["pdflatex"] 1717991919 "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.tex" "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.pdf" "progress report" 1717991921
+["pdflatex"] 1717991919 "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.tex" "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.pdf" "progress report" 1718063735
   "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.aux" 1717991920 4437 75231a34b2fd399a94e57ba666346580 ""
   "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.tex" 1717991919 40238 bc09b670caeb5d0ef20c5a4710f41a9d ""
   "/usr/local/texlive/2019/texmf-dist/fonts/map/fontname/texfonts.map" 1511824771 3332 103109f5612ad95229751940c61aada0 ""
@@ -165,9 +165,9 @@
   "progress report.spl" 1717991920 0 d41d8cd98f00b204e9800998ecf8427e "pdflatex"
   "progress report.tex" 1717991919 40238 bc09b670caeb5d0ef20c5a4710f41a9d ""
   (generated)
-  "progress report.pdf"
-  "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.pdf"
+  "progress report.spl"
   "progress report.aux"
   "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.log"
-  "progress report.spl"
   "progress report.log"
+  "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/progress report/progress report.pdf"
+  "progress report.pdf"
