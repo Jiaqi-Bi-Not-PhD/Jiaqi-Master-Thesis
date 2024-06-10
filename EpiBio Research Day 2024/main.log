@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.9.16)  11 APR 2024 00:51
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.9.16)  4 JUN 2024 12:51
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -754,25 +754,25 @@ File: tikzlibrarycalc.code.tex 2019/04/04 v3.1.2 (3.1.2)
 
 
 Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
-(hyperref)                removing `\new@ifnextchar' on input line 92.
+(hyperref)                removing `\new@ifnextchar' on input line 95.
 
 (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/EpiBio Research Day 2024/main.aux)
 \openout1 = `main.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 92.
-LaTeX Font Info:    ... okay on input line 92.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 92.
-LaTeX Font Info:    ... okay on input line 92.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 92.
-LaTeX Font Info:    ... okay on input line 92.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 92.
-LaTeX Font Info:    ... okay on input line 92.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 92.
-LaTeX Font Info:    ... okay on input line 92.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 92.
-LaTeX Font Info:    ... okay on input line 92.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 92.
-LaTeX Font Info:    ... okay on input line 92.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 95.
+LaTeX Font Info:    ... okay on input line 95.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -834,7 +834,7 @@ Package grfext Info: Graphics extension search list:
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 )) ABD: EveryShipout initializing macros
 \AtBeginShipoutBox=\box88
-Package hyperref Info: Link coloring OFF on input line 92.
+Package hyperref Info: Link coloring OFF on input line 95.
  (/usr/local/texlive/2019/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
  (/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
@@ -842,62 +842,62 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count194
 )
-LaTeX Info: Redefining \ref on input line 92.
-LaTeX Info: Redefining \pageref on input line 92.
-LaTeX Info: Redefining \nameref on input line 92.
+LaTeX Info: Redefining \ref on input line 95.
+LaTeX Info: Redefining \pageref on input line 95.
+LaTeX Info: Redefining \nameref on input line 95.
  (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/EpiBio Research Day 2024/main.out) (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/EpiBio Research Day 2024/main.out)
 \@outlinefile=\write5
 \openout5 = `main.out'.
 
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
-(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 92.
+(Font)                  OT1/cmr/m/n --> OT1/cmss/m/n on input line 95.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 92.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 95.
 \symnumbers=\mathgroup6
 \sympureletters=\mathgroup7
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 92.
-LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 92.
+(Font)                  OT1/cmss/m/n --> OT1/cmr/m/n on input line 95.
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 95.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 92.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 95.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 92.
-LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 92.
+(Font)                  OT1/cmr/bx/n --> OT1/cmss/bx/n on input line 95.
+LaTeX Font Info:    Redeclaring math alphabet \mathsf on input line 95.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 92.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/m/n on input line 95.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 92.
-LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 92.
+(Font)                  OT1/cmss/bx/n --> OT1/cmss/m/n on input line 95.
+LaTeX Font Info:    Redeclaring math alphabet \mathit on input line 95.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
-(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 92.
+(Font)                  OT1/cmr/m/it --> OT1/cmss/m/it on input line 95.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 92.
-LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 92.
+(Font)                  OT1/cmr/bx/it --> OT1/cmss/m/it on input line 95.
+LaTeX Font Info:    Redeclaring math alphabet \mathtt on input line 95.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 92.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 95.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 92.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/m/n on input line 95.
 LaTeX Font Info:    Overwriting symbol font `numbers' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 92.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 95.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 92.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 95.
 LaTeX Font Info:    Overwriting math alphabet `\mathrm' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmr/bx/n on input line 92.
+(Font)                  OT1/cmss/bx/n --> OT1/cmr/bx/n on input line 95.
 LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
-(Font)                  OT1/cmss/bx/n --> OT1/cmss/bx/n on input line 92.
+(Font)                  OT1/cmss/bx/n --> OT1/cmss/bx/n on input line 95.
 LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
-(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 92.
+(Font)                  OT1/cmss/m/n --> OT1/cmss/bx/n on input line 95.
 LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
-(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 92.
+(Font)                  OT1/cmss/m/it --> OT1/cmss/bx/it on input line 95.
 LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
-(Font)                  OT1/cmtt/m/n --> OT1/cmtt/bx/n on input line 92.
-LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 92.
+(Font)                  OT1/cmtt/m/n --> OT1/cmtt/bx/n on input line 95.
+LaTeX Font Info:    Redeclaring symbol font `pureletters' on input line 95.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `normal'
-(Font)                  OT1/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 92.
+(Font)                  OT1/cmss/m/it --> OT1/mathkerncmss/m/sl on input line 95.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  OT1/cmss/bx/it --> OT1/mathkerncmss/m/sl on input line 92.
+(Font)                  OT1/cmss/bx/it --> OT1/mathkerncmss/m/sl on input line 95.
 LaTeX Font Info:    Overwriting symbol font `pureletters' in version `bold'
-(Font)                  OT1/mathkerncmss/m/sl --> OT1/mathkerncmss/bx/sl on input line 92.
+(Font)                  OT1/mathkerncmss/m/sl --> OT1/mathkerncmss/bx/sl on input line 95.
  (/usr/local/texlive/2019/texmf-dist/tex/latex/translator/translator-basic-dictionary-English.dict
 Dictionary: translator-basic-dictionary, Language: English 
 ) (/usr/local/texlive/2019/texmf-dist/tex/latex/translator/translator-bibliography-dictionary-English.dict
@@ -914,395 +914,128 @@ Dictionary: translator-theorem-dictionary, Language: English
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
  (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/EpiBio Research Day 2024/main.nav)
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 104.
-
-<schulich uwo.png, id=18, 409.53pt x 197.73875pt>
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 104.
+<schulichuwo.png, id=18, 409.53pt x 197.73875pt>
+File: schulichuwo.png Graphic file (type png)
+<use schulichuwo.png>
+Package pdftex.def Info: schulichuwo.png  used on input line 107.
 (pdftex.def)             Requested size: 113.81102pt x 54.95311pt.
-LaTeX Font Info:    Try loading font information for U+msa on input line 104.
-(/usr/local/texlive/2019/texmf-dist/tex/latex/amsfonts/umsa.fd
+LaTeX Font Info:    Try loading font information for U+msa on input line 107.
+ (/usr/local/texlive/2019/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 104.
+LaTeX Font Info:    Try loading font information for U+msb on input line 107.
  (/usr/local/texlive/2019/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 )
-LaTeX Font Info:    Try loading font information for OT1+mathkerncmss on input line 104.
+LaTeX Font Info:    Try loading font information for OT1+mathkerncmss on input line 107.
  (/usr/local/texlive/2019/texmf-dist/tex/latex/sansmathaccent/ot1mathkerncmss.fd
 File: ot1mathkerncmss.fd 2013/03/27 Fontinst v1.933 font definitions for OT1/mathkerncmss.
 ) [1
 
-{/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map} </Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/EpiBio Research Day 2024/schulich uwo.png>]
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 116.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 116.
+{/usr/local/texlive/2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map} </Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/EpiBio Research Day 2024/schulichuwo.png>]
+File: schulichuwo.png Graphic file (type png)
+<use schulichuwo.png>
+Package pdftex.def Info: schulichuwo.png  used on input line 118.
 (pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[2
+ [2
 
 ]
-<figures/pedigreetree.png, id=60, 1230.5975pt x 1300.86pt>
-File: figures/pedigreetree.png Graphic file (type png)
-<use figures/pedigreetree.png>
-Package pdftex.def Info: figures/pedigreetree.png  used on input line 124.
-(pdftex.def)             Requested size: 216.67201pt x 229.02353pt.
-
-Overfull \vbox (43.08884pt too high) detected at line 124
- []
-
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 124.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 124.
+File: schulichuwo.png Graphic file (type png)
+<use schulichuwo.png>
+Package pdftex.def Info: schulichuwo.png  used on input line 133.
 (pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[3
-
- </Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/EpiBio Research Day 2024/figures/pedigreetree.png>]
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 139.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 139.
-(pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[4
+ [3
 
 ]
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 156.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 156.
+File: schulichuwo.png Graphic file (type png)
+<use schulichuwo.png>
+Package pdftex.def Info: schulichuwo.png  used on input line 150.
 (pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[5
+ [4
 
 ]
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 174.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 174.
+File: schulichuwo.png Graphic file (type png)
+<use schulichuwo.png>
+Package pdftex.def Info: schulichuwo.png  used on input line 166.
 (pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[6
+ [5
 
 ]
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 190.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 190.
+File: schulichuwo.png Graphic file (type png)
+<use schulichuwo.png>
+Package pdftex.def Info: schulichuwo.png  used on input line 175.
 (pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[7
+ [6
 
 ]
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 203.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 203.
+File: schulichuwo.png Graphic file (type png)
+<use schulichuwo.png>
+Package pdftex.def Info: schulichuwo.png  used on input line 188.
 (pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[8
+ [7
 
 ]
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 214.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 214.
+File: schulichuwo.png Graphic file (type png)
+<use schulichuwo.png>
+Package pdftex.def Info: schulichuwo.png  used on input line 192.
 (pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[9
+ [8
 
 ]
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 229.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 229.
+File: schulichuwo.png Graphic file (type png)
+<use schulichuwo.png>
+Package pdftex.def Info: schulichuwo.png  used on input line 200.
 (pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[10
+ [9
 
 ]
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 237.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 237.
+File: schulichuwo.png Graphic file (type png)
+<use schulichuwo.png>
+Package pdftex.def Info: schulichuwo.png  used on input line 218.
 (pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[11
+ [10
 
 ]
-
-LaTeX Warning: File `figures/gamma contour.png' not found on input line 246.
-
-<figures/gamma contour.png, id=223, 1230.5975pt x 1300.86pt>
-File: figures/gamma contour.png Graphic file (type png)
-<use figures/gamma contour.png>
-Package pdftex.def Info: figures/gamma contour.png  used on input line 246.
-(pdftex.def)             Requested size: 216.67201pt x 229.02353pt.
-
-Overfull \vbox (72.41801pt too high) detected at line 246
- []
-
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 246.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 246.
+File: schulichuwo.png Graphic file (type png)
+<use schulichuwo.png>
+Package pdftex.def Info: schulichuwo.png  used on input line 231.
 (pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[12
-
- </Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/EpiBio Research Day 2024/figures/gamma contour.png>]
-
-LaTeX Warning: File `figures/GAMMA 3D 1.png' not found on input line 255.
-
-<figures/GAMMA 3D 1.png, id=231, 592.2125pt x 624.3325pt>
-File: figures/GAMMA 3D 1.png Graphic file (type png)
-<use figures/GAMMA 3D 1.png>
-Package pdftex.def Info: figures/GAMMA 3D 1.png  used on input line 255.
-(pdftex.def)             Requested size: 216.67201pt x 228.41771pt.
-
-Overfull \vbox (71.8122pt too high) detected at line 255
- []
-
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 255.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 255.
-(pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[13
-
- </Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/EpiBio Research Day 2024/figures/GAMMA 3D 1.png>]
-
-LaTeX Warning: File `figures/GAMMA 3D 2.png' not found on input line 264.
-
-<figures/GAMMA 3D 2.png, id=240, 597.23125pt x 622.325pt>
-File: figures/GAMMA 3D 2.png Graphic file (type png)
-<use figures/GAMMA 3D 2.png>
-Package pdftex.def Info: figures/GAMMA 3D 2.png  used on input line 264.
-(pdftex.def)             Requested size: 216.67201pt x 225.77457pt.
-
-Overfull \vbox (69.16905pt too high) detected at line 264
- []
-
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 264.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 264.
-(pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[14
-
- </Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/EpiBio Research Day 2024/figures/GAMMA 3D 2.png>]
-
-LaTeX Warning: File `figures/lognormal frailty contour.png' not found on input line 274.
-
-<figures/lognormal frailty contour.png, id=248, 1230.5975pt x 1300.86pt>
-File: figures/lognormal frailty contour.png Graphic file (type png)
-<use figures/lognormal frailty contour.png>
-Package pdftex.def Info: figures/lognormal frailty contour.png  used on input line 274.
-(pdftex.def)             Requested size: 216.67201pt x 229.02353pt.
-
-Overfull \vbox (62.08408pt too high) detected at line 274
- []
-
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 274.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 274.
-(pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[15
-
- </Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/EpiBio Research Day 2024/figures/lognormal frailty contour.png>]
-
-LaTeX Warning: File `figures/lognormal frailty 3D 1.jpeg' not found on input line 282.
-
-<figures/lognormal frailty 3D 1.jpeg, id=256, 613.29124pt x 643.40375pt>
-File: figures/lognormal frailty 3D 1.jpeg Graphic file (type jpg)
-<use figures/lognormal frailty 3D 1.jpeg>
-Package pdftex.def Info: figures/lognormal frailty 3D 1.jpeg  used on input line 282.
-(pdftex.def)             Requested size: 216.67201pt x 227.30545pt.
-
-Overfull \vbox (43.49992pt too high) detected at line 282
- []
-
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 282.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 282.
-(pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[16
-
- </Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/EpiBio Research Day 2024/figures/lognormal frailty 3D 1.jpeg>]
-
-LaTeX Warning: File `figures/lognormal frailty 3D 2.jpeg' not found on input line 290.
-
-<figures/lognormal frailty 3D 2.jpeg, id=264, 609.27625pt x 595.22375pt>
-File: figures/lognormal frailty 3D 2.jpeg Graphic file (type jpg)
-<use figures/lognormal frailty 3D 2.jpeg>
-Package pdftex.def Info: figures/lognormal frailty 3D 2.jpeg  used on input line 290.
-(pdftex.def)             Requested size: 216.67201pt x 211.67375pt.
-
-Overfull \vbox (27.86823pt too high) detected at line 290
- []
-
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 290.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 290.
-(pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[17
-
- </Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/EpiBio Research Day 2024/figures/lognormal frailty 3D 2.jpeg>]
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 304.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 304.
-(pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[18
+ [11
 
 ]
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 318.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 318.
+File: schulichuwo.png Graphic file (type png)
+<use schulichuwo.png>
+Package pdftex.def Info: schulichuwo.png  used on input line 255.
 (pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[19
+ [12
 
 ]
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 332.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 332.
+File: schulichuwo.png Graphic file (type png)
+<use schulichuwo.png>
+Package pdftex.def Info: schulichuwo.png  used on input line 271.
 (pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[20
+ [13
 
 ]
-Overfull \hbox (22.22192pt too wide) detected at line 344
-\OML/cmm/m/it/10.95 `[]\OT1/cmss/m/n/10.95 ([]) = [] \OML/cmm/m/it/10.95 ^^N[] []\OT1/cmss/m/n/10.95 (\OT1/mathkerncmss/m/sl/10.95 h\OT1/cmss/m/n/10.95 (\OT1/mathkerncmss/m/sl/10.95 t[]\OMS/cmsy/m/n/10.95 j\OT1/cmss/bx/n/10.95 x[]\OT1/cmss/m/n/10.95 )) + [] [][] [] [] []
- []
-
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 344.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 344.
+File: schulichuwo.png Graphic file (type png)
+<use schulichuwo.png>
+Package pdftex.def Info: schulichuwo.png  used on input line 279.
 (pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[21
+ [14
 
 ]
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 350.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 350.
+File: schulichuwo.png Graphic file (type png)
+<use schulichuwo.png>
+Package pdftex.def Info: schulichuwo.png  used on input line 298.
 (pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[22
+ [15
 
 ]
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 364.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 364.
+File: schulichuwo.png Graphic file (type png)
+<use schulichuwo.png>
+Package pdftex.def Info: schulichuwo.png  used on input line 318.
 (pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[23
-
-]
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 375.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 375.
-(pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[24
-
-]
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 383.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 383.
-(pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[25
-
-]
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 393.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 393.
-(pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[26
-
-]
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 405.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 405.
-(pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[27
-
-]
-Overfull \hbox (12.27945pt too wide) in paragraph at lines 423--423
- [] 
- []
-
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 423.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 423.
-(pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[28
-
-]
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 431.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 431.
-(pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[29
+ [16
 
 ] (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/EpiBio Research Day 2024/main.bbl
 
@@ -1310,46 +1043,26 @@ Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):
 (hyperref)                removing `\translate ' on input line 1.
 
 )
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 436.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 436.
+File: schulichuwo.png Graphic file (type png)
+<use schulichuwo.png>
+Package pdftex.def Info: schulichuwo.png  used on input line 323.
 (pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[30
+ [17
 
 ]
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 436.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 436.
+File: schulichuwo.png Graphic file (type png)
+<use schulichuwo.png>
+Package pdftex.def Info: schulichuwo.png  used on input line 323.
 (pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[31
+ [18
 
 
 ]
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 436.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 436.
+File: schulichuwo.png Graphic file (type png)
+<use schulichuwo.png>
+Package pdftex.def Info: schulichuwo.png  used on input line 329.
 (pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[32
-
-
-]
-
-LaTeX Warning: File `schulich uwo.png' not found on input line 440.
-
-File: schulich uwo.png Graphic file (type png)
-<use schulich uwo.png>
-Package pdftex.def Info: schulich uwo.png  used on input line 440.
-(pdftex.def)             Requested size: 53.03455pt x 25.6073pt.
-[33
+ [19
 
 ]
 \tf@nav=\write6
@@ -1361,27 +1074,27 @@ Package pdftex.def Info: schulich uwo.png  used on input line 440.
 \tf@snm=\write8
 \openout8 = `main.snm'.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 442.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 442.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 331.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 331.
  (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/EpiBio Research Day 2024/main.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 442.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 442.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 331.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 331.
 Package rerunfilecheck Info: File `main.out' has not changed.
 (rerunfilecheck)             Checksum: 06E27B416B3B1946CD705C501CA5B3BD;45.
  ) 
 Here is how much of TeX's memory you used:
- 26787 strings out of 492616
- 550959 string characters out of 6129481
- 644093 words of memory out of 5000000
- 30015 multiletter control sequences out of 15000+600000
- 22549 words of font info for 76 fonts, out of 8000000 for 9000
+ 26713 strings out of 492616
+ 549709 string characters out of 6129481
+ 646055 words of memory out of 5000000
+ 29975 multiletter control sequences out of 15000+600000
+ 26626 words of font info for 91 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  56i,17n,79p,903b,719s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
-Output written on "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/EpiBio Research Day 2024/main.pdf" (33 pages, 1557549 bytes).
+</usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmss10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmss12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmss8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmssbx10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmssi8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb>
+Output written on "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/EpiBio Research Day 2024/main.pdf" (19 pages, 209464 bytes).
 PDF statistics:
- 479 PDF objects out of 1000 (max. 8388607)
- 337 compressed objects within 4 object streams
- 79 named destinations out of 1000 (max. 500000)
- 493 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 366 PDF objects out of 1000 (max. 8388607)
+ 251 compressed objects within 3 object streams
+ 47 named destinations out of 1000 (max. 500000)
+ 470 words of extra memory for PDF output out of 10000 (max. 10000000)
 

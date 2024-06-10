@@ -1,0 +1,71 @@
+\begin{thebibliography}{9}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{\texttt{#1}}
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{doi: #1}\else
+  \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
+
+\bibitem[Duncan et~al.(1998)Duncan, Reeves, and Cooke]{duncan1998brca1}
+JA~Duncan, JR~Reeves, and TG~Cooke.
+\newblock {BRCA1 and BRCA2 proteins: roles in health and disease.}
+\newblock \emph{Molecular pathology}, 51\penalty0 (5):\penalty0 237, 1998.
+
+\bibitem[Greer and Whitcomb(2006)]{greer2006role}
+Julia~B Greer and David~C Whitcomb.
+\newblock {Role of BRCA1/2 mutations in pancreatic cancer}.
+\newblock \emph{Gut}, 2006.
+
+\bibitem[Haffty et~al.(2002)Haffty, Harrold, Khan, Pathare, Smith, Turner,
+  Glazer, Ward, Carter, Matloff, et~al.]{haffty2002outcome}
+Bruce~G Haffty, Elizabeth Harrold, Atif~J Khan, Pradip Pathare, Tanya~E Smith,
+  Bruce~C Turner, Peter~M Glazer, Barbara Ward, Daryl Carter, Ellen Matloff,
+  et~al.
+\newblock {Outcome of conservatively managed early-onset breast cancer by
+  BRCA1/2 status}.
+\newblock \emph{The Lancet}, 359\penalty0 (9316):\penalty0 1471--1477, 2002.
+
+\bibitem[Huang(2018)]{huang2018association}
+Yong-Wen Huang.
+\newblock {Association of BRCA1/2 mutations with ovarian cancer prognosis: an
+  updated meta-analysis}.
+\newblock \emph{Medicine}, 97\penalty0 (2), 2018.
+
+\bibitem[Friedenson(2007)]{friedenson2007brca1}
+Bernard Friedenson.
+\newblock {The BRCA1/2 pathway prevents hematologic cancers in addition to
+  breast and ovarian cancers}.
+\newblock \emph{BMC cancer}, 7\penalty0 (1):\penalty0 1--11, 2007.
+
+\bibitem[Lux et~al.(2006)Lux, Fasching, and Beckmann]{lux2006hereditary}
+Michael~P Lux, Peter~A Fasching, and Matthias~W Beckmann.
+\newblock Hereditary breast and ovarian cancer: review and future perspectives.
+\newblock \emph{Journal of molecular medicine}, 84:\penalty0 16--28, 2006.
+
+\bibitem[Mai et~al.(2009)Mai, Chatterjee, Hartge, Tucker, Brody, Struewing, and
+  Wacholder]{mai2009potential}
+Phuong~L Mai, Nilanjan Chatterjee, Patricia Hartge, Margaret Tucker, Lawrence
+  Brody, Jeffery~P Struewing, and Sholom Wacholder.
+\newblock Potential excess mortality in brca1/2 mutation carriers beyond
+  breast, ovarian, prostate, and pancreatic cancers, and melanoma.
+\newblock \emph{PLoS One}, 4\penalty0 (3):\penalty0 e4812, 2009.
+
+\bibitem[Choi et~al.(2021{\natexlab{a}})Choi, Jung, Buys, Daly, John, Hopper,
+  Andrulis, Terry, and Briollais]{choi2021competing}
+Yun-Hee Choi, Hae Jung, Saundra Buys, Mary Daly, Esther~M John, John Hopper,
+  Irene Andrulis, Mary~Beth Terry, and Laurent Briollais.
+\newblock A competing risks model with binary time varying covariates for
+  estimation of breast cancer risks in brca1 families.
+\newblock \emph{Statistical Methods in Medical Research}, 30\penalty0
+  (9):\penalty0 2165--2183, 2021{\natexlab{a}}.
+
+\bibitem[Choi et~al.(2021{\natexlab{b}})Choi, Terry, Daly, MacInnis, Hopper,
+  Colonna, Buys, Andrulis, John, Kurian, et~al.]{choi2021association}
+Yun-Hee Choi, Mary~Beth Terry, Mary~B Daly, Robert~J MacInnis, John~L Hopper,
+  Sarah Colonna, Saundra~S Buys, Irene~L Andrulis, Esther~M John, Allison~W
+  Kurian, et~al.
+\newblock Association of risk-reducing salpingo-oophorectomy with breast cancer
+  risk in women with brca1 and brca2 pathogenic variants.
+\newblock \emph{JAMA oncology}, 7\penalty0 (4):\penalty0 585--592,
+  2021{\natexlab{b}}.
+
+\end{thebibliography}

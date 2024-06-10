@@ -1,0 +1,44 @@
+\chapter{Introduction}
+\section{Background}
+The Breast Cancer type 1/2, usually referred as BRCA1/2, are proteins that consists of genes that code for BRCA1 in humans. BRCA1/2 are human tumor suppressor genes, that are responsible for repairing the DNA~\cite{duncan1998brca1}. 
+When the mutation exists on these genes may cause the impairments of proper functions, which can lead to the possibility of capturing the breast, ovarian, or other specific cancers~\cite{greer2006role, haffty2002outcome, huang2018association}. 
+Inheriting one of these mutations does not guarantee developing cancer disease, but the mutation can increase the risk of getting those cancers~\cite{friedenson2007brca1}. 
+
+In the field of medicine, these cancer types are classified as Hereditary Breast and Ovarian Cancer Syndrome (HBOC)~\cite{lux2006hereditary}. 
+The average life expectancy of individuals with BRCA1, without any interventions, is approximately 4.2 years shorter than that of non-carriers of the BRCA1 gene~\cite{mai2009potential}.
+Significant advancements have been made in the medical and statistical modeling of breast cancer risk among BRCA1/2 carriers. These include the application of competing risk survival analysis based on breast and ovarian cancer outcomes developed by~\citet{choi2021competing}, as well as various clinical trials investigating risk-reducing treatment approaches for breast cancer patients~\cite{choi2021association}.
+Despite these efforts, it remains crucial to ensure statistical validity across these studies especially when missing data exists.
+
+From a statistical perspective, the study is centered on a specific disease, which may introduce selection bias due to the sampling process. 
+This bias arises from the selection criteria based on specific probands in each family. 
+To mitigate this sampling bias, an ascertainment correction should be applied to the likelihood calculation, conditioning on the proband information.
+To accurately capture the heterogeneity between families in the context of time-to-cancer outcomes, the use of a frailty model is recommended. 
+There are various choices for frailty distributions in survival analysis, including the Gamma distribution and the log-Normal distribution.
+
+\section{Motivation}
+Although numerous studies on risk assessment in susceptible populations and statistical advancements in dynamic prediction have significantly contributed to understanding BRCA1/2 families, the issue of missing data remains a substantial challenge, particularly in the context of survival outcomes.
+Over the past decade, several methodologies have been proposed to address missing data, including the Expectation-Maximization (EM) algorithm, the Monte-Carlo EM algorithm for cases where the E-step lacks a closed form, and Multiple Imputation (MI). 
+However, when applying frailty models, which incorporate random effects in survival analysis, the literature addressing missing data is relatively sparse.
+
+In genetic epidemiology, research is typically conducted on a family-wise basis.
+Therefore, considering the family structure when addressing statistical problems is both essential and unavoidable. 
+Moreover, existing techniques for handling missing data must be carefully adapted, as the clustered nature of the dataset introduces additional complexity.
+Within the genetic framework, many variables, such as genetic information and polygenic risk scores (PRS), are not independent between individuals. 
+Traditional methodologies often fail to account for family correlations and ascertainment bias. 
+Given that families are selected based on a proband, it is crucial to apply ascertainment correction to minimize the selection bias.
+This situation presents an opportunity to further investigate and develop adequate methods for handling missing data, taking into account family correlations and ascertainment bias.
+
+In this project, we aim to investigate the current implementation of Multiple Imputation (MI) methods for frailty models. 
+Additionally, we propose a novel MI method that explicitly incorporates the kinship matrix during the imputation of genetically related variables. 
+This proposed method will be evaluated by comparing it to existing MI methods and Complete Case Analysis (CCA).
+
+\section{Objectives}
+With the proposed MI method and the BRCA1 data, the objectives of this thesis are designed as follows: 
+\begin{enumerate}
+    \item To adapt the kinship correlations into the imputation step
+    \item To incorporate the ascertainment correction into the likelihood while considering that not all probands are affected
+    \item To assess the novel MI method via the calculation of the estimations, biases, and precisions through the simulation study
+    \item To apply the novel MI method and adjusted likelihood to model the BRCA1 family data
+\end{enumerate}
+
+\section{Organizations of the Thesis}

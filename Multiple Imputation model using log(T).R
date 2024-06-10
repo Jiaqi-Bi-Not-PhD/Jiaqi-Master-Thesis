@@ -1,10 +1,12 @@
-#### Multiple Imputation using log(T) ####
-## MI
-baseline_gammafr <- as.vector(summary(miss50_gamma)$estimates[1:2,1])
-famx_newx_imp_fam <- list() 
-
-baseline_gammafr <- as.vector(summary(miss50_gamma)$estimates[1:2,1])
+####################################################################################
+############### Multiple Imputation with kinship using log(T) - draft ##############
+####################################################################################
+################################# Imputation Step ##################################
+####################################################################################
 ## Step 1 - Kinship matrix
+library(kinship2)
+library(lme4qtl)
+library(lme4)
 kinship_mat <- with(miss50_famx, kinship(id = indID, dadid = fatherID, momid = motherID,
                                          sex = gender))
 kinship_mat_sparse <- Matrix(kinship_mat, sparse = TRUE)
@@ -15,14 +17,14 @@ Iden_mat <- diag(nrow = nrow(miss50_famx)) # Identity matrix n*n
 Iden_mat_sparse <- Matrix(Iden_mat, sparse = TRUE)
 
 ## Step 2 - empirical estimates
-model_test <- relmatLmer(newx ~ log(time) * status  + (1|indID), data = miss50_famx, relmat = list(indID = kinship_mat))
-#summary(model_test)
-X <- model.matrix(model_test) # imputation model design matrix
+model_test <- relmatLmer(newx ~ gender + ageonset + currentage + log(time) + status + mgene + (1|indID), data = miss50_famx, relmat = list(indID = kinship_mat))
+summary(model_test)
+X <- model.matrix(~ gender + ageonset + currentage + log(time) + status + mgene, data = miss50_famx) # imputation model design matrix
 
 #betas <- coef(model_test)
 betas <- as.vector(summary(model_test)$coefficients[,1]) # beta coefficients
-sigma_g_2 <- attr(VarCorr(model_test)$indID, "stddev")^2 # genetic variance
-sigma_e_2 <- attr(VarCorr(model_test), "sc")^2 # residual variance
+sigma_g_2 <- attr(lme4::VarCorr(model_test)$indID, "stddev")^2 # genetic variance
+sigma_e_2 <- attr(lme4::VarCorr(model_test), "sc")^2 # residual variance
 
 Sigma <- sigma_g_2*kinship_mat_sparse + sigma_e_2*Iden_mat_sparse # Sparse matrix for Sigma
 Sigma_mat <- as.matrix(Sigma) # Non-sparse
@@ -30,27 +32,29 @@ Sigma_mat <- as.matrix(Sigma) # Non-sparse
 V <- vcov(model_test)
 
 ## Step 3 - conditional variance
-num_cores <- detectCores() - 2 # 6 cores
-cl <- makeCluster(num_cores)
-clusterExport(cl, varlist = c("Sigma")) 
-clusterEvalQ(cl, library(Matrix))
+#num_cores <- detectCores() - 2 # 6 cores
+#cl <- makeCluster(num_cores)
+#clusterExport(cl, varlist = c("Sigma")) 
+#clusterEvalQ(cl, library(Matrix))
 
-cond_var <- function(i) {
-  conditional_var <- Sigma[i,i] - Sigma[i,-i] %*% solve(Sigma[-i,-i]) %*% Sigma[-i,i]
-  return(conditional_var)
-}
-conditional_variances <- parSapply(cl, 1:nrow(miss50_famx), cond_var)
-conditional_variances_temp <- as.vector(do.call(rbind, conditional_variances))
+#cond_var <- function(i) {
+#  conditional_var <- Sigma[i,i] - Sigma[i,-i] %*% solve(Sigma[-i,-i]) %*% Sigma[-i,i]
+#  return(conditional_var)
+#}
+#conditional_variances <- parSapply(cl, 1:nrow(miss50_famx), cond_var)
+#conditional_variances_temp <- as.vector(do.call(rbind, conditional_variances))
 
-stopCluster(cl)
+#stopCluster(cl)
 
 ## Imputation steps
 miss50_famx <- miss50_famx |>
   mutate(cond_var = conditional_variances_temp)
 
 newx <- miss50_famx$newx
+Y_obs <- miss50_famx$newx
+famx_newx_imp_fam <- list()
 
-for (m in 1:20) {
+for (m in 1:5) {
   
   ## Step 4
   w_1 <- rnorm(n = length(betas), mean = 0, sd = 1)
@@ -80,13 +84,14 @@ for (m in 1:20) {
   conditional_expectations <- parSapply(cl, 1:nrow(miss50_famx), E_cond)
   conditional_expectations <- as.vector(do.call(rbind, conditional_expectations))
   
-  conditional_vars <- miss50_famx$cond_var
+  #conditional_vars <- miss50_famx$cond_var
   
   ## Step 8
   w2i <- rnorm(n = nrow(miss50_famx), mean = 0, sd = 1)
   
   ## Step 9
-  newx_star <- conditional_expectations + w2i * sqrt(conditional_vars)
+  newx_star <- conditional_expectations 
+  newx_star <- sapply(newx_star, find_closest, Y_obs)
   #newx_star <- conditional_expectations + conditional_vars
   famx_newx_imp_fam[[m]] <- miss50_famx |>
     mutate(newx_I = newx_star) |>
@@ -94,3 +99,25 @@ for (m in 1:20) {
   
   stopCluster(cl)
 }
+
+####################################################################################
+################################# Analysis Step ####################################
+####################################################################################
+gamma_results <- list()
+for (i in 1:5) {
+  gamma_results[[i]] <- penmodel(Surv(time, status) ~ gender + mgene + newx_I, cluster = "famID", 
+                                 gvar = "mgene", design = "pop", base.dist = "Weibull", 
+                                 frailty.dist = "gamma", agemin = 20, 
+                                 data = famx_newx_imp_fam[[i]], parms = c(0.016,3,0, 0, 0,2)) 
+}
+mi_K_logT <- gamma_results
+est_list <- lapply(mi_K_logT, function(x) summary(x)$estimates[,1]) 
+SE_list <- lapply(mi_K_logT, function(x) x$se)
+est_gamma_aftermi <- colMeans(do.call(rbind, est_list))
+
+famx_newx_imp_fam[[1]] |>
+  ggplot(aes(x = newx_I)) + geom_density()
+
+####################################################################################
+################################# Pooling Step #####################################
+####################################################################################

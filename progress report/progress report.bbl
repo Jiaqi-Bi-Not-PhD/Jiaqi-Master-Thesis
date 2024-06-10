@@ -1,4 +1,4 @@
-\begin{thebibliography}{19}
+\begin{thebibliography}{16}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -49,10 +49,10 @@ Donald~B Rubin.
 \newblock Inference and missing data.
 \newblock \emph{Biometrika}, 63\penalty0 (3):\penalty0 581--592, 1976.
 
-\bibitem[Rubin(1987)]{Rubin1987}
+\bibitem[Rubin(1987{\natexlab{a}})]{Rubin1987}
 Donald~B Rubin.
 \newblock \emph{Multiple imputation for nonresponse in surveys}.
-\newblock John Wiley \& Sons, New York, 1987.
+\newblock John Wiley \& Sons, New York, 1987{\natexlab{a}}.
 \newblock \doi{10.1002/9780470316696}.
 
 \bibitem[Baraldi and Enders(2010)]{baraldi2010introduction}
@@ -73,43 +73,21 @@ Miriam~Seoane Santos, Ricardo~Cardoso Pereira, Adriana~Fonseca Costa,
 \newblock Generating synthetic missing data: A review by missing mechanism.
 \newblock \emph{IEEE Access}, 7:\penalty0 11651--11667, 2019.
 
-\bibitem[Gelfand and Smith(1990)]{gelfand1990sampling}
-Alan~E Gelfand and Adrian~FM Smith.
-\newblock Sampling-based approaches to calculating marginal densities.
-\newblock \emph{Journal of the American statistical association}, 85\penalty0
-  (410):\penalty0 398--409, 1990.
+\bibitem[Barnard and Rubin(1999)]{barnard1999miscellanea}
+John Barnard and Donald~B Rubin.
+\newblock Miscellanea. small-sample degrees of freedom with multiple
+  imputation.
+\newblock \emph{Biometrika}, 86\penalty0 (4):\penalty0 948--955, 1999.
 
-\bibitem[Ziyatdinov et~al.(2018)Ziyatdinov, V{\'a}zquez-Santiago, Brunel,
-  Martinez-Perez, Aschard, and Soria]{ziyatdinov2018lme4qtl}
-Andrey Ziyatdinov, Miquel V{\'a}zquez-Santiago, Helena Brunel, Angel
-  Martinez-Perez, Hugues Aschard, and Jose~Manuel Soria.
-\newblock lme4qtl: linear mixed models with flexible covariance structure for
-  genetic studies of related individuals.
-\newblock \emph{BMC bioinformatics}, 19:\penalty0 1--5, 2018.
-
-\bibitem[Griffin and Walker(2013)]{griffin2013adaptive}
-Jim~E Griffin and Stephen~G Walker.
-\newblock On adaptive metropolis--hastings methods.
-\newblock \emph{Statistics and Computing}, 23:\penalty0 123--134, 2013.
-
-\bibitem[Andrieu and Moulines(2006)]{10.1214/105051606000000286}
-Christophe Andrieu and {\'E}ric Moulines.
-\newblock {On the ergodicity properties of some adaptive MCMC algorithms}.
-\newblock \emph{The Annals of Applied Probability}, 16\penalty0 (3):\penalty0
-  1462 -- 1505, 2006.
-
-\bibitem[Łatuszyński et~al.(2013)Łatuszyński, Roberts, and
-  Rosenthal]{10.1214/11-AAP806}
-Krzysztof Łatuszyński, Gareth~O. Roberts, and Jeffrey~S. Rosenthal.
-\newblock {Adaptive Gibbs samplers and related MCMC methods}.
-\newblock \emph{The Annals of Applied Probability}, 23\penalty0 (1):\penalty0
-  66 -- 98, 2013.
-
-\bibitem[Van~Buuren(2011)]{van2011multiple}
+\bibitem[Van~Buuren(2018)]{van2018flexible}
 Stef Van~Buuren.
-\newblock Multiple imputation of multilevel data.
-\newblock In \emph{Handbook of advanced multilevel analysis}, pages 173--196.
-  Routledge, 2011.
+\newblock \emph{Flexible imputation of missing data}.
+\newblock CRC press, 2018.
+
+\bibitem[Rubin(1987{\natexlab{b}})]{Rubin1987Multiple}
+D.B. Rubin.
+\newblock \emph{Multiple Imputation for Nonresponse in Surveys}.
+\newblock John Wiley \& Sons, 1987{\natexlab{b}}.
 
 \bibitem[Van~Buuren and Groothuis-Oudshoorn(2011)]{van2011mice}
 Stef Van~Buuren and Karin Groothuis-Oudshoorn.

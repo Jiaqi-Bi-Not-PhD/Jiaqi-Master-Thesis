@@ -14,6 +14,11 @@ prs_data2 <- prs_data %>%
   dplyr::select(-"Person_ID")
 brca1_prs <- left_join(brca1, prs_data2, by = "indID")
 
+brca1_prs <- brca1_prs |>
+  mutate(df = df1) |>
+  mutate(time = timeBC,
+         status = BC)
+
 ## For MCEM, if one family contains 0 observed PRS, delete this family
 brca1_prs_MCEM <- brca1_prs |>
   mutate(PRS_obs = ifelse(!is.na(PRS), 1, 0)) |>
