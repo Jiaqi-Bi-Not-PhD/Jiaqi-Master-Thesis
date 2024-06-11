@@ -1,0 +1,44 @@
+\chapter{Literature Reviews}
+\section{Survival Analysis}
+Survival analysis is a robust statistical methodology used to analyze time-to-event data, where the focus is on the time until an event of interest occurs.
+It has been extensively applied in medical research, particularly in studies involving cancer, where events such as death or relapse are critical endpoints.
+The literature identifies several key methods and models that form the backbone of survival analysis. \citet{kaplan1958nonparametric} introduced the Kaplan-Meier estimator, a nonparametric statistic used to estimate survival functions from incomplete observations, which remains widely used due to its simplicity and effectiveness in handling censored data.
+\citet{cox1972regression} proposed the proportional hazards model, which allows for the inclusion of covariates and has become a standard technique for assessing the effect of explanatory variables on survival.
+\citet{collett2023modelling}, \citet{machin2006survival}, and \citet{kleinbaum1996survival} provide detailed expositions on survival analysis methods, including parametric and nonparametric approaches.
+Recent advancements have addressed complex issues such as interval censoring and competing risks, expanding the applicability and precision of survival analysis.
+hese methodological developments have significantly enhanced the ability to make informed inferences from survival data, contributing to more accurate prognostic assessments and treatment evaluations in clinical research.
+In the survival analysis, there are several key functions that will contribute essentially to nearly all relevant scientific work. 
+
+The survival function $S(t)$ measures the probability of study subject's entry age $t$ is less than the event time $T$, 
+\begin{equation} 
+    S(t)=P(T>t)
+\end{equation}
+The cumulative distribution function $F(t)$ represents the probability that the event has occurred by time $t$. 
+This is the complement of the survival function $S(t)$,
+\begin{equation}
+    F(t)=P(T\leq t)=1-S(t)
+\end{equation}
+The probability density function $f(t)$ is the likelihood of the event occurring at an exact time $t$. 
+It is the derivative of the cumulative distribution function (CDF) or the negative derivative of the survival function. 
+\begin{equation}
+    f(t)=\frac{d}{dt}F(t)=-\frac{d}{dt}S(t)=h(t)S(t)
+\end{equation}
+The hazard function $h(t)$ measures the instantaneous rate at which the event occurs, given that the individual has survived up to the time $t$. 
+It is the probability that an event occurs in a very small time interval, given survival until the beginning of the interval. 
+\begin{equation}
+    h(t)=\lim_{\Delta t\rightarrow 0}\frac{P(t\leq T<t+\Delta t|T\geq t)}{\Delta t}=\frac{f(t)}{S(t)}
+\end{equation}
+The accumulated risk of experiencing the event up to time $t$ can be expressed using the cumulative hazard function. 
+It is the integral of the hazard function over time, providing a cumulative measure of risk. 
+\begin{equation}
+    H(t)=\int_0^t h(u)du=-\log S(t)
+\end{equation}
+Whenever we can define one of above functions, it is straighforward to derive the rest. 
+
+
+
+
+\subsection{Parametric Survival Analysis}
+Parametric survival analysis methods assume that the time-to-event data follow a specific probability distribution.
+This approach provides a more detailed and flexible framework for modeling survival data, allowing for more precise estimates and interpretations of survival functions and hazard rates.
+\citet{hosmer2008applied} has comprehensively summarized most of parametric baseline hazard

@@ -1,4 +1,4 @@
-\begin{thebibliography}{9}
+\begin{thebibliography}{15}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -67,5 +67,38 @@ Yun-Hee Choi, Mary~Beth Terry, Mary~B Daly, Robert~J MacInnis, John~L Hopper,
   risk in women with brca1 and brca2 pathogenic variants.
 \newblock \emph{JAMA oncology}, 7\penalty0 (4):\penalty0 585--592,
   2021{\natexlab{b}}.
+
+\bibitem[Kaplan and Meier(1958)]{kaplan1958nonparametric}
+Edward~L Kaplan and Paul Meier.
+\newblock Nonparametric estimation from incomplete observations.
+\newblock \emph{Journal of the American statistical association}, 53\penalty0
+  (282):\penalty0 457--481, 1958.
+
+\bibitem[Cox(1972)]{cox1972regression}
+David~R Cox.
+\newblock Regression models and life-tables.
+\newblock \emph{Journal of the Royal Statistical Society: Series B
+  (Methodological)}, 34\penalty0 (2):\penalty0 187--202, 1972.
+
+\bibitem[Collett(2023)]{collett2023modelling}
+David Collett.
+\newblock \emph{Modelling survival data in medical research}.
+\newblock Chapman and Hall/CRC, 2023.
+
+\bibitem[Machin et~al.(2006)Machin, Cheung, and Parmar]{machin2006survival}
+David Machin, Yin~Bun Cheung, and Mahesh Parmar.
+\newblock \emph{Survival analysis: a practical approach}.
+\newblock John Wiley \& Sons, 2006.
+
+\bibitem[Kleinbaum and Klein(1996)]{kleinbaum1996survival}
+David~G Kleinbaum and Mitchel Klein.
+\newblock \emph{Survival analysis a self-learning text}.
+\newblock Springer, 1996.
+
+\bibitem[Hosmer~Jr et~al.(2008)Hosmer~Jr, Lemeshow, and May]{hosmer2008applied}
+David~W Hosmer~Jr, Stanley Lemeshow, and Susanne May.
+\newblock \emph{Applied survival analysis: regression modeling of time-to-event
+  data}, volume 618.
+\newblock John Wiley \& Sons, 2008.
 
 \end{thebibliography}
