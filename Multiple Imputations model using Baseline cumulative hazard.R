@@ -109,7 +109,7 @@ for (m in 1:5) {
     mutate(H0 = (exp(logalpha)^exp(loglambda)) * (exp(loglambda)^2) * (time^exp(loglambda)) )
   famx_newx_imp_fam[[m]] <- miss50_famx
   
-  if (i >= 5) break
+  if (m >= 5) break
   ## Step X - update baseline cumulative hazard
   updates_impdata <- penmodel(Surv(time, status) ~ gender + mgene + newx_I, cluster = "famID", gvar = "mgene", 
                               design = "pop", base.dist = "Weibull", frailty.dist = "gamma", agemin = 20, data = miss50_famx,
