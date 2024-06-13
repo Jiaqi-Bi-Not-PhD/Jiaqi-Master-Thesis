@@ -1,0 +1,19 @@
+\chapter{Methods}
+\section{Introduction}
+When making the imputation on the continuous variable, one common way is to assume a conditionally normal distribution. 
+This conditional distribution can be estimated from a linear regression. 
+The original multiple imputation structure was brought by~\citet{rubin1987multiple}, that this method has been widely used by different scientific researchers with different models.
+There are many softwares that based on the multiple imputations as well, such as Blimp software~\cite{keller2021blimp}, \texttt{MICE} package in R~\cite{royston2011multiple}, and \texttt{jomo} package in R~\cite{quartagno2019jomo}. 
+Apparently, this thesis cannot provide enough rooms for those well-designed softwares that I have not mentioned. 
+The development of Multiple Imputation within certain specific models remains incomplete, and many details have not yet been comprehensively addressed in the current published literature.
+In genetic epidemiology, studies are mostly conducted with family clusters. 
+Current implementation of the multiple imputation does not account for the genetic correlations. 
+Furthermore, there remains room for exploration in the application of the frailty model with ascertainment correction.
+Therefore, this research is designed to develop a computationally efficient multiple imputation method to account for the kinship correlations, and apply it to frailty models with ascertainment correction. 
+
+In this chapter, a comprehensive guideline and adjusted multiple imputation formulas are provided. 
+We explicitly show how the kinship matrix works in the imputation step, and how the ascertainment correction handles the analysis step in this research. 
+The special imputation model is introduced as well, while considering the genetic variance and residual variance (sometimes refer to the environmental variance).
+The variance estimation using Rubin's Rule is provided, as well as the confidence interval based on completed data following the proposed multiple imputation.
+
+\section{Kinship Matrix}

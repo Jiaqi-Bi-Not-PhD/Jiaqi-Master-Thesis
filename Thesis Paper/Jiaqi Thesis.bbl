@@ -1,4 +1,4 @@
-\begin{thebibliography}{12}
+\begin{thebibliography}{16}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -81,5 +81,27 @@ David~W Hosmer~Jr, Stanley Lemeshow, and Susanne May.
 \newblock \emph{Applied survival analysis: regression modeling of time-to-event
   data}, volume 618.
 \newblock John Wiley \& Sons, 2008.
+
+\bibitem[Rubin(1987)]{rubin1987multiple}
+Donald~B Rubin.
+\newblock Multiple imputation for survey nonresponse, 1987.
+
+\bibitem[Keller and Enders(2021)]{keller2021blimp}
+BT~Keller and CK~Enders.
+\newblock Blimp user’s guide (version 3).
+\newblock \emph{Blimp Software: Los Angeles, CA, USA}, 2021.
+
+\bibitem[Royston and White(2011)]{royston2011multiple}
+Patrick Royston and Ian~R White.
+\newblock Multiple imputation by chained equations (mice): implementation in
+  stata.
+\newblock \emph{Journal of statistical software}, 45:\penalty0 1--20, 2011.
+
+\bibitem[Quartagno et~al.(2019)Quartagno, Grund, and
+  Carpenter]{quartagno2019jomo}
+Matteo Quartagno, Simon Grund, and James Carpenter.
+\newblock Jomo: a flexible package for two-level joint modelling multiple
+  imputation.
+\newblock \emph{R Journal}, 9\penalty0 (1), 2019.
 
 \end{thebibliography}

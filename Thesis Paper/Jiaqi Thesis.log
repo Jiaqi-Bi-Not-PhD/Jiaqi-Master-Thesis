@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.9.16)  12 JUN 2024 21:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.9.16)  13 JUN 2024 13:08
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -460,7 +460,7 @@ Package glossaries Info: Writing glossary file "Jiaqi Thesis".glo on input line 
 \openout5 = `"Jiaqi Thesis.slo"'.
 
 Package glossaries Info: Writing glossary file "Jiaqi Thesis".slo on input line 81.
- (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/Jiaqi Thesis.aux (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/chapter1.aux) (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/chapter2.aux))
+ (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/Jiaqi Thesis.aux (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/chapter1.aux) (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/chapter2.aux) (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/chapter3.aux))
 \openout1 = `"Jiaqi Thesis.aux"'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 172.
@@ -616,33 +616,42 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 
-]) [5] (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/Jiaqi Thesis.bbl [6
+]) [5]
+\openout2 = `chapter3.aux'.
+
+ (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/chapter3.tex
+Chapter 3.
+) [6
+
+
+
+] (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/Jiaqi Thesis.bbl [7
 
 
 ])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 281.
- [7]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 281.
- (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/Jiaqi Thesis.aux (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/chapter1.aux) (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/chapter2.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 281.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 281.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 282.
+ [8]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 282.
+ (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/Jiaqi Thesis.aux (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/chapter1.aux) (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/chapter2.aux) (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/chapter3.aux))
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 282.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 282.
 Package rerunfilecheck Info: File `"Jiaqi Thesis".out' has not changed.
-(rerunfilecheck)             Checksum: 54177B3FAF22CE1BAB47618ED7038FBE;736.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 281.
+(rerunfilecheck)             Checksum: 4EDACBFCE2C5F9CFE8C1DF1D8970954E;902.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 282.
  ) 
 Here is how much of TeX's memory you used:
- 14098 strings out of 492616
- 220272 string characters out of 6129481
- 414440 words of memory out of 5000000
- 17682 multiletter control sequences out of 15000+600000
- 15532 words of font info for 57 fonts, out of 8000000 for 9000
+ 14131 strings out of 492616
+ 221335 string characters out of 6129481
+ 415155 words of memory out of 5000000
+ 17699 multiletter control sequences out of 15000+600000
+ 15700 words of font info for 58 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  52i,11n,38p,2079b,637s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb>
-Output written on "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/Jiaqi Thesis.pdf" (16 pages, 193936 bytes).
+</usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb>
+Output written on "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/Jiaqi Thesis.pdf" (17 pages, 208195 bytes).
 PDF statistics:
- 292 PDF objects out of 1000 (max. 8388607)
- 256 compressed objects within 3 object streams
- 88 named destinations out of 1000 (max. 500000)
- 105 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 324 PDF objects out of 1000 (max. 8388607)
+ 286 compressed objects within 3 object streams
+ 96 named destinations out of 1000 (max. 500000)
+ 129 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -3,46 +3,47 @@ Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: Jiaqi Thesis.aux
 A level-1 auxiliary file: chapter1.aux
 A level-1 auxiliary file: chapter2.aux
+A level-1 auxiliary file: chapter3.aux
 The style file: unsrtnat.bst
 Database file #1: westernthesis.bib
-You've used 12 entries,
+You've used 16 entries,
             2481 wiz_defined-function locations,
-            637 strings with 6936 characters,
-and the built_in function-call counts, 4846 in all, are:
-= -- 356
-> -- 330
-< -- 6
-+ -- 125
-- -- 100
-* -- 417
-:= -- 820
-add.period$ -- 36
-call.type$ -- 12
-change.case$ -- 20
-chr.to.int$ -- 11
-cite$ -- 12
-duplicate$ -- 227
-empty$ -- 413
-format.name$ -- 116
-if$ -- 985
+            659 strings with 7474 characters,
+and the built_in function-call counts, 6076 in all, are:
+= -- 459
+> -- 388
+< -- 9
++ -- 149
+- -- 116
+* -- 495
+:= -- 1017
+add.period$ -- 47
+call.type$ -- 16
+change.case$ -- 28
+chr.to.int$ -- 15
+cite$ -- 16
+duplicate$ -- 296
+empty$ -- 534
+format.name$ -- 140
+if$ -- 1248
 int.to.chr$ -- 2
-int.to.str$ -- 13
-missing$ -- 16
-newline$ -- 68
-num.names$ -- 36
-pop$ -- 103
+int.to.str$ -- 17
+missing$ -- 19
+newline$ -- 87
+num.names$ -- 48
+pop$ -- 139
 preamble$ -- 1
-purify$ -- 12
+purify$ -- 16
 quote$ -- 0
-skip$ -- 123
+skip$ -- 170
 stack$ -- 0
-substring$ -- 189
-swap$ -- 27
+substring$ -- 213
+swap$ -- 35
 text.length$ -- 1
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 72
+type$ -- 100
 warning$ -- 0
-while$ -- 37
+while$ -- 47
 width$ -- 0
-write$ -- 160
+write$ -- 208

@@ -18,4 +18,6 @@ variable_to_ampute <- "newx"
 n <- nrow(famx)
 num_missing <- floor(0.5*n)
 missing_indices <- sample(1:n, num_missing)
-famx_50missing <- 
+miss50_famx <- famx
+miss50_famx[missing_indices, variable_to_ampute] <- NA
+

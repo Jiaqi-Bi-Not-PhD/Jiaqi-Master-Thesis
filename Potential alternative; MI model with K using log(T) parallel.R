@@ -54,7 +54,12 @@ newx <- miss50_famx$newx
 Y_obs <- miss50_famx$newx
 famx_newx_imp_fam <- list()
 
-for (m in 1:5) {
+num_cores <- detectCores() - 2
+cl <- makeCluster(num_cores)
+registerDoParallel(cl)
+clusterExport(cl, varlist = c("betas", "V", "X", "Sigma", "newx", "miss50_famx", "Y_obs", "find_closest"))
+
+results <- foreach(m = 1:5, .packages = c('Matrix', 'foreach', 'doParallel', 'dplyr')) %dopar% {
   
   ## Step 4
   w_1 <- rnorm(n = length(betas), mean = 0, sd = 1)
@@ -66,11 +71,6 @@ for (m in 1:5) {
   mu_star <- X %*% as.vector(betastar)
   
   ## Step 7
-  num_cores <- detectCores() - 2 # 6 cores
-  cl <- makeCluster(num_cores)
-  clusterExport(cl, varlist = c("Sigma", "newx", "mu_star")) 
-  clusterEvalQ(cl, library(Matrix))
-  
   E_cond <- function(i) {
     y_minus_i <- newx[-i]
     mu_star_minus_i <- mu_star[-i]
@@ -81,10 +81,9 @@ for (m in 1:5) {
     conditional_Expect <- mu_star[i] + Sigma[i,-i][non_NA] %*% solve(Sigma[-i,-i][non_NA, non_NA]) %*% (y_minus_i - mu_star_minus_i)
     return(conditional_Expect)
   }
-  conditional_expectations <- parSapply(cl, 1:nrow(miss50_famx), E_cond)
-  conditional_expectations <- as.vector(do.call(rbind, conditional_expectations))
   
-  #conditional_vars <- miss50_famx$cond_var
+  conditional_expectations <- sapply(1:nrow(miss50_famx), E_cond)
+  conditional_expectations <- as.vector(do.call(rbind, conditional_expectations))
   
   ## Step 8
   w2i <- rnorm(n = nrow(miss50_famx), mean = 0, sd = 1)
@@ -92,13 +91,17 @@ for (m in 1:5) {
   ## Step 9
   newx_star <- conditional_expectations 
   newx_star <- sapply(newx_star, find_closest, Y_obs)
-  #newx_star <- conditional_expectations + conditional_vars
+  
   famx_newx_imp_fam[[m]] <- miss50_famx |>
     mutate(newx_I = newx_star) |>
     mutate(newx_I = ifelse(!is.na(newx), newx, newx_I))
   
-  stopCluster(cl)
+  return(famx_newx_imp_fam[[m]])
 }
+
+famx_newx_imp_fam <- results
+
+stopCluster(cl)
 
 ####################################################################################
 ################################# Analysis Step ####################################
@@ -111,8 +114,7 @@ for (i in 1:5) {
                                  data = famx_newx_imp_fam[[i]], parms = c(0.016,3,0, 0, 0,2)) 
 }
 
-cl <- 6
-registerDoParallel(cl)
+
 gamma_results <- foreach(i = 1:5) %dopar% {
   penmodel(Surv(time, status) ~ gender + mgene + newx_I, cluster = "famID", 
            gvar = "mgene", design = "pop", base.dist = "Weibull", 
