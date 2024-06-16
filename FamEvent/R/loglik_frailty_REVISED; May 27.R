@@ -15,7 +15,7 @@ time0 <- Y[,1] - agemin
 cuts0 <- cuts - agemin
 status <- Y[,2]
 ip <- data$proband == 1
-ip_fam <- aggregate(data$proband, list(data$famID.byuser), sum)[,2] # indicates if family has proband or not
+ip_fam <- aggregate(data$proband, list(unlist(data$famID.byuser)), sum)[,2] # indicates if family has proband or not
 wt <- 1
 wt_fam <- 1
 #wt <- data$weight
@@ -32,7 +32,7 @@ logh <- log(bhaz) + xbeta
 loglik <-  wt * (status*logh )
 
 df <- data$df[!duplicated(data$famID.byuser)]
-s <- aggregate(H, list(data$famID.byuser), sum)[,2]
+s <- aggregate(H, list(unlist(data$famID.byuser)), sum)[,2]
 logdL <- wt_fam*log( dlaplace(frailty.dist, g=s, d=df, k=kappa) )
 
 
@@ -49,8 +49,8 @@ logdL <- wt_fam*log( dlaplace(frailty.dist, g=s, d=df, k=kappa) )
   
   
   logasc[logasc == -Inf] <- 0
-  sloglik <- sum(loglik[loglik!=-Inf], na.rm=T) + sum(logdL[logdL!=-Inf], na.rm=T) - sum(logasc[logasc!=-Inf], na.rm=T)
-  loglik[ip] <- loglik[ip] + logdL[ip_fam==1] - logasc[ip_fam==1]
+  sloglik <- sum(loglik[loglik!=-Inf & loglik != Inf], na.rm=T) + sum(logdL[logdL!=-Inf & logdL != Inf], na.rm=T) - sum(logasc[logasc!=-Inf & logasc != Inf], na.rm=T)
+  loglik[ip_fam] <- loglik[ip_fam] + logdL[ip_fam==1] - logasc[ip_fam==1]
   
   #print(c(theta, -sloglik))
   #print(c(theta, -sloglik, sum(logdL), sum(logasc)))

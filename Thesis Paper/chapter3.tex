@@ -17,3 +17,253 @@ The special imputation model is introduced as well, while considering the geneti
 The variance estimation using Rubin's Rule is provided, as well as the confidence interval based on completed data following the proposed multiple imputation.
 
 \section{Kinship Matrix}
+The kinship matrix, also known as the relatedness matrix, is a fundamental concept in statistical genetics, particularly in the context of quantitative genetics and genetic epidemiology. 
+It quantifies the genetic relatedness between individuals based on pedigree information~\cite{lynch1998genetics}. 
+This matrix is essential for estimating heritability and for controlling for familial relatedness in genetic association studies. 
+The elements of the kinship matrix represent the probability that a randomly chosen allele from one individual is identical by descent (IBD) to a randomly chosen allele from another individual.
+Once the relationship between each individual in a study is known, the kinship matrix can be generated either for each family or as a whole~\cite{sinnwell2014kinship2}. 
+For example, the kinship matrix $K$ for a family may look like the following:
+
+\begin{equation*}
+    K = \begin{bmatrix}
+    1    & 0.5  & 0.25 & 0 \\
+    0.5  & 1    & 0.5  & 0 \\
+    0.25 & 0.5 & 1    & 0 \\
+    0    & 0    & 0    & 1 \\
+    \end{bmatrix}
+\end{equation*}
+such that assume there are 4 individuals in a family, the row and the column represent the exactly the same individuals. 
+Therefore, the diagonal of the kinship matrix has a value of 1, which measures the correlation of one person and himself. 
+In $K_{11}$, the individual index $1$ and himself is fully related to himself. 
+In $K_{12}=0.5$, the first and second individuals are half-related (e.g., Siblings). 
+In $K_{13}=0.25$, the first and third individuals are a quarter-related (e.g., half-siblings or grandparent-grandchild). 
+In $K_{14}=0$, the first and the fourth individuals are not related (e.g., spousal relationship, or lawful adoption). 
+Note that in nature, the kinship matrix is fully symmetric. 
+Being a symmetric matrix yields real eigenvalues and orthogonal eigenvectors, which is beneficial in principal component analysis (PCA) that is often conducted within a GWAS study to reduce dimensionality~\cite{price2006principal}. 
+Also, this symmetric property ensures the genetic relatedness between any two individuals is consistent regardless of their order in a dataset, which further ensures an accurate interpretation in the the statistical inference and valid and unbiased statistical tests. 
+In statistical analyses, the kinship matrix is not typically estimated; rather, it is derived from a precise understanding of familial relationships. 
+This direct acquisition ensures an accurate representation of genetic relatedness, which is essential for the integrity of subsequent genetic analyses.
+
+In some variables within a familial study, the structure could be highly dependent on the kinship matrix. 
+For example, the PRS score may be used as a covariate when researchers try to model certain disease risks. 
+Especially, in a genetic study where the missing data occurs, without the extensive considerations on the kinship correlation structure, the inference of parameters may be biased. 
+In current imputation models, there is a challenge that those methods do not handle the kinship correlations. 
+Thus, the following section shows how to conduct a proper multiple imputation without ignoring the pedigree information. 
+
+\section{Multiple Imputation without Kinship Matrix}
+\raggedbottom
+In the existing multiple imputation methods for continuous variable, one easy way is to assume a conditionally normal distribution. 
+Suppose $y$ is the variable contains missing values, $\mathbf{x}$ are other variables are fully observed. 
+We assume there are total $p$ parameters being estimated in this linear regression. 
+The conditionally normal model (linear regression) can be written as 
+\begin{equation} 
+    y|\mathbf{x},\boldsymbol{\beta}\sim N(\boldsymbol{\beta}\mathbf{x}, \sigma^2)
+\end{equation}
+In the linear regression setting, 
+\begin{equation} 
+    y=\mathbf{x}\boldsymbol{\beta}+\epsilon,~ \epsilon\sim N(0, \sigma^2)
+\end{equation}
+This simply corresponds to the likelihood 
+\begin{equation}\label{eq:bayeslinearnormal}
+    f(y|\mathbf{x}, \boldsymbol{\beta}, \sigma^2)\propto (\sigma^2)^{-n/2}\exp \Big (-\frac{1}{2\sigma^2} (y-\mathbf{x}\boldsymbol{\beta})^{\top}(y-\mathbf{x}\boldsymbol{\beta})\Big )
+\end{equation}
+because of the conditional normality of $y$. 
+We can solve that 
+\begin{equation} 
+    \hat{\boldsymbol{\beta}}=(\mathbf{x}^{\top}\mathbf{x})^{-1}\mathbf{x}^{\top}y
+\end{equation}
+In the Bayesian framework, we need to find the prior, which is the joint distribution $f(\sigma^2,\boldsymbol{\beta})$. 
+Note that $(y-\mathbf{x}\boldsymbol{\beta})^{\top}(y-\mathbf{x}\boldsymbol{\beta})$ can be written as 
+\begin{align} 
+    (y-\mathbf{x}\boldsymbol{\beta})^{\top}(y-\mathbf{x}\boldsymbol{\beta})&=\big ((y-\mathbf{x}\boldsymbol{\beta})+(\mathbf{x}\hat{\boldsymbol{\beta}}-\mathbf{x}\boldsymbol{\beta})\big )^{\top}\big ((y-\mathbf{x}\boldsymbol{\beta})+(\mathbf{x}\hat{\boldsymbol{\beta}}-\mathbf{x}\boldsymbol{\beta})\big )\\
+    &=(y-\mathbf{x}\boldsymbol{\beta})^{\top}(y-\mathbf{x}\boldsymbol{\beta}) + (\boldsymbol{\beta}-\hat{\boldsymbol{\beta}})^{\top}(\mathbf{x}^{\top}\mathbf{x})(\boldsymbol{\beta}-\hat{\boldsymbol{\beta}})+2(\mathbf{x}\hat{\boldsymbol{\beta}}-\mathbf{x}\boldsymbol{\beta})\\
+    &=(y-\mathbf{x}\boldsymbol{\beta})^{\top}(y-\mathbf{x}\boldsymbol{\beta}) + (\boldsymbol{\beta}-\hat{\boldsymbol{\beta}})^{\top}(\mathbf{x}^{\top}\mathbf{x})(\boldsymbol{\beta}-\hat{\boldsymbol{\beta}})
+\end{align}
+So Equation~\ref{eq:bayeslinearnormal} will become 
+\begin{equation} 
+    f(y|\mathbf{x}, \boldsymbol{\beta}, \sigma^2)\propto \underbrace{(\sigma^2)^{-v/2}\exp (-\frac{vs^2}{2\sigma^2})}_{f(\sigma)}\underbrace{(\sigma^2)^{-\frac{n-v}{2}}\exp \Big (-\frac{1}{2\sigma^2}(\boldsymbol{\beta}-\hat{\boldsymbol{\beta}})^{\top}(\mathbf{x}^{\top}\mathbf{x})(\boldsymbol{\beta}-\hat{\boldsymbol{\beta}})\Big )}_{f(\boldsymbol{\beta}|\sigma)}
+\end{equation}
+where $vs^2=(\mathbf{y}-\mathbf{x}\hat{\boldsymbol{\beta}})^{\top}(\mathbf{y}-\mathbf{x}\hat{\boldsymbol{\beta}})=SSE$, such that $v=n_{obs}-p$. 
+Then $f(\sigma^2)$ can be written as a proportional density to the inverse gamma distribution,
+\begin{equation} 
+    f(\sigma^2)\propto (\sigma^2)^{-\frac{v}{2}-1}\exp (-\frac{vs^2}{2\sigma^2})=(\sigma^2)^{-\frac{v}{2}-1}\exp (-\frac{SSE}{2\sigma^2})
+\end{equation}
+In this $\sigma^2\sim \text{Inverse-Gamma}(\alpha, \phi)$, we have $\alpha = \frac{v}{2}=\frac{n_{obs}-p}{2}$ and $\phi = \frac{1}{2}vs^2=\frac{SSE}{2}$.
+From the inverse-gamma property, when 
+\begin{equation} 
+    \sigma^2\sim \text{Inverse-Gamma}(\frac{n_{obs}-p}{2}, \frac{SSE}{2})
+\end{equation}
+and $\exists\lambda$ such that 
+\begin{equation} 
+    \sigma^2=\frac{SSE}{2}/\lambda
+\end{equation}
+then $\lambda$ can be transformed 
+\begin{equation} 
+    \lambda = \frac{\chi^2_{n_{obs}-p}}{2}
+\end{equation}
+since $\chi^2_{df}=\text{Gamma}(\frac{df}{2},2)$, so 
+\begin{equation} 
+    \sigma^2=\frac{\frac{SSE}{2}}{\frac{\chi^2_{n_{obs}-p}}{2}}=\frac{SSE}{\chi^2_{n_{obs}-p}}
+\end{equation}
+Thus, we can sample the standard deviation of the missing data distribution from 
+\begin{equation} 
+    \sigma^*=\hat{\sigma}\sqrt{\frac{SSE}{\chi^2_{n_{obs}-p}}}=\hat{\sigma}\sqrt{\frac{SSE}{g}}
+\end{equation}
+from sampling $g\sim \chi^2_{n_{obs}-p}$. 
+Moreover, we know 
+\begin{equation} 
+    \text{Var}(\hat{\boldsymbol{\beta}})=\sigma^2(\mathbf{x}^{\top}\mathbf{x}^{-1})=\mathbf{V}
+\end{equation}
+so the marginal distribution for $\boldsymbol{\beta}$, 
+\begin{equation}\label{eq:betadistmi}
+    \boldsymbol{\beta}\sim N(\hat{\boldsymbol{\beta}}, \sigma^2(\mathbf{x}^{\top}\mathbf{x})^{-1})
+\end{equation}
+Note that when a random variable $T\sim N(\mathbf{m}, \mathbf{c})$, then $T$ can be generated from a standard normal variable $\mathbf{u}$ with 
+\begin{equation} 
+    T=\mathbf{m}+\mathbf{L}\mathbf{u}
+\end{equation}
+where $\mathbf{L}$ is the cholesky decomposition of $\mathbf{c}$ such that $\mathbf{c}=\mathbf{L}\mathbf{L}^{\top}$.
+For $\boldsymbol{\beta}$, from~\ref{eq:betadistmi}, it can be derived as 
+\begin{align} 
+    \boldsymbol{\beta}&=\hat{\boldsymbol{\beta}}+\sigma ( \mathbf{x}^{\top}\mathbf{x} )^{-1/2}\mathbf{u}_1\\
+    &=\hat{\boldsymbol{\beta}}+\mathbf{u}_1\mathbf{V}^{-1/2}
+\end{align}
+Adjusting for $\sigma^*$ to make sure $\boldsymbol{\beta}$ matches the variability implied by the random draw of $\sigma^*$, 
+\begin{equation} 
+    \boldsymbol{\beta}^*=\hat{\boldsymbol{\beta}}+\frac{\sigma^*}{\hat{\sigma}}\mathbf{u}_1\mathbf{V}^{-1/2}
+\end{equation}
+such that $\mathbf{u}_1$ is a row vector of $p$ independent draws from a standard normal distribution, $u_{1k}\stackrel{iid}{\sim} N(0,1)$, and $k=\ldots,p$. 
+The imputation for $y_i^*$ is computed as 
+\begin{equation} 
+    y_i^*=\boldsymbol{\beta}^*\mathbf{x}_i+u_{2i}\sigma^*,~ s.t.~ u_{2i}\sim N(0,1)
+\end{equation}
+where $u_{2i}$ adds the uncertainty to the imputation as well to ensure the imputation is not solely based on the predicted value of $y_i^*$. 
+This prevents the underestimation of the variability. 
+Therefore, the comprehensive steps of the multiple imputation on the continuous missing data can be summarized to the following steps: 
+\begin{enumerate} 
+    \item Calculate $\hat{y}=\hat{\boldsymbol{\beta}}\mathbf{x}$ using $y_{obs}$, and $\hat{\boldsymbol{\beta}}$ can be obtained easily, as well as $\hat{\sigma}$, and $\text{Var}(\hat{\boldsymbol{\beta}})=\mathbf{V}$
+    \item Draw $g\sim \chi^2_{n_{obs}-p}$ for one random draw 
+    \item Calculate $\sigma^*=\hat{\sigma}/\sqrt{SSE/g}$
+    \item Draw a $p$ dimensional vector $\mathbf{u}_1$ such that $u_{1k}\stackrel{iid}{\sim} N(0,1)$ and $k=1,\ldots,p$
+    \item Calculate $\boldsymbol{\beta}^*=\hat{\boldsymbol{\beta}}+\frac{\sigma^*}{\hat{\sigma}}\mathbf{u}_1\mathbf{V}^{1/2}$ such that $\mathbf{V}^{1/2}$ is the cholesky decomposition of $\mathbf{V}$
+    \item Draw $u_{2i}\stackrel{iid}{\sim} N(0,1)$ 
+    \item Impute $y_{mis,i}=\boldsymbol{\beta}^*\mathbf{x}_i+u_{2i}\sigma^*$ 
+    \item (Option: PMM) Match the imputed value to the nearest observed value.
+    \item Repeat 2.\ to 7.\ (2.\ to 8. for PMM) for $M$ times to obtain $M$ complete datasets
+\end{enumerate}
+
+\section{Multiple Imputation with Kinship Matrix}
+In order to account for the kinship correlations, the conditional normal distribution needs to be adjusted where the variable contains the missing components are said to be multivariate. 
+Denote $\mathbf{y}$ as the continuous variable that is subject to missing, $\mathbf{x}$ is other covariates that formed a design matrix that determined to be eligible to be part of the imputation model, and $\boldsymbol{\beta}$ is simply the parameter of the imputation model.
+\begin{equation} 
+    \mathbf{y}|\mathbf{x},\boldsymbol{\beta}\sim MVN(\boldsymbol{\beta}\mathbf{x}, \sigma_g^2K+\sigma_e^2I)
+\end{equation}
+where in the linear mixed effect regression form with flexible covariance matrix, the model can be written as 
+\begin{equation} 
+    \mathbf{y}=\mathbf{x}\boldsymbol{\beta}+\mathbf{u}+\mathbf{e}
+\end{equation}
+such that two random parts of the model have certain multivariate normal distribution,
+\begin{equation*}
+    \mathbf{u}\sim MVN(0,\sigma_g^2K),~ \text{and}~ \mathbf{e}\sim MVN(0,\sigma_e^2I)
+\end{equation*}
+$K$ is the kinship matrix with the diagonal of 1, and $I$ is the identity matrix. 
+Note that the flexible covariance matrix can be written as 
+\begin{equation}
+    \boldsymbol{\Sigma}=\sigma_g^2K+\sigma_e^2I
+\end{equation}
+So in this multivariate version of linear mixed effects model, the kinship matrix is being adapted. 
+With unknown mean and fully unknown covariance matrix, the prior of the covariance matrix can be selected as an Inverse Wishart distribution with some degrees of freedom and the scale parameter in Bayesian sense. 
+However, in this case, the covariance matrix is not fully unknown. 
+The only unknown parts of this covariance matrix is introduced by simply $\sigma_g^2$ and $\sigma_e^2$. 
+Deriving the Bayesian prior of these two parameters is challenging, especially it needs to incorporate with partially known multivariate parameter $\boldsymbol{\Sigma}$. 
+Therefore, prior definition steps are adjusted to empirical estimates of these two variances. 
+Although, in a normal model, the inverse-gamma distribution can be an option as a conjugate prior for variance component. 
+The conjugacy simplifies the mathematical derivation, but there are two variance components when the flexible covariance matrix for this designed imputation model, which defers from the regular choice. 
+With the above preliminary settings before the imputation step, the adjusted multiple imputation can be concluded into following steps: 
+\begin{enumerate} 
+    \item Obtain the kinship matrix $K$ among all individuals 
+    \item Calculate the estimates of $\hat{y}=\mathbf{x}\boldsymbol{\beta}$, obtain estimates of $\hat{\boldsymbol{\beta}}$, $\hat{\sigma_g}^2$, $\hat{\sigma_e}^2$, $\text{Var}(\hat{\boldsymbol{\beta}})=\mathbf{V}$. In this step, naturally, $\boldsymbol{\hat{\Sigma}}$ is obtained.
+    \item Suppose there are $p$ predictors in the imputation model, draw $p$-dimensional vector $\mathbf{w}_1$ such that $w_{1k}\stackrel{iid}{\sim} N(0,1)$ where $k=1,...,p$
+    \item Calculate $\boldsymbol{\beta}^*=\hat{\boldsymbol{\beta}}+w_1\mathbf{V}^{1/2}$ such that $\mathbf{V}^{1/2}$ is the cholesky decomposition of $\mathbf{V}$
+    \item Obtain $\mu_i^*=\boldsymbol{\beta}^*\mathbf{x}_i$
+    \item Obtain the conditional expectations 
+    \begin{equation}
+        E(y_{mis,i}|\mathbf{y}_{-i})=\mu_i^*+\hat{\boldsymbol{\Sigma}}_{i,-i}\hat{\boldsymbol{\Sigma}}_{-i,-i}^{-1}(\mathbf{y}_{-i}-\boldsymbol{\mu}^*_{-i})
+    \end{equation}
+    \item Impute $y_{mis,i}=E(y_{mis,i}|\mathbf{y}_{-i})$
+    \item (Option: PMM) Match the imputed value to the nearest observed value
+    \item Repeat 3. to 7. (3. to 8. for PMM) for $M$ times to obtain $M$ completed datasets.
+\end{enumerate}
+Generally, when there is no preliminary knowledge on the dataset, one should use as many variables as possible for the imputation model covariate~\cite{rubin2018multiple}.
+Also, in the survival analysis, there has been always an argument on whether the $\log(T)$ or $\log(H_0(T))$ should be used within the imputation model~\cite{white2009imputing}. 
+In this thesis, we have used both $\log(T)$ and $\log(H_0(T))$ in the simulation study to determine the differences to avoid potential biases caused by misspecification of the model. 
+
+\section{Variance Estimation}
+Based on the Rubin's rule, the pooling step of the analysis is defined as 
+\begin{equation} 
+    \bar{\theta}=\frac{1}{M}\sum_{i=1}^M\theta_i
+\end{equation}
+where $\theta_i$ is the parameter estimate that we are making the inference in a study for $i$-th imputation after $M$ imputations. 
+So $\bar{\theta}$ is the pooled parameter estimates. 
+Based on~\citet{barnard1999miscellanea}, the variance estimation is also defined in a two-level structure, which are within imputation variance and between imputation variance. 
+The within imputation variance is similar to the pooled parameter estimation, where 
+\begin{equation} 
+    V_W=\frac{1}{M}\sum_{i=1}^mSE_i^2
+\end{equation}
+such that $V_W$ determines the within-imputation variance, and it's simply ``pooled" variance among all analyses from the imputed dataset $i$. 
+The between-imputation variance, on the other hand, accounts for the extra variances caused by the missing data. 
+The between-imputation variance $V_B$ is defined as 
+\begin{equation} 
+    V_B=\frac{\sum_{i=1}^M(\theta_i-\bar{\theta})^2}{M-1}
+\end{equation}
+where $V_B$ is the unbiased estimation. 
+Note that $\theta$ is estimated using the only finite $M$ imputed datasets, according to~\citet{van2018flexible}, $V_B$ is the approximation when $M\rightarrow\infty$.
+Therefore, the total variance can be written as
+\begin{equation} 
+    V_{\text{Total}}=V_W+V_B+\frac{V_B}{M}
+\end{equation}
+when $M$ is large enough, $V_{\text{Total}}$ tends to have the only two components of within and between variances. 
+The test statistic (Wald statistic) is 
+\begin{equation} 
+    \frac{(\bar{\theta}-\theta_0)^2}{V_{\text{Total}}}\sim F_{1,df_{adj}}
+\end{equation}
+which 
+\begin{equation} 
+    \frac{\bar{\theta}-\theta_0}{\sqrt{V_{\text{Total}}}}\sim t_{df_{adj}, \frac{1-\alpha}{2}}
+\end{equation}
+such that $\alpha$ is the significance level. 
+Define 
+\begin{equation}
+    \rho=\frac{V_B+\frac{V_B}{M}}{V_{\text{Total}}}
+\end{equation}
+and 
+\begin{equation}
+    r=\frac{V_B+\frac{V_B}{M}}{V_W}
+\end{equation}
+where $\rho$ is the fraction of missing information, which quantifies the proportion of the total variance that is attributable to the fact that the data have been imputed $M$ times. 
+Also, $r$ is the relative increase in variance due to non-responses (missing data), which measures the increase in variance due to the missing data compared to if there were no missing data. 
+In the interpretation, $\rho$ gives the proportion of the total variance that is due to the uncertainty introduced by the missing data. 
+A higher $\rho$ indicates a larger fractino of the total uncertainty comes from the fact that the data were imputed.
+A higher $r$ indicates that the missing data have a larger impact on the overall variance. 
+In the first MI literature by~\citet{rubin1987multiple}, the degrees of freedom was defined as
+\begin{equation}\label{eq:dfold}
+    df_{old}=(M-1)\times (1+\frac{1}{r})^2
+\end{equation}
+The estimated degrees of freedom for the observed data, adjusted for the missing information, are
+\begin{equation}\label{eq:dfobs}
+    df_{obs}=\frac{(n-k)+1}{(n-k)+3}(n-k)(1-\rho)
+\end{equation}
+where $n$ is the number of observations in each imputed data, and $k$ is the number of parameters to be estimated.
+\citet{barnard1999miscellanea} further alternated the calculation of the degrees of freedom by combining Equations~\ref{eq:dfold} and~\ref{eq:dfobs}
+\begin{equation}
+    df_{adj}=\frac{df_{old}df_{obs}}{df_{old}+df_{obs}}
+\end{equation}
+When conducting the statistical tests on the pooled estimates, $df_{adj}$ is used for the t-distribution degrees of freedom. 
+The confidence interval is straightforward, where we obtain 
+\begin{equation}
+    SE_{pooled}=\sqrt{V_{\text{Total}}}
+\end{equation}
+then we simply calculate 
+\begin{equation}
+    CI=\bar{\theta}\pm t_{df_{adj},\frac{1-\alpha}{2}}\times SE_{pooled}
+\end{equation}

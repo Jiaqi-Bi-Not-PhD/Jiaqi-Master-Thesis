@@ -1,4 +1,4 @@
-\begin{thebibliography}{16}
+\begin{thebibliography}{23}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -103,5 +103,47 @@ Matteo Quartagno, Simon Grund, and James Carpenter.
 \newblock Jomo: a flexible package for two-level joint modelling multiple
   imputation.
 \newblock \emph{R Journal}, 9\penalty0 (1), 2019.
+
+\bibitem[Lynch et~al.(1998)Lynch, Walsh, et~al.]{lynch1998genetics}
+Michael Lynch, Bruce Walsh, et~al.
+\newblock \emph{Genetics and analysis of quantitative traits}, volume~1.
+\newblock Sinauer Sunderland, MA, 1998.
+
+\bibitem[Sinnwell et~al.(2014)Sinnwell, Therneau, and
+  Schaid]{sinnwell2014kinship2}
+Jason~P Sinnwell, Terry~M Therneau, and Daniel~J Schaid.
+\newblock The kinship2 r package for pedigree data.
+\newblock \emph{Human heredity}, 78\penalty0 (2):\penalty0 91--93, 2014.
+
+\bibitem[Price et~al.(2006)Price, Patterson, Plenge, Weinblatt, Shadick, and
+  Reich]{price2006principal}
+Alkes~L Price, Nick~J Patterson, Robert~M Plenge, Michael~E Weinblatt, Nancy~A
+  Shadick, and David Reich.
+\newblock Principal components analysis corrects for stratification in
+  genome-wide association studies.
+\newblock \emph{Nature genetics}, 38\penalty0 (8):\penalty0 904--909, 2006.
+
+\bibitem[Rubin(2018)]{rubin2018multiple}
+Donald~B Rubin.
+\newblock Multiple imputation.
+\newblock In \emph{Flexible Imputation of Missing Data, Second Edition}, pages
+  29--62. Chapman and Hall/CRC, 2018.
+
+\bibitem[White and Royston(2009)]{white2009imputing}
+Ian~R White and Patrick Royston.
+\newblock Imputing missing covariate values for the cox model.
+\newblock \emph{Statistics in medicine}, 28\penalty0 (15):\penalty0 1982--1998,
+  2009.
+
+\bibitem[Barnard and Rubin(1999)]{barnard1999miscellanea}
+John Barnard and Donald~B Rubin.
+\newblock Miscellanea. small-sample degrees of freedom with multiple
+  imputation.
+\newblock \emph{Biometrika}, 86\penalty0 (4):\penalty0 948--955, 1999.
+
+\bibitem[Van~Buuren(2018)]{van2018flexible}
+Stef Van~Buuren.
+\newblock \emph{Flexible imputation of missing data}.
+\newblock CRC press, 2018.
 
 \end{thebibliography}

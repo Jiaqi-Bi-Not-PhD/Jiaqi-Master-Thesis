@@ -16,8 +16,18 @@ library(latex2exp)
 set.seed(123123)
 famx <- simfam(N.fam = 200, design = "pop", variation = "frailty", 
                base.dist = "Weibull", frailty.dist = "gamma", interaction = FALSE,
-               add.x = TRUE, x.dist = "normal", x.parms = c(0, 1),  depend = 2, 
-               base.parms = c(0.016,3), vbeta = c(1, 3, 3)) # Number of family = 10
+               add.x = TRUE, x.dist = "normal", x.parms = c(0, 1), depend = 2, 
+               base.parms = c(0.035,2.3), vbeta = c(1, 3, 3)) 
+#famx <- famx |>
+#  group_by(famID) |>
+#  group_modify(~ sample_rows(.x)) |>
+#  ungroup()
+#newdata <- famx |>
+#  group_by(famID) |>
+#  summarise(df = sum(status))
+#famx <- merge(famx, newdata, by = "famID")
+mean(famx$status == 0)
+# Number of family = 200
 
 
 ## Simulate newx using kinship-correlation
@@ -48,22 +58,24 @@ famx$PRS <- ( famx$PRS + 10 ) * ( (3 + 3)/(10 + 10) ) - 3
 
 
 ## Test if Gamma frailty model gives the correct estimates ##
-test_model <- penmodel(Surv(time, status) ~ gender + mgene + PRS, cluster = "famID", gvar = "mgene", 
-                       design = "pop", base.dist = "Weibull", frailty.dist = "gamma", agemin = min(famx$currentage[famx$status == 1]), data = famx,
+test_model <- penmodel(Surv(time, status) ~ gender + mgene + newx, cluster = "famID", gvar = "mgene", 
+                       design = "pop", base.dist = "Weibull", frailty.dist = "gamma", 
+                       agemin = min(famx$currentage[famx$status == 1]), data = famx,
                        parms = c(1/41.41327,1,0,0,0, 1)) # True params
 summary(test_model)
 ## Test if Gamma frailty model gives the correct estimates ##
 
 ## Estimates when there are no missing data
 nomiss_gamma <- penmodel(Surv(time, status) ~ gender + mgene + newx, cluster = "famID", gvar = "mgene", 
-                       design = "pop", base.dist = "Weibull", frailty.dist = "gamma", agemin = 20, data = famx,
+                       design = "pop", base.dist = "Weibull", frailty.dist = "gamma", agemin = min(famx$currentage[famx$status == 1]), data = famx,
                        parms = c(1/41.41327,1,0,0,0, 1)) # True params
 summary(nomiss_gamma)
 
 ###################################### Missing Data Plot ########################################
 ## Initial baseline cumulative hazard
 miss50_gamma_cca <- penmodel(Surv(time, status) ~ gender + mgene + newx, cluster = "famID", gvar = "mgene", 
-                             design = "pop", base.dist = "Weibull", frailty.dist = "gamma", agemin = 20, data = miss50_famx,
+                             design = "pop", base.dist = "Weibull", frailty.dist = "gamma", 
+                             agemin = min(miss50_famx$currentage[miss50_famx$status == 1]), data = miss50_famx,
                              parms = c(1/41.41327,1,0,0,0, 1))
 
 summary(miss50_gamma_cca)
@@ -102,12 +114,14 @@ miss50_famx |>
 miss50_famx_CCA <- miss50_famx |>
   filter(!is.na(newx)) 
 miss50_gamma <- penmodel(Surv(time, status) ~ gender + mgene + newx, cluster = "famID", gvar = "mgene", 
-                         design = "pop", base.dist = "Weibull", frailty.dist = "gamma", agemin = 20, data = miss50_famx_CCA,
+                         design = "pop", base.dist = "Weibull", frailty.dist = "gamma", agemin = min(famx$currentage[famx$status == 1]), 
+                         data = miss50_famx,
                          parms = c(1/41.41327,1,0,0,0, 1)) # True params
 summary(miss50_gamma)
 ## CCA Log-Normal
 miss50_lognorm <- penmodel(Surv(time, status) ~ gender + mgene + newx, cluster = "famID", gvar = "mgene", 
-                         design = "pop", base.dist = "Weibull", frailty.dist = "lognormal", agemin = 20, data = miss50_famx_CCA,
+                         design = "pop", base.dist = "Weibull", frailty.dist = "lognormal", 
+                         agemin = min(famx$currentage[famx$status == 1]), data = miss50_famx,
                          parms = c(1/41.41327,1,0,0,0, 1)) # True params
 summary(miss50_lognorm)
 
