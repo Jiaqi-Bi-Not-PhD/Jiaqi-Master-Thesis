@@ -265,40 +265,56 @@ The Equation~\ref{eq:conditionalexpectation} holds with the following proof:
     We will only focus on the conditional expectation in this case. 
     The joint density of $(x_i, \mathbf{x}_{-i})$ is given by: 
     \begin{equation*}
-        f\left ( \begin{pmatrix} x_i \\ \mathbf{x}_{-i} \end{pmatrix} \right ) = \frac{1}{(2\pi)^{n/2} |\boldsymbol{\Sigma}|^{1/2}} \exp \left ( -\frac{1}{2} \begin{pmatrix} x_i - \mu_i \\ \mathbf{x}_{-i} - \boldsymbol{\mu}_{-i} \end{pmatrix}^T \boldsymbol{\Sigma}^{-1} \begin{pmatrix} x_i - \mu_i \\ \mathbf{x}_{-i} - \boldsymbol{\mu}_{-i} \end{pmatrix} \right )
+        f\left ( \begin{pmatrix} x_i \\ \mathbf{x}_{-i} \end{pmatrix} \right ) = \frac{1}{(2\pi)^{n/2} |\boldsymbol{\Sigma}|^{1/2}} \exp \left ( -\frac{1}{2} \begin{pmatrix} x_i - \mu_i \\ \mathbf{x}_{-i} - \boldsymbol{\mu}_{-i} \end{pmatrix}^{\top} \boldsymbol{\Sigma}^{-1} \begin{pmatrix} x_i - \mu_i \\ \mathbf{x}_{-i} - \boldsymbol{\mu}_{-i} \end{pmatrix} \right )
     \end{equation*}
     Now we compute the inverse of the covariance matrix $\boldsymbol{\Sigma}$, using the block matrix inversion formula: 
     \begin{equation*}
         \boldsymbol{\Sigma}^{-1} = \begin{pmatrix} \Sigma_{ii} & \boldsymbol{\Sigma}_{i,-i} \\ \boldsymbol{\Sigma}_{-i,i} & \boldsymbol{\Sigma}_{-i,-i} \end{pmatrix}^{-1} = \begin{pmatrix} A & B \\ C & D \end{pmatrix}
     \end{equation*}
     where the submatrices $A$, $B$, $C$, and $D$ are given by:
-    \[
+    \begin{equation}
         A = (\Sigma_{ii} - \boldsymbol{\Sigma}_{i,-i} \boldsymbol{\Sigma}_{-i,-i}^{-1} \boldsymbol{\Sigma}_{-i,i})^{-1}
-    \]
-    \[
+    \end{equation}
+    \begin{equation}\label{eq:B}
         B = -A \boldsymbol{\Sigma}_{i,-i} \boldsymbol{\Sigma}_{-i,-i}^{-1}
-    \]
-    \[
-        C = -\boldsymbol{\Sigma}_{-i,-i}^{-1} \boldsymbol{\Sigma}_{-i,i} A
-    \]
-    \[
+    \end{equation}
+    \begin{equation}
+        C = -\boldsymbol{\Sigma}_{-i,-i}^{-1} \boldsymbol{\Sigma}_{-i,i} A = B^{\top}
+    \end{equation}
+    \begin{equation}
         D = \boldsymbol{\Sigma}_{-i,-i}^{-1} + \boldsymbol{\Sigma}_{-i,-i}^{-1} \boldsymbol{\Sigma}_{-i,i} A \boldsymbol{\Sigma}_{i,-i} \boldsymbol{\Sigma}_{-i,-i}^{-1}
-    \]  
+    \end{equation}  
     The quadratic form in the exponent of the joint density is
     \begin{equation}\label{eq:quadraticform}
-        \begin{pmatrix} x_i - \mu_i \\ \mathbf{x}_{-i} - \boldsymbol{\mu}_{-i} \end{pmatrix}^T \boldsymbol{\Sigma}^{-1} \begin{pmatrix} x_i - \mu_i \\ \mathbf{x}_{-i} - \boldsymbol{\mu}_{-i} \end{pmatrix}
+        \begin{pmatrix} x_i - \mu_i \\ \mathbf{x}_{-i} - \boldsymbol{\mu}_{-i} \end{pmatrix}^{\top} \boldsymbol{\Sigma}^{-1} \begin{pmatrix} x_i - \mu_i \\ \mathbf{x}_{-i} - \boldsymbol{\mu}_{-i} \end{pmatrix}
     \end{equation}
     Expanding~\ref{eq:quadraticform}, and using the symmetric of the covariance matrix that we know $C=B^{\top}$, we can get 
     \begin{align*}
-        &\begin{pmatrix} x_i - \mu_i \\ \mathbf{x}_{-i} - \boldsymbol{\mu}_{-i} \end{pmatrix}^T \boldsymbol{\Sigma}^{-1} \begin{pmatrix} x_i - \mu_i \\ \mathbf{x}_{-i} - \boldsymbol{\mu}_{-i} \end{pmatrix} \\
-        &= (x_i - \mu_i)^T A (x_i - \mu_i) + (x_i - \mu_i)^T B (\mathbf{x}_{-i} - \boldsymbol{\mu}_{-i}) + \\
-        &+(\mathbf{x}_{-i} - \boldsymbol{\mu}_{-i})^T C (x_i - \mu_i) + (\mathbf{x}_{-i} - \boldsymbol{\mu}_{-i})^T D (\mathbf{x}_{-i} - \boldsymbol{\mu}_{-i}) \\
-        &= (x_i - \mu_i)^T A (x_i - \mu_i) + 2 (x_i - \mu_i)^T B (\mathbf{x}_{-i} - \boldsymbol{\mu}_{-i}) + (\mathbf{x}_{-i} - \boldsymbol{\mu}_{-i})^T D (\mathbf{x}_{-i} - \boldsymbol{\mu}_{-i})
+        &\begin{pmatrix} x_i - \mu_i \\ \mathbf{x}_{-i} - \boldsymbol{\mu}_{-i} \end{pmatrix}^{\top} \boldsymbol{\Sigma}^{-1} \begin{pmatrix} x_i - \mu_i \\ \mathbf{x}_{-i} - \boldsymbol{\mu}_{-i} \end{pmatrix} \\
+        &= (x_i - \mu_i)^{\top} A (x_i - \mu_i) + (x_i - \mu_i)^{\top} B (\mathbf{x}_{-i} - \boldsymbol{\mu}_{-i}) + \\
+        &+(\mathbf{x}_{-i} - \boldsymbol{\mu}_{-i})^{\top} C (x_i - \mu_i) + (\mathbf{x}_{-i} - \boldsymbol{\mu}_{-i})^{\top} D (\mathbf{x}_{-i} - \boldsymbol{\mu}_{-i}) \\
+        &= (x_i - \mu_i)^{\top} A (x_i - \mu_i) + 2 (x_i - \mu_i)^{\top} B (\mathbf{x}_{-i} - \boldsymbol{\mu}_{-i}) + (\mathbf{x}_{-i} - \boldsymbol{\mu}_{-i})^{\top} D (\mathbf{x}_{-i} - \boldsymbol{\mu}_{-i})
     \end{align*}
-    The conditional mean comes directly from the term \( 2 (x_i - \mu_i)^T B (\mathbf{x}_{-i} - \boldsymbol{\mu}_{-i}) \), leading to the linear adjustment term \(\boldsymbol{\Sigma}_{i,-i} \boldsymbol{\Sigma}_{-i,-i}^{-1} (\mathbf{x}_{-i} - \boldsymbol{\mu}_{-i})\), where
+    Because the term $2(x_i - \mu_i)^{\top} B (\mathbf{x}_{-i} - \boldsymbol{\mu}_{-i})$ is a linear in $x_i$ and $\mathbf{x}_{-i}$. 
+    This term represents the interaction between $x_i$ and $\mathbf{x}_{-i}$ in the conditional expectation. 
+    In particular, this linear relationship helps us determine how $x_i$ is adjusted based on the values of $\mathbf{x}_{-i}$.
+    Substitute~\ref{eq:B} into $2(x_i - \mu_i)^{\top} B (\mathbf{x}_{-i} - \boldsymbol{\mu}_{-i})$, 
+    \begin{equation} 
+        2(x_i - \mu_i)^{\top} B (\mathbf{x}_{-i} - \boldsymbol{\mu}_{-i})=2(x_i - \mu_i)^{\top} -A \boldsymbol{\Sigma}_{i,-i} \boldsymbol{\Sigma}_{-i,-i}^{-1} (\mathbf{x}_{-i} - \boldsymbol{\mu}_{-i})
+    \end{equation}
+    The conditional mean $E(x_i|\mathbf{x}_{-i})$ focuses on how $x_i$ is adjusted linearly based on $\mathbf{x}_{-i}$. 
+    The coefficient of $(\mathbf{x}_{-i} - \boldsymbol{\mu}_{-i})$ in the linear term gives us the adjustment factor $-A \boldsymbol{\Sigma}_{i,-i} \boldsymbol{\Sigma}_{-i,-i}^{-1}$. 
+    Since $ A=(\Sigma_{ii} - \boldsymbol{\Sigma}_{i,-i} \boldsymbol{\Sigma}_{-i,-i}^{-1} \boldsymbol{\Sigma}_{-i,i})^{-1}$, it can be factored out when considering the linear relationship only.
+    The term inside the expectation $E(x_i|\mathbf{x}_{-i})$ then becomes 
+    \begin{equation} 
+        E(x_i|\mathbf{x}_{-i})=\mu_i-A\boldsymbol{\Sigma}_{i,-i}\boldsymbol{\Sigma}_{-i, -i}^{-1}(\mathbf{x}_{-i}-\boldsymbol{\mu}_{-i})
+    \end{equation}
+    Note that $A$ includes the adjustment based on $\Sigma_{ii}$, we focus on the adjustment in terms of covariance components $\boldsymbol{\Sigma}_{i,-i}\boldsymbol{\Sigma}_{-i,-i}^{-1}$, which directly represents the linear dependence. 
+    Hence, the conditional mean comes directly from the term $2(x_i - \mu_i)^{\top} B (\mathbf{x}_{-i} - \boldsymbol{\mu}_{-i})$, leading to the linear adjustment term \(\boldsymbol{\Sigma}_{i,-i} \boldsymbol{\Sigma}_{-i,-i}^{-1} (\mathbf{x}_{-i} - \boldsymbol{\mu}_{-i})\), where
     \begin{equation*}
         E(x_i|\mathbf{x}_{-i})=\mu_i+\boldsymbol{\Sigma}_{i,-i}\boldsymbol{\Sigma}_{-i,-i}^{-1}(\mathbf{x}_{-i}-\boldsymbol{\mu}_{-i})
     \end{equation*}
+    such that the linear dependence is introduced by $\boldsymbol{\Sigma}_{i,-i}\boldsymbol{\Sigma}_{-i,-i}^{-1}$. 
 \end{proof}
 Using the conditional expectation captures the genetic correlations when imputing the missing variable. 
 In fact, once the correlation matrix is known, even broader scope than the genetic epidemiology, can still apply this proposed multiple imputation method.

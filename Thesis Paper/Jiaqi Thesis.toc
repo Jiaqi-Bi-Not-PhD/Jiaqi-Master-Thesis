@@ -14,6 +14,6 @@
 \contentsline {section}{\numberline {3.1}Introduction}{6}{section.3.1}% 
 \contentsline {section}{\numberline {3.2}Kinship Matrix}{7}{section.3.2}% 
 \contentsline {section}{\numberline {3.3}Multiple Imputation without Kinship Matrix}{9}{section.3.3}% 
-\contentsline {section}{\numberline {3.4}Multiple Imputation with Kinship Matrix}{13}{section.3.4}% 
-\contentsline {section}{\numberline {3.5}Pooling Step and Variance Estimation}{17}{section.3.5}% 
-\contentsline {chapter}{Bibliography}{20}{equation.3.5.39}% 
+\contentsline {section}{\numberline {3.4}Multiple Imputation with Kinship Matrix}{12}{section.3.4}% 
+\contentsline {section}{\numberline {3.5}Pooling Step and Variance Estimation}{16}{section.3.5}% 
+\contentsline {chapter}{Bibliography}{19}{equation.3.5.45}% 
