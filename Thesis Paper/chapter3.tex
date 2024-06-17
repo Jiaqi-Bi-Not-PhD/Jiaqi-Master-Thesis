@@ -308,44 +308,43 @@ Also, in the survival analysis, there has been always an argument on whether the
 In this thesis, we have used both $\log(T)$ and $\log(H_0(T))$ in the simulation study to determine the differences to avoid potential biases caused by misspecification of the model. 
 
 \section{Pooling Step and Variance Estimation}
-After multiple imputation, Rubin's rules are applied to combine the results from the multiple datasets. 
-These rules are used to derive overall estimates and associated variances that incorporate the uncertainty due to missing data. 
-Specifically, Rubin's rule for variance estimation involves calculating within-imputation variance and between-imputation variance. 
-The total variance is the sum of the average within-imputation variance and the between-imputation variance adjusted by a factor related to the number of imputations. 
-This approach ensures that the variability due to missing data is properly reflected in the final statistical inferences. 
-Rubin's rule is advantageous compared to empirical variance estimation because it accounts for both within-imputation and between-imputation variances, thus providing a more accurate reflection of the uncertainty due to missing data. 
+After multiple imputation, Rubin's rules are applied to combine the results from multiple datasets.
+These rules derive overall estimates and associated variances that incorporate the uncertainty due to missing data.
+Specifically, Rubin's rule for variance estimation involves calculating within-imputation and between-imputation variances.
+The total variance is the sum of the average within-imputation variance and the between-imputation variance, adjusted by a factor related to the number of imputations.
+This approach ensures that the variability due to missing data is properly reflected in the final statistical inferences.
+Rubin's rule is advantageous compared to empirical variance estimation because it accounts for both within-imputation and between-imputation variances, providing a more accurate reflection of the uncertainty due to missing data.
 This dual consideration enhances the validity of statistical inferences by incorporating the variability introduced through the imputation process. 
 In contrast, empirical variance estimation may underestimate this uncertainty, leading to overly optimistic conclusions~\cite{rubin2018multiple}.
 
-Based on the Rubin's rule, the pooling step of the analysis is defined as 
+Based on Rubin's rule, the pooling step of the analysis is defined as
 \begin{equation} 
     \bar{\theta}=\frac{1}{M}\sum_{i=1}^M\theta_i
 \end{equation}
-where $\theta_i$ is the parameter estimate that we are making the inference in a study for $i$-th imputation after $M$ imputations. 
-So $\bar{\theta}$ is the pooled parameter estimates. 
-Based on~\citet{barnard1999miscellanea}, the variance estimation is also defined in a two-level structure, which are within imputation variance and between imputation variance. 
+where $\theta_i$ is the parameter estimate for the $i$-th imputation after $M$ imputations. 
+Thus, $\bar{\theta}$ represents the pooled parameter estimates.
+According to \citet{barnard1999miscellanea}, variance estimation is structured at two levels: within-imputation variance and between-imputation variance.
 The within imputation variance is similar to the pooled parameter estimation, where 
 \begin{equation} 
-    V_W=\frac{1}{M}\sum_{i=1}^mSE_i^2
+    V_W=\frac{1}{M}\sum_{i=1}^MSE_i^2
 \end{equation}
 such that $V_W$ determines the within-imputation variance, and it's simply ``pooled" variance among all analyses from the imputed dataset $i$. 
-The between-imputation variance, on the other hand, accounts for the extra variances caused by the missing data. 
-The between-imputation variance $V_B$ is defined as 
+The between-imputation variance $V_B$, on the other hand, accounts for the extra variances caused by the missing data is defined as 
 \begin{equation} 
     V_B=\frac{\sum_{i=1}^M(\theta_i-\bar{\theta})^2}{M-1}
 \end{equation}
-where $V_B$ is the unbiased estimation. 
-Note that $\theta$ is estimated using the only finite $M$ imputed datasets, according to~\citet{van2018flexible}, $V_B$ is the approximation when $M\rightarrow\infty$.
+where $V_B$ is the unbiased estimate of between-imputation variance. 
+Given that $\theta$ is estimated using the only the finite $M$ imputed datasets,~\citet{van2018flexible} note that $V_B$ is the approximation of the variance when $M\rightarrow\infty$.
 Therefore, the total variance can be written as
 \begin{equation} 
     V_{\text{Total}}=V_W+V_B+\frac{V_B}{M}
 \end{equation}
-when $M$ is large enough, $V_{\text{Total}}$ tends to have the only two components of within and between variances. 
-The test statistic (Wald statistic) is 
-\begin{equation} 
+when $M$ is large enough, $V_{\text{Total}}$ tends to primarily consist of within-imputation and between-imputation variances.
+The test statistic (Wald statistic) for the pooled estimate is 
+\begin{equation}\label{eq:teststatFdist}
     \frac{(\bar{\theta}-\theta_0)^2}{V_{\text{Total}}}\sim F_{1,df_{adj}}
 \end{equation}
-which 
+where $\theta_0$ is the null hypothesis for the estimate, which~\ref{eq:teststatFdist} can be derived to
 \begin{equation} 
     \frac{\bar{\theta}-\theta_0}{\sqrt{V_{\text{Total}}}}\sim t_{df_{adj}, \frac{1-\alpha}{2}}
 \end{equation}
@@ -361,7 +360,7 @@ and
 where $\rho$ is the fraction of missing information, which quantifies the proportion of the total variance that is attributable to the fact that the data have been imputed $M$ times. 
 Also, $r$ is the relative increase in variance due to non-responses (missing data), which measures the increase in variance due to the missing data compared to if there were no missing data. 
 In the interpretation, $\rho$ gives the proportion of the total variance that is due to the uncertainty introduced by the missing data. 
-A higher $\rho$ indicates a larger fractino of the total uncertainty comes from the fact that the data were imputed.
+A higher $\rho$ indicates a larger fraction of the total uncertainty comes from the fact that the data were imputed.
 A higher $r$ indicates that the missing data have a larger impact on the overall variance. 
 In the first MI literature by~\citet{rubin1987multiple}, the degrees of freedom was defined as
 \begin{equation}\label{eq:dfold}
@@ -385,3 +384,6 @@ then we simply calculate
 \begin{equation}
     CI=\bar{\theta}\pm t_{df_{adj},\frac{1-\alpha}{2}}\times SE_{pooled}
 \end{equation}
+
+In conclusion, Rubin's rules provide a robust framework for combining estimates from multiple imputed datasets, effectively accounting for both within-imputation and between-imputation variances. 
+This approach enhances the validity of statistical inferences by appropriately reflecting the uncertainty due to missing data.
