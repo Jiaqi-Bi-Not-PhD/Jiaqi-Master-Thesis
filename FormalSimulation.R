@@ -255,6 +255,14 @@ penmodel <- function(formula, cluster="famID", gvar="mgene", parms, cuts=NULL, d
 ################# Formal Simulation #############
 ################# 100 Simulations ###############
 #################################################
+## True thetas
+true_beta1 <- 1
+true_beta2 <- 3
+true_beta3 <- 3
+true_kappa <- log(2)
+true_alpha <- log(0.035)
+true_lambda <- log(2.3)
+  
 n_simulations <- 100
 n_cores <- detectCores() - 1 
 
@@ -424,14 +432,15 @@ stopCluster(cl)
 ### nomiss_datasets contains 6 lists of 100 datasets -> 600 datasets
 ### mar_datasets
 names(mar_datasets)
-saveRDS(complete_datasets, file = "100 complete datasets lists.RData")
-saveRDS(mar_datasets, file = "100 mar datasets lists.RData")
-test_list <- readRDS("100 mar datasets lists.RData")
+#saveRDS(complete_datasets, file = "100 complete datasets lists.RData")
+#saveRDS(mar_datasets, file = "100 mar datasets lists.RData")
+#test_list <- readRDS("100 mar datasets lists.RData")
 
 
 #######################################################################################
 ################################ Generate MAR Ends ####################################
 #######################################################################################
+
 
 
 
