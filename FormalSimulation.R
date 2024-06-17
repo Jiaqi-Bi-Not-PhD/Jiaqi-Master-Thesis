@@ -262,11 +262,10 @@ n_cores <- detectCores() - 1
 #######################################################################################
 ################################ Generate 100 datasets ################################
 #######################################################################################
-# Define scenarios
+## 500, 200, 50 families => Gamma or LogNormal
 Nfam_values <- c(500, 200, 50)
 frailty_dist_values <- c("gamma", "lognormal")
 
-# Combine all scenario parameters into a list
 scenarios <- expand.grid(Nfam = Nfam_values, frailty_dist = frailty_dist_values)
 scenarios_list <- split(scenarios, seq(nrow(scenarios)))
 
@@ -279,13 +278,13 @@ run_simulation <- function(params, sim_index) {
   frailty_dist <- params$frailty_dist
   
   repeat {
-    # Generate the data
+    ## Data Generation
     famx <- simfam(N.fam = Nfam, design = "pop", variation = "frailty", 
                    base.dist = "Weibull", frailty.dist = frailty_dist, interaction = FALSE,
                    add.x = TRUE, x.dist = "normal", x.parms = c(0, 1), depend = 2, 
                    base.parms = c(0.035,2.3), vbeta = c(1, 3, 3)) 
     
-    # Try to run the analysis and capture warnings
+    ## If warning exists when the generated data runs the analysis => re-generate a new data and abandon the current
     result <- tryCatch({
       test_model <- penmodel(Surv(time, status) ~ gender + mgene + newx, cluster = "famID", gvar = "mgene", 
                              design = "pop", base.dist = "Weibull", frailty.dist = frailty_dist, 
@@ -299,16 +298,16 @@ run_simulation <- function(params, sim_index) {
     })
     
     if (is.null(result$warning) && is.null(result$error)) {
-      return(famx) # Only store the dataset
+      return(famx) ## Only store the dataset
     } else {
       cat("Warning or error occurred in iteration", sim_index, "- rerunning\n")
     }
   }
 }
 
-# Define the number of simulations and the number of cores to use
+## Generate 100 complete datasets for 2*3 = 6 types of data
 n_simulations <- 100
-n_cores <- detectCores() - 1  # Use one less than the number of available cores
+n_cores <- detectCores() - 1  # 7 cores on my own computer
 
 # Create a cluster
 cl <- makeCluster(n_cores)
@@ -358,13 +357,11 @@ nomiss_datasets <- list(simulated_dataset_100_Complete_lognormal_50_fam,
 #######################################################################################
 ################################ Generate MAR #########################################
 #######################################################################################
-# Define the proportions for missing data
 proportions <- c(0.20, 0.40, 0.60, 0.80)
 
-# Define the missing pattern
 miss_pattern <- matrix(c(rep(1, 14), 0, rep(1, 4)), nrow = 1, byrow = TRUE)
 
-# Function to introduce missingness for a single dataset and a given proportion
+## Missingness & proportion function
 introduce_missingness <- function(index, dataset_list, prop, miss_pattern) {
   famx <- dataset_list[[index]]
   
@@ -378,7 +375,7 @@ introduce_missingness <- function(index, dataset_list, prop, miss_pattern) {
   return(miss_famx)
 }
 
-# Function to run the missingness introduction for all proportions
+## Function to run the missingness introduction for all proportions
 run_for_all_proportions <- function(i, dataset_list, proportions, miss_pattern) {
   results <- lapply(proportions, function(prop) {
     introduce_missingness(i, dataset_list, prop, miss_pattern)
@@ -387,39 +384,35 @@ run_for_all_proportions <- function(i, dataset_list, proportions, miss_pattern) 
   return(results)
 }
 
-# Create a cluster
 n_cores <- detectCores() - 1
 cl <- makeCluster(n_cores)
-clusterEvalQ(cl, library(mice))  # Ensure necessary libraries are loaded on each worker
+clusterEvalQ(cl, library(mice))  
 
-# List of complete datasets
+## List of complete datasets
 complete_datasets <- list(
-  Gamma_50 = simulated_dataset_100_Complete_gamma_50_fam,
-  Gamma_200 = simulated_dataset_100_Complete_gamma_200_fam,
-  Gamma_500 = simulated_dataset_100_Complete_gamma_500_fam,
-  Lognormal_50 = simulated_dataset_100_Complete_lognormal_50_fam,
-  Lognormal_200 = simulated_dataset_100_Complete_lognormal_200_fam,
-  Lognormal_500 = simulated_dataset_100_Complete_lognormal_500_fam
+  simulated_dataset_100_Complete_gamma_50_fam = simulated_dataset_100_Complete_gamma_50_fam,
+  simulated_dataset_100_Complete_gamma_200_fam = simulated_dataset_100_Complete_gamma_200_fam,
+  simulated_dataset_100_Complete_gamma_500_fam = simulated_dataset_100_Complete_gamma_500_fam,
+  simulated_dataset_100_Complete_lognormal_50_fam = simulated_dataset_100_Complete_lognormal_50_fam,
+  simulated_dataset_100_Complete_lognormal_200_fam = simulated_dataset_100_Complete_lognormal_200_fam,
+  simulated_dataset_100_Complete_lognormal_500_fam = simulated_dataset_100_Complete_lognormal_500_fam
 )
 
-
-# Export necessary functions and objects to the cluster
 clusterExport(cl, c("introduce_missingness", "run_for_all_proportions", "miss_pattern", "proportions",
                     "complete_datasets"))
 
-# Initialize an empty list to store the results
 mar_datasets <- list()
 
-# Iterate over each complete dataset and apply the missing data mechanism
+## Iterate over each complete dataset and apply the missing data mechanism
 for (dataset_name in names(complete_datasets)) {
   dataset <- complete_datasets[[dataset_name]]
   clusterExport(cl, "dataset")
-  # Apply the function in parallel
+  ## Apply the function in parallel
   results_parallel <- parLapply(cl, 1:100, function(i) {
     run_for_all_proportions(i, dataset, proportions, miss_pattern)
   })
   
-  # Store the results in the mar_datasets list
+  ## Store the results in the mar_datasets list
   for (prop in proportions) {
     mar_datasets[[paste0("simulated_dataset_100_MAR", prop * 100, "_", dataset_name)]] <- lapply(1:100, function(i) results_parallel[[i]][[as.character(prop)]])
   }
@@ -427,8 +420,13 @@ for (dataset_name in names(complete_datasets)) {
 
 stopCluster(cl)
 
-# mar_datasets contains 24 lists of 100 datasets -> 2400 datasets
-# nomiss_datasets contains 6 lists of 100 datasets -> 600 datasets
+### mar_datasets contains 24 lists of 100 datasets -> 2400 datasets
+### nomiss_datasets contains 6 lists of 100 datasets -> 600 datasets
+### mar_datasets
+names(mar_datasets)
+saveRDS(complete_datasets, file = "100 complete datasets lists.RData")
+saveRDS(mar_datasets, file = "100 mar datasets lists.RData")
+test_list <- readRDS("100 mar datasets lists.RData")
 
 
 #######################################################################################

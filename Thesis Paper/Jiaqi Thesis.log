@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.9.16)  14 JUN 2024 22:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2019.9.16)  17 JUN 2024 02:02
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -450,33 +450,49 @@ Package: glossary-tree 2019/01/06 v4.42 (NLCT)
 \@glsxtrnewgls@inner=\count155
 \glsshortpltok=\toks39
 \glslongpltok=\toks40
+) (/usr/local/texlive/2019/texmf-dist/tex/latex/blkarray/blkarray.sty
+Package: blkarray 2015/02/27 v0.07 Block array (dpc)
+\c@BAenumi=\count156
+\BA@col=\count157
+\BA@block@cnt=\count158
+\BA@final@box=\box34
+\BA@first@box=\box35
+\BA@colsep=\dimen140
+\BA@ftn=\toks41
+\BAextrarowheight=\dimen141
+\BAextraheightafterhline=\dimen142
+\BAarrayrulewidth=\dimen143
+\BAdoublerulesep=\dimen144
+\BAfootskip=\dimen145
+\BA@dashbox=\box36
+\BA@ddashbox=\box37
 )
 \glswrite=\write3
 \glo@main@file=\write4
 \openout4 = `"Jiaqi Thesis.glo"'.
 
-Package glossaries Info: Writing glossary file "Jiaqi Thesis".glo on input line 82.
+Package glossaries Info: Writing glossary file "Jiaqi Thesis".glo on input line 85.
 \glo@symbols@file=\write5
 \openout5 = `"Jiaqi Thesis.slo"'.
 
-Package glossaries Info: Writing glossary file "Jiaqi Thesis".slo on input line 82.
+Package glossaries Info: Writing glossary file "Jiaqi Thesis".slo on input line 85.
  (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/Jiaqi Thesis.aux (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/chapter1.aux) (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/chapter2.aux) (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/chapter3.aux))
 \openout1 = `"Jiaqi Thesis.aux"'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 173.
-LaTeX Font Info:    ... okay on input line 173.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 173.
-LaTeX Font Info:    ... okay on input line 173.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 173.
-LaTeX Font Info:    ... okay on input line 173.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 173.
-LaTeX Font Info:    ... okay on input line 173.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 173.
-LaTeX Font Info:    ... okay on input line 173.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 173.
-LaTeX Font Info:    ... okay on input line 173.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 173.
-LaTeX Font Info:    ... okay on input line 173.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 176.
+LaTeX Font Info:    ... okay on input line 176.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 176.
+LaTeX Font Info:    ... okay on input line 176.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 176.
+LaTeX Font Info:    ... okay on input line 176.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 176.
+LaTeX Font Info:    ... okay on input line 176.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 176.
+LaTeX Font Info:    ... okay on input line 176.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 176.
+LaTeX Font Info:    ... okay on input line 176.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 176.
+LaTeX Font Info:    ... okay on input line 176.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -514,17 +530,17 @@ LaTeX Font Info:    ... okay on input line 173.
 
 (/usr/local/texlive/2019/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count156
-\scratchdimen=\dimen140
-\scratchbox=\box34
-\nofMPsegments=\count157
-\nofMParguments=\count158
-\everyMPshowfont=\toks41
-\MPscratchCnt=\count159
-\MPscratchDim=\dimen141
-\MPnumerator=\count160
-\makeMPintoPDFobject=\count161
-\everyMPtoPDFconversion=\toks42
+\scratchcounter=\count159
+\scratchdimen=\dimen146
+\scratchbox=\box38
+\nofMPsegments=\count160
+\nofMParguments=\count161
+\everyMPshowfont=\toks42
+\MPscratchCnt=\count162
+\MPscratchDim=\dimen147
+\MPnumerator=\count163
+\makeMPintoPDFobject=\count164
+\everyMPtoPDFconversion=\toks43
 ) (/usr/local/texlive/2019/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
  (/usr/local/texlive/2019/texmf-dist/tex/latex/oberdiek/grfext.sty
@@ -537,28 +553,28 @@ Package grfext Info: Graphics extension search list:
  (/usr/local/texlive/2019/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 ))
-\AtBeginShipoutBox=\box35
-Package hyperref Info: Link coloring OFF on input line 173.
+\AtBeginShipoutBox=\box39
+Package hyperref Info: Link coloring OFF on input line 176.
  (/usr/local/texlive/2019/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
  (/usr/local/texlive/2019/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count162
+\c@section@level=\count165
 )
-LaTeX Info: Redefining \ref on input line 173.
-LaTeX Info: Redefining \pageref on input line 173.
-LaTeX Info: Redefining \nameref on input line 173.
+LaTeX Info: Redefining \ref on input line 176.
+LaTeX Info: Redefining \pageref on input line 176.
+LaTeX Info: Redefining \nameref on input line 176.
  (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/Jiaqi Thesis.out) (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/Jiaqi Thesis.out)
 \@outlinefile=\write6
 \openout6 = `"Jiaqi Thesis.out"'.
 
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 180.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 184.
  (/usr/local/texlive/2019/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 180.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 184.
  [1
 
 \openout3 = `"Jiaqi Thesis.ist"'.
@@ -597,22 +613,16 @@ File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 
  (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/chapter1.tex
 Chapter 1.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [1
+[1
 
 
 
-]) [2] [3]
+] [2]) [3]
 \openout2 = `chapter2.aux'.
 
  (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/chapter2.tex
 Chapter 2.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [4
+[4
 
 
 
@@ -621,40 +631,47 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/chapter3.tex
 Chapter 3.
+[6
 
+
+
+] [7]
+
+LaTeX Font Warning: Command \scriptsize invalid in math mode on input line 62.
+
+[8] [9]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [6
+ [10]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [11] [12] [13] [14] [15] [16] [17] [18]) [19] (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/Jiaqi Thesis.bbl [20
 
 
-
-] [7] [8] [9] [10] [11] [12]) [13] (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/Jiaqi Thesis.bbl [14
-
-
-])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 283.
- [15]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 283.
+] [21])
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 288.
+ [22]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 288.
  (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/Jiaqi Thesis.aux (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/chapter1.aux) (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/chapter2.aux) (/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/chapter3.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 283.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 283.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 288.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 288.
 Package rerunfilecheck Info: File `"Jiaqi Thesis".out' has not changed.
-(rerunfilecheck)             Checksum: 7FF53BEADB9EA5C16B25D858AABFA593;1147.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 283.
+(rerunfilecheck)             Checksum: 2D94CA889190467F7FA0EA731E7A20E1;1164.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 288.
  ) 
 Here is how much of TeX's memory you used:
- 14233 strings out of 492616
- 222918 string characters out of 6129481
- 415741 words of memory out of 5000000
- 17728 multiletter control sequences out of 15000+600000
- 15700 words of font info for 58 fonts, out of 8000000 for 9000
+ 14614 strings out of 492616
+ 227822 string characters out of 6129481
+ 424182 words of memory out of 5000000
+ 18080 multiletter control sequences out of 15000+600000
+ 18836 words of font info for 71 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 52i,13n,38p,2100b,637s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb>
-Output written on "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/Jiaqi Thesis.pdf" (24 pages, 282465 bytes).
+ 52i,18n,38p,2100b,637s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmib10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmmib8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/local/texlive/2019/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb>
+Output written on "/Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/Jiaqi Thesis.pdf" (31 pages, 311499 bytes).
 PDF statistics:
- 477 PDF objects out of 1000 (max. 8388607)
- 426 compressed objects within 5 object streams
- 169 named destinations out of 1000 (max. 500000)
+ 535 PDF objects out of 1000 (max. 8388607)
+ 475 compressed objects within 5 object streams
+ 186 named destinations out of 1000 (max. 500000)
  153 words of extra memory for PDF output out of 10000 (max. 10000000)
 

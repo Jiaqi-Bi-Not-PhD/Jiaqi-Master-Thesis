@@ -77,6 +77,9 @@
 \usepackage[numbers]{natbib}
 \usepackage[symbols,nogroupskip,nonumberlist]{glossaries-extra}
 \usepackage{setspace}
+\usepackage{blkarray}
+
+\newcommand{\matindex}[1]{\mbox{\scriptsize#1}}
 
 \makeglossaries
 
@@ -172,6 +175,7 @@ Schulich School of Medicine \& Dentistry}
 
 \begin{document}
 
+
 %% This sets the page style and numbering for preliminary sections.
 \begin{preliminary}
 
@@ -259,6 +263,7 @@ Schulich School of Medicine \& Dentistry}
 %%  chapter start on a new page, and allow you to format only parts   %%
 %%  of your thesis at a time by using `\includeonly'.                 %%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setstretch{1.5}
 \include{chapter1}
 \include{chapter2}
 \include{chapter3}

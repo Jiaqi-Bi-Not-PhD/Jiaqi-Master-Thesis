@@ -150,6 +150,8 @@ INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/supertabular/supertabular.sty
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/supertabular/supertabular.sty
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/glossaries/styles/glossary-tree.sty
 INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/glossaries/styles/glossary-tree.sty
+INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/blkarray/blkarray.sty
+INPUT /usr/local/texlive/2019/texmf-dist/tex/latex/blkarray/blkarray.sty
 OUTPUT /Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/Jiaqi Thesis.glo
 OUTPUT /Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/Jiaqi Thesis.slo
 INPUT /Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/Jiaqi Thesis.aux
@@ -252,6 +254,19 @@ OUTPUT /Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesi
 INPUT /Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/chapter3.tex
 INPUT /Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/chapter3.tex
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex7.tfm
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmbx5.tfm
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam5.tfm
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm5.tfm
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/rsfs/rsfs5.tfm
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmr9.tfm
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmmi9.tfm
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmsy9.tfm
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/amsfonts/cmextra/cmex9.tfm
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/cm/cmbx9.tfm
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/amsfonts/symbols/msam10.tfm
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/amsfonts/symbols/msbm10.tfm
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/tfm/public/rsfs/rsfs10.tfm
 INPUT /Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/Jiaqi Thesis.bbl
 INPUT /Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/Jiaqi Thesis.bbl
 INPUT /Users/garybi/Desktop/MSc Biostatistics Western/Jiaqi-Master-Thesis/Thesis Paper/Jiaqi Thesis.aux
@@ -267,6 +282,7 @@ INPUT /usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.p
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cmextra/cmex8.pfb
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi6.pfb
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb
@@ -282,4 +298,5 @@ INPUT /usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy6.pf
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb
+INPUT /usr/local/texlive/2019/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb
 INPUT /usr/local/texlive/2019/texmf-dist/fonts/type1/public/rsfs/rsfs10.pfb

@@ -1,4 +1,4 @@
-\begin{thebibliography}{23}
+\begin{thebibliography}{25}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
@@ -122,6 +122,19 @@ Alkes~L Price, Nick~J Patterson, Robert~M Plenge, Michael~E Weinblatt, Nancy~A
 \newblock Principal components analysis corrects for stratification in
   genome-wide association studies.
 \newblock \emph{Nature genetics}, 38\penalty0 (8):\penalty0 904--909, 2006.
+
+\bibitem[Rubin(1986)]{rubin1986statistical}
+Donald~B Rubin.
+\newblock Statistical matching using file concatenation with adjusted weights
+  and multiple imputations.
+\newblock \emph{Journal of Business \& Economic Statistics}, 4\penalty0
+  (1):\penalty0 87--94, 1986.
+
+\bibitem[Little(1988)]{little1988missing}
+Roderick~JA Little.
+\newblock Missing-data adjustments in large surveys.
+\newblock \emph{Journal of Business \& Economic Statistics}, 6\penalty0
+  (3):\penalty0 287--296, 1988.
 
 \bibitem[Rubin(2018)]{rubin2018multiple}
 Donald~B Rubin.
