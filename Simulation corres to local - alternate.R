@@ -16,11 +16,11 @@ process_datasets <- function(datasets, true_value) {
 #mar_datasets_gamma_test <- mar_datasets_gamma[c(1,12)]
 #mar_datasets_gamma_test$simulated_dataset_100_MAR20_Gamma_50 <- mar_datasets_gamma_test$simulated_dataset_100_MAR20_Gamma_50[c(1:2)]
 #mar_datasets_gamma_test$simulated_dataset_100_MAR80_Gamma_500 <- mar_datasets_gamma_test$simulated_dataset_100_MAR80_Gamma_500[c(1:2)]
-
-scenario_names <- names(mar_datasets_gamma_test) # Gamma frailty, adjust accordingly for lognormal frailty
+start_time <- Sys.time()
+scenario_names <- names(mar_datasets_gamma_50_500) # Gamma frailty, adjust accordingly for lognormal frailty
 
 all_scenarios_results <- mclapply(scenario_names, function(scenario) {
-  scenario_data <- mar_datasets_gamma_test[[scenario]] # Gamma frailty, adjust accordingly for lognormal frailty
+  scenario_data <- mar_datasets_gamma_50_500[[scenario]] # Gamma frailty, adjust accordingly for lognormal frailty
   scenario_results <- process_datasets(scenario_data, true_value)
   scenario_results <- scenario_results |> mutate(Scenario = as.character(scenario))
   return(scenario_results)
@@ -29,9 +29,12 @@ all_scenarios_results <- mclapply(scenario_names, function(scenario) {
 all_scenarios_results <- bind_rows(all_scenarios_results)
 
 summary_results <- all_scenarios_results |>
-  group_by(Scenario, Parameter) |>
+  group_by(Scenario, Parameters) |>
   summarize(
     Bias = mean(Bias),
+    RMSE = sqrt(mean(MSE)),
     MSE = mean(MSE),
     Coverage = mean(Coverage)
   )
+end_time <- Sys.time()
+running_time <- end_time - start_time
