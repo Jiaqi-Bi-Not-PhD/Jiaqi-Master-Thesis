@@ -9,9 +9,12 @@ CCA_model_gamma <- penmodel(Surv(timeBC, BC) ~ mgeneI + PRS, cluster = "famID",
 summary(CCA_model_gamma)
 CCA_model_lognormal <- penmodel(Surv(timeBC, BC) ~ mgeneI + PRS, cluster = "famID", 
                                 gvar = "mgeneI", design = "pop", base.dist = "Weibull", 
-                                frailty.dist = "gamma", agemin = min(brca1_prs$timeBC[status == 1]), 
+                                frailty.dist = "lognormal", agemin = min(brca1_prs$timeBC[status == 1]), 
                                 data = brca1_prs, parms = c(0.016,3,0, 0,2))
 summary(CCA_model_lognormal)
+
+coxph_1 <- coxph(Surv(timeBC, BC) ~ mgeneI + PRS, data = brca1_prs[brca1_prs$proband == 0,])
+summary(coxph_1)
 
 
 

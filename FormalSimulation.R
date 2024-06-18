@@ -188,7 +188,7 @@ penmodel <- function(formula, cluster="famID", gvar="mgene", parms, cuts=NULL, d
                   agemin=agemin, control = list(maxit = 50000), hessian=TRUE)
   }
   else{ # frailty model
-    if(is.null(data$df)){
+    if(suppressWarnings(is.null(data$df))){
       df <- aggregate(Y[,2], list(newdata$famID), sum)[,2]
       fsize <- aggregate(Y[,2], list(newdata$famID), length)[,2]
       newdata$df <- rep(df, fsize)

@@ -24,7 +24,7 @@ Pooling <- function(model, imputed_data) {
   rho <- ( Var_B + Var_B/m )/(Var_T) # rho
   df_old <- (m-1)*( (1+1/r)^2 ) # Old df
   df_obs <- ( ((n-k)+1)/((n-k)+3) ) * (n-k) * (1-rho) # df obs
-  df_adj <- (df_old * df_obs)/(df_old + df_obs) 
+  df_adj <- (df_old * df_obs)/(df_old + df_obs) # adjusted df
   
   p_values <- 2 * pt(-abs(sqrt(Wald_pooled)), df_adj) # P Value
   

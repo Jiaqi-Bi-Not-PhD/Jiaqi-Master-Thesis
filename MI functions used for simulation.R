@@ -2,6 +2,8 @@
 ############# MI Functions used for simulation #############
 ############################################################
 
+############ Gamma Frailty #################################
+
 ####################################################################################
 ####################################################################################
 ####################################################################################
@@ -9,11 +11,12 @@
 ####################################################################################
 ####################################################################################
 ####################################################################################
-MI_FamEvent_noK_logT <- function(data, M = 5) {
+MI_FamEvent_noK_logT <- function(data, M = 5, option = "General") {
+  repeat {
+    tryCatch({
   ## Step 1 - Empirical estimates
   imp_model <- lm(newx ~ ageonset + log(time) + status , data = data) 
-  X <- model.matrix( ~ ageonset + log(time) + status, data = data)
-  summary(imp_model)
+  X <- model.matrix( ~ ageonset + log(time) + status, data = data) 
   betas <- coef(imp_model)
   sigmahat <- sigma(imp_model)
   V <- vcov(imp_model)
@@ -44,15 +47,35 @@ MI_FamEvent_noK_logT <- function(data, M = 5) {
     
     newx_Imp <- X %*% betastar 
     newx_Imp <- as.vector(newx_Imp)
-    #newx_Imp <- sapply(newx_Imp, find_closest, Y_obs)  # Comment out for regular MI
+    if (option == "PMM") newx_Imp <- sapply(newx_Imp, find_closest, Y_obs)  # Comment out for regular MI
     
     ## Step 7
     data_imp[[i]] <- data |>
-      mutate(newx_Imp_temp = newx_Imp) |>
-      mutate(newx_I = ifelse(is.na(newx), newx_Imp_temp, newx))
+      dplyr::mutate(newx_Imp_temp = newx_Imp) |>
+      dplyr::mutate(newx_I = ifelse(is.na(newx), newx_Imp_temp, newx))
     
     #data_imp[[i]] <- data |>
     #  mutate(newx_Imp = newx_Imp) |>
     #  mutate(newx_I = ifelse(is.na(newx), newx_Imp, newx))
   }
+  #return(data_imp)
+  for (i in 1:M) {
+    gamma_results[[i]] <- penmodel(Surv(time, status) ~ gender + mgene + newx_I, cluster = "famID", 
+                                   gvar = "mgene", design = "pop", base.dist = "Weibull", 
+                                   frailty.dist = "gamma", agemin = min(data_imp[[i]]$currentage[data_imp[[i]]$status == 1]), 
+                                   data = data_imp[[i]], parms = c(0.035,2.3,1, 3, 3,2)) 
+  }
+  model_list <- gamma_results
+  #est_list <- lapply(model_list, function(x) summary(x)$estimates[,1]) 
+  #est_aftermi <- colMeans(do.call(rbind, est_list))
+  pooled_est <- Pooling(model = model_list, imputed_data = data_imp)
+  return(pooled_est)
+    }, error = function(e) {
+      message("Error occurred: ", e$message)
+    }, warning = function(w) {
+      message("Warning occurred: ", w$message)
+    })
+  }
 }
+#MI_FamEvent_noK_logT(data = miss50_famx)
+MI_function_test <- MI_FamEvent_noK_logT(data = miss50_famx)
