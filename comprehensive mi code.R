@@ -5,8 +5,8 @@
 ####################################################################################
 
 ## Step 1 - Empirical estimates
-imp_model <- lm(newx ~  ageonset + log(time) + status  , data = miss50_famx) 
-X <- model.matrix( ~ ageonset + log(time) + status  , data = miss50_famx)
+imp_model <- lm(newx ~ ageonset + log(time) + status , data = miss50_famx) 
+X <- model.matrix( ~ ageonset + log(time) + status, data = miss50_famx)
 summary(imp_model)
 betas <- coef(imp_model)
 sigmahat <- sigma(imp_model)
@@ -323,9 +323,9 @@ Y_obs <- miss50_famx$newx
 start_time <- Sys.time() # Starting time 
 for (m in 1:5) {
   ## Step 2 - empirical estimates
-  model_test <- relmatLmer(newx ~ gender + ageonset + currentage + log(H0) + status + mgene + (1|indID), data = miss50_famx, relmat = list(indID = kinship_mat))
-  #summary(model_test)
-  X <- model.matrix(~  gender + ageonset + currentage + log(H0) + status + mgene, data = miss50_famx) # imputation model design matrix
+  model_test <- relmatLmer(newx ~ ageonset + log(H0) + status + (1|indID), data = miss50_famx, relmat = list(indID = kinship_mat))
+  summary(model_test)
+  X <- model.matrix(~  ageonset + log(H0) + status, data = miss50_famx) # imputation model design matrix
   V <- vcov(model_test)
   
   #betas <- coef(model_test)
@@ -368,10 +368,10 @@ for (m in 1:5) {
   mu_star <- X %*% as.vector(betastar)
   
   ## Step 7
-  num_cores <- detectCores() - 2 # 6 cores
-  cl <- makeCluster(num_cores)
-  clusterExport(cl, varlist = c("Sigma", "newx", "mu_star")) 
-  clusterEvalQ(cl, library(Matrix))
+  #num_cores <- detectCores() - 2 # 6 cores
+  #cl <- makeCluster(num_cores)
+  #clusterExport(cl, varlist = c("Sigma", "newx", "mu_star")) 
+  #clusterEvalQ(cl, library(Matrix))
   
   E_cond <- function(i) {
     y_minus_i <- newx[-i]
@@ -385,11 +385,11 @@ for (m in 1:5) {
     conditional_Expect <- mu_star[i] + Sigmahat %*% solve(Sigma_nonNA) %*% (y_minus_i - mu_star_minus_i)
     return(conditional_Expect)
   }
-  conditional_expectations <- parSapply(cl, 1:nrow(miss50_famx), E_cond)
+  conditional_expectations <- sapply(1:nrow(miss50_famx), E_cond)
   conditional_expectations <- as.vector(do.call(rbind, conditional_expectations))
   
   #conditional_vars <- miss50_famx$cond_var
-  stopCluster(cl)
+  #stopCluster(cl)
   
   ## Step 8
   #w2i <- rnorm(n = nrow(miss50_famx), mean = 0, sd = 1)
@@ -432,7 +432,8 @@ gamma_results <- list()
 for (i in 1:5) {
   gamma_results[[i]] <- penmodel(Surv(time, status) ~ gender + mgene + newx_I, cluster = "famID", gvar = "mgene", 
                                  design = "pop", base.dist = "Weibull", frailty.dist = "gamma", 
-                                 agemin = min(miss50_famx_imp[[i]]$currentage[miss50_famx_imp[[i]]$status == 1]), data = famx_newx_imp_fam[[i]],
+                                 agemin = min(famx_newx_imp_fam[[i]]$currentage[famx_newx_imp_fam[[i]]$status == 1]), 
+                                 data = famx_newx_imp_fam[[i]],
                                  parms = c(1/41.41327,1,0,0,0, 1)) 
 }
 MI_K_H0_gamma_results <- gamma_results
