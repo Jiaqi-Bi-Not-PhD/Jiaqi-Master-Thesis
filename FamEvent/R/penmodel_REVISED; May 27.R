@@ -10,8 +10,8 @@ penmodel <- function(formula, cluster="famID", gvar="mgene", parms, cuts=NULL, d
   if(is.null(agemin)){
     agemin <- attr(data, "agemin")
     if(is.null(agemin)) {
-          agemin <- 0
-          warning("agemin = 0 was used or assign agemin to attr(data, \"agemin\").")
+      agemin <- 0
+      warning("agemin = 0 was used or assign agemin to attr(data, \"agemin\").")
     }
   }
   
@@ -34,35 +34,35 @@ penmodel <- function(formula, cluster="famID", gvar="mgene", parms, cuts=NULL, d
   type <- attr(Y, "type")
   if (type == "counting") stop("start-stop type Surv objects are not supported.")
   if (type == "mright" || type == "mcounting") stop("multi-state survival is not supported.")
-
+  
   if(base.dist=="piecewise"){
     if(is.null(cuts)) stop("The cuts should be specified")
     if(any(cuts > max(Y[,1]) | cuts < min(Y[,1]))) stop("Some value(s) of the cuts are beyond the range.")
   }
-
-
+  
+  
   X <- model.matrix(Terms, m)
-
+  
   nvar <- ncol(X)-1
   var.names <- colnames(X)[-1]
   if(nvar==1) X <- matrix(X[,-1])
   else X <- X[,-1]
-
+  
   #number of parameters for baseline
   nbase <- ifelse(base.dist=="logBurr", 3, ifelse(base.dist=="piecewise", length(cuts)+1, 2)) 
-
+  
   #nk <- ifelse(is.null(frailty.dist),0,1)
   colnames(X) <- var.names
   vbeta <- parms[(nbase+1):(nbase+nvar)]
   kappa <- parms[(nbase+nvar+1)]
-#  if(length(vbeta) != nvar) stop("The size of parms is incorrect.")
+  #  if(length(vbeta) != nvar) stop("The size of parms is incorrect.")
   if(length(parms) != (nvar+nbase+nfp) ) stop("The size of parms is incorrect.")
   
   if(is.null(data$weight)) data$weight <- 1
- 
+  
   if(base.dist=="lognormal"){
-  	if(parms[2] <= 0) stop("parms[2] has to be > 0")
-  	else parms[1] <- exp(parms[1])
+    if(parms[2] <= 0) stop("parms[2] has to be > 0")
+    else parms[1] <- exp(parms[1])
   } 
   else if(any(parms[1:nbase]<=0)) stop("All baseline parameters should be > 0")
   
@@ -72,7 +72,7 @@ penmodel <- function(formula, cluster="famID", gvar="mgene", parms, cuts=NULL, d
                   agemin=agemin, control = list(maxit = 50000), hessian=TRUE)
   }
   else{ # frailty model
-    if(is.null(data$df)){
+    if(suppressWarnings(is.null(data$df))){
       df <- aggregate(Y[,2], list(newdata$famID), sum)[,2]
       fsize <- aggregate(Y[,2], list(newdata$famID), length)[,2]
       newdata$df <- rep(df, fsize)
@@ -82,13 +82,13 @@ penmodel <- function(formula, cluster="famID", gvar="mgene", parms, cuts=NULL, d
                   frailty.dist=frailty.dist, agemin=agemin, vec=FALSE,
                   control = list(maxit = 50000), hessian=TRUE)
   }
-    
+  
   logLik <- -est1$value
-    EST <- est1$par
-    H <- est1$hessian
-    Var <- try(solve(H), TRUE)
-
-
+  EST <- est1$par
+  H <- est1$hessian
+  Var <- try(solve(H), TRUE)
+  
+  
   if(!is.null(attr(Var,"class"))) stop("Model did not converge.\n  Try again with different initial values.")
   else{ 
     bparms.name <- c("log.lambda","log.rho", "log.eta")
@@ -107,28 +107,28 @@ penmodel <- function(formula, cluster="famID", gvar="mgene", parms, cuts=NULL, d
       if(frailty.dist=="none")  grad <- jacobian(loglik_ind, est1$par, X=X, Y=Y, cuts=cuts, nbase=nbase, data=data, design=design, base.dist=base.dist, agemin=agemin, vec=TRUE)
       else grad <- jacobian(loglik_frailty, est1$par, X=X, Y=Y, cuts=cuts, nbase=nbase, data=data, design=design, base.dist=base.dist, frailty.dist=frailty.dist, agemin=agemin, vec=TRUE)
       Jscore <- t(grad)%*%grad
- 		 parms.cov.robust <- Var%*%(Jscore)%*%Var
- 		 parms.se.robust <- sqrt(diag(parms.cov.robust))
- 		 rownames(parms.cov.robust) <- colnames(parms.cov.robust) <- parms.name
+      parms.cov.robust <- Var%*%(Jscore)%*%Var
+      parms.se.robust <- sqrt(diag(parms.cov.robust))
+      rownames(parms.cov.robust) <- colnames(parms.cov.robust) <- parms.name
     }
   }
-    
-    aic = 2*length(EST) - 2*logLik
-    
-    out <- list(estimates = EST, varcov = parms.cov, varcov.robust = parms.cov.robust, se = parms.se, se.robust = parms.se.robust,logLik = logLik, AIC=aic)  
-    class(out) <- "penmodel"
-    attr(out, "design") <- design
-    attr(out, "base.dist") <- base.dist
-    attr(out, "frailty.dist") <- frailty.dist
-    attr(out, "agemin") <- agemin
-    attr(out, "cuts") <- cuts
-    attr(out, "nbase") <- nbase
-    attr(out, "data") <- data
-    attr(out, "robust") <- robust
-    attr(out, "formula") <- formula
-    attr(out, "X") <- X
-    attr(out, "Y") <- Y
-    invisible(out)
-    
+  
+  aic = 2*length(EST) - 2*logLik
+  
+  out <- list(estimates = EST, varcov = parms.cov, varcov.robust = parms.cov.robust, se = parms.se, se.robust = parms.se.robust,logLik = logLik, AIC=aic)  
+  class(out) <- "penmodel"
+  attr(out, "design") <- design
+  attr(out, "base.dist") <- base.dist
+  attr(out, "frailty.dist") <- frailty.dist
+  attr(out, "agemin") <- agemin
+  attr(out, "cuts") <- cuts
+  attr(out, "nbase") <- nbase
+  attr(out, "data") <- data
+  attr(out, "robust") <- robust
+  attr(out, "formula") <- formula
+  attr(out, "X") <- X
+  attr(out, "Y") <- Y
+  invisible(out)
+  
 }#end
   

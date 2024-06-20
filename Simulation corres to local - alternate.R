@@ -14,12 +14,14 @@ start_time <- Sys.time()
 scenario_names <- names(simulated_dataset_100_MAR20_Gamma_50)
 sim_results <- process_datasets(datasets = simulated_dataset_100_MAR20_Gamma_50$simulated_dataset_100_MAR20_Gamma_50, 
                                 true_value = true_value)
-sim_results |> group_by(Parameters) |> summarise(Bias = mean(Bias, na.rm = TRUE),
+sim_results_toprint <- sim_results |> group_by(Parameters) |> summarise(Bias = mean(Bias, na.rm = TRUE),
                                                  RMSE = sqrt(mean(MSE, na.rm = TRUE)),
                                                  MSE = mean(MSE, na.rm = TRUE),
                                                  Coverage = mean(Coverage, na.rm = TRUE))
+print(list(scenario_names, sim_results_toprint))
 end_time <- Sys.time()
 running_time <- end_time - start_time
+############# Below is the draft #################
 #names(mar_datasets_gamma)
 #mar_datasets_gamma_50_500 <- mar_datasets_gamma[-(5:8)]
 #mar_datasets_gamma_test <- mar_datasets_gamma[c(1,12)]

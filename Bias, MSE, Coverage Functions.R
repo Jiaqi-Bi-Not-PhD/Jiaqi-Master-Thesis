@@ -1,7 +1,7 @@
 ###########################################################
 ################### Simulation Functions ##################
 ###########################################################
-true_value <- c(true_alpha, true_lambda, true_beta1, true_beta2, true_beta3, true_kappa)
+true_value <- c(-3.3524072, 0.8329091, 1.0000000, 3.0000000, 3.0000000, 0.6931472)
 
 calculate_metrics <- function(imp_results, true_value = true_value) {
   Parameters <- imp_results$Parameters
@@ -28,4 +28,4 @@ calculate_metrics <- function(imp_results, true_value = true_value) {
     Coverage = coverage
   ))
 }
-calculate_metrics(MI_function_test, true_value)
+#calculate_metrics(MI_function_test, true_value)

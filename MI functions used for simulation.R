@@ -2,8 +2,6 @@
 ############# MI Functions used for simulation #############
 ############################################################
 
-############ Gamma Frailty #################################
-
 ####################################################################################
 ####################################################################################
 ####################################################################################
@@ -11,7 +9,7 @@
 ####################################################################################
 ####################################################################################
 ####################################################################################
-MI_FamEvent_noK_logT <- function(data, M = 5, option = "General") {
+MI_FamEvent_noK_logT <- function(data, M = 5, option = "General", frailty.dist = "gamma") {
   attempts <- 0
   max_attempts <- 3
   success <- FALSE
@@ -66,7 +64,8 @@ MI_FamEvent_noK_logT <- function(data, M = 5, option = "General") {
   for (i in 1:M) {
     gamma_results[[i]] <- penmodel(Surv(time, status) ~ gender + mgene + newx_I, cluster = "famID", 
                                    gvar = "mgene", design = "pop", base.dist = "Weibull", 
-                                   frailty.dist = "gamma", agemin = min(data_imp[[i]]$currentage[data_imp[[i]]$status == 1]), 
+                                   frailty.dist = frailty.dist, 
+                                   agemin = min(data_imp[[i]]$currentage[data_imp[[i]]$status == 1]), 
                                    data = data_imp[[i]], parms = c(0.035,2.3,1, 3, 3,2)) 
   }
   model_list <- gamma_results
@@ -90,7 +89,15 @@ MI_FamEvent_noK_logT <- function(data, M = 5, option = "General") {
   }
 }
 #MI_FamEvent_noK_logT(data = data)
-MI_function_test <- MI_FamEvent_noK_logT(data = data, option = "PMM")
+#MI_function_test <- MI_FamEvent_noK_logT(data = data, option = "PMM")
+
+####################################################################################
+####################################################################################
+####################################################################################
+################# Multiple Imputations WITH kinship using log(T) ###################
+####################################################################################
+####################################################################################
+####################################################################################
 
 ####################################################################################
 ####################################################################################
@@ -119,7 +126,7 @@ MI_FamEvent_K_H0T <- function(data, M = 5, option = "General") {
   
   ## Step X - Initial baseline cumulative hazard
   miss50_gamma_cca <- penmodel(Surv(time, status) ~ gender + mgene + newx, cluster = "famID", gvar = "mgene", 
-                               design = "pop", base.dist = "Weibull", frailty.dist = "gamma", 
+                               design = "pop", base.dist = "Weibull", frailty.dist = frailty.dist, 
                                agemin = min(data$currentage[data$status == 1]), data = data,
                                parms = c(0.035,2.3,1, 3, 3,2))
   baseline_gammafr <- as.vector(summary(miss50_gamma_cca)$estimates[1:2,1])
@@ -209,11 +216,10 @@ MI_FamEvent_K_H0T <- function(data, M = 5, option = "General") {
     data$newx_star <- newx_star
     data <- data |>
       mutate(H0 = (exp(logalpha)^exp(loglambda)) * (exp(loglambda)^2) * (time^exp(loglambda)) ) |>
-      mutate(newx_I = newx_star) |>
-      mutate(newx_I = ifelse(!is.na(newx), newx, newx_I)) |>
-      group_by(famID) |>
-      mutate(newx_I = ifelse(!is.na(newx), find_closest(newx_I, newx), newx_I)) |>
-      ungroup() 
+      mutate(newx_I = ifelse(!is.na(newx), newx, newx_star)) 
+      #group_by(famID) |>
+      #mutate(newx_I = ifelse(!is.na(newx), find_closest(newx_I, newx), newx_I)) |>
+      #ungroup() 
     
     data_imp[[m]] <- data
     
@@ -221,7 +227,7 @@ MI_FamEvent_K_H0T <- function(data, M = 5, option = "General") {
     ## Step X - update baseline cumulative hazard
     updates_impdata <- penmodel(Surv(time, status) ~ gender + mgene + newx_I, cluster = "famID", 
                                 gvar = "mgene", 
-                                design = "pop", base.dist = "Weibull", frailty.dist = "gamma", 
+                                design = "pop", base.dist = "Weibull", frailty.dist = frailty.dist, 
                                 agemin = min(data$currentage[data$status == 1]), 
                                 data = data,
                                 parms = c(0.035,2.3,1, 3, 3,2)) 
@@ -242,7 +248,7 @@ MI_FamEvent_K_H0T <- function(data, M = 5, option = "General") {
   gamma_results <- list()
   for (i in 1:M) {
     gamma_results[[i]] <- penmodel(Surv(time, status) ~ gender + mgene + newx_I, cluster = "famID", gvar = "mgene", 
-                                   design = "pop", base.dist = "Weibull", frailty.dist = "gamma", 
+                                   design = "pop", base.dist = "Weibull", frailty.dist = frailty.dist, 
                                    agemin = min(data_imp[[i]]$currentage[data_imp[[i]]$status == 1]), data = data_imp[[i]],
                                    parms = c(0.035,2.3,1, 3, 3,2)) 
   }
@@ -261,4 +267,4 @@ MI_FamEvent_K_H0T <- function(data, M = 5, option = "General") {
   })
   }
 }
-MI_function_test <- MI_FamEvent_K_H0T(data = data)
+#MI_function_test <- MI_FamEvent_K_H0T(data = data)

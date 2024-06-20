@@ -1,6 +1,6 @@
 \chapter{Literature Reviews}
 \section{Survival Analysis}
-Survival analysis is a robust statistical methodology used to analyze time-to-event data, where the focus is on the time until an event of interest occurs.
+Survival analysis is a common statistical tool used to analyze time-to-event data, where the focus is on the time until an event of interest occurs.
 It has been extensively applied in medical research, particularly in studies involving cancer, where events such as death or relapse are critical endpoints.
 The literature identifies several key methods and models that form the backbone of survival analysis. \citet{kaplan1958nonparametric} introduced the Kaplan-Meier estimator, a nonparametric statistic used to estimate survival functions from incomplete observations, which remains widely used due to its simplicity and effectiveness in handling censored data.
 \citet{cox1972regression} proposed the proportional hazards model, which allows for the inclusion of covariates and has become a standard technique for assessing the effect of explanatory variables on survival.
@@ -39,6 +39,6 @@ Whenever we can define one of above functions, it is straighforward to derive th
 
 
 \subsection{Frailty Model for Family Based Study}
-Parametric survival analysis methods assume that the time-to-event data follow a specific probability distribution.
-This approach provides a more detailed and flexible framework for modeling survival data, allowing for more precise estimates and interpretations of survival functions and hazard rates.
-\citet{hosmer2008applied} has comprehensively summarized most of parametric baseline hazard
+In survival analysis, similar to other statistical methods, it is important to account for random effects within a multilevel structure.
+The term is called frailty term. 
+The frailty accounts for the heterogeneity between clusters, and in a family-based study, we need to measure the variance introduced additionally from the cluster. 

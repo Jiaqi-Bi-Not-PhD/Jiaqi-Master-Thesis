@@ -1,3 +1,10 @@
+library(parallel)
+library(dplyr)
+library(survival)
+library(parallelly)
+library(FamEvent)
+library(mice)
+
 cumhaz  <-  function(dist="Weibull", t, parms, cuts=NULL){
   
   if(dist=="Weibull")	 	chaz <- (parms[1]*t)^parms[2] 
@@ -253,7 +260,7 @@ penmodel <- function(formula, cluster="famID", gvar="mgene", parms, cuts=NULL, d
 
 #################################################
 ################# Formal Simulation #############
-################# 100 Simulations ###############
+################ 1000 Simulations ###############
 #################################################
 ## True thetas
 true_beta1 <- 1
@@ -262,16 +269,19 @@ true_beta3 <- 3
 true_kappa <- log(2)
 true_alpha <- log(0.035)
 true_lambda <- log(2.3)
+
+true_value <- c(-3.3524072, 0.8329091, 1.0000000, 3.0000000, 3.0000000, 0.6931472)
   
-n_simulations <- 100
-n_cores <- detectCores() - 1 
+n_simulations <- 1000
+n_cores <- parallelly::availableCores()-2
+cl <- parallel::makeCluster(n_cores)
 
 #start_time <- Sys.time() # Starting time 
 #######################################################################################
-################################ Generate 100 datasets ################################
+################################ Generate 1000 datasets ###############################
 #######################################################################################
 ## 500, 200, 50 families => Gamma or LogNormal
-Nfam_values <- c(500, 200, 50)
+Nfam_values <- c(500, 50)
 frailty_dist_values <- c("gamma", "lognormal")
 
 scenarios <- expand.grid(Nfam = Nfam_values, frailty_dist = frailty_dist_values)
@@ -287,17 +297,17 @@ run_simulation <- function(params, sim_index) {
   
   repeat {
     ## Data Generation
-    famx <- simfam(N.fam = Nfam, design = "pop", variation = "frailty", 
+    famx <- FamEvent::simfam(N.fam = Nfam, design = "pop", variation = "frailty", 
                    base.dist = "Weibull", frailty.dist = frailty_dist, interaction = FALSE,
                    add.x = TRUE, x.dist = "normal", x.parms = c(0, 1), depend = 2, 
                    base.parms = c(0.035,2.3), vbeta = c(1, 3, 3)) 
     
     ## If warning exists when the generated data runs the analysis => re-generate a new data and abandon the current
     result <- tryCatch({
-      test_model <- penmodel(Surv(time, status) ~ gender + mgene + newx, cluster = "famID", gvar = "mgene", 
+      test_model <- penmodel(survival::Surv(time, status) ~ gender + mgene + newx, cluster = "famID", gvar = "mgene", 
                              design = "pop", base.dist = "Weibull", frailty.dist = frailty_dist, 
                              agemin = min(famx$currentage[famx$status == 1]), data = famx,
-                             parms = c(1/41.41327,1,0,0,0, 1))
+                             parms = true_value)
       list(model = test_model, warning = NULL)
     }, warning = function(w) {
       list(model = NULL, warning = w)
@@ -313,34 +323,34 @@ run_simulation <- function(params, sim_index) {
   }
 }
 
+
 ## Generate 100 complete datasets for 2*3 = 6 types of data
-n_simulations <- 100
-n_cores <- detectCores() - 1  # 7 cores on my own computer
+#n_cores <- parallelly::availableCores()   # 7 cores on my own computer
 
 # Create a cluster
-cl <- makeCluster(n_cores)
+
 #clusterEvalQ(cl, {
 #  library(survival)
 #  library(survPen)
 #})
 
-clusterExport(cl, c("simfam", "penmodel", "run_simulation", "gh",
+parallel::clusterExport(cl, c("simfam", "penmodel", "run_simulation", "gh",
                     "loglik_frailty", "cumhaz", "hazards", "Surv", "dlaplace",
                     "laplace", "scenarios_list", "n_simulations"))  
 
 ## Apply the function in parallel for all scenarios
-results_parallel <- parLapply(cl, seq_along(scenarios_list), function(scenario_idx) {
+results_parallel <- parallel::parLapply(cl, seq_along(scenarios_list), function(scenario_idx) {
   scenario_params <- scenarios_list[[scenario_idx]]
   lapply(1:n_simulations, function(sim_index) {
     run_simulation(scenario_params, sim_index)
   })
 })
 
-stopCluster(cl)
+#stopCluster(cl)
 
 for (i in seq_along(scenarios_list)) {
   scenario_params <- scenarios_list[[i]]
-  scenario_name <- paste("simulated_dataset_100_Complete", scenario_params$frailty_dist, scenario_params$Nfam, "fam", sep = "_")
+  scenario_name <- paste("simulated_dataset_1000_Complete", scenario_params$frailty_dist, scenario_params$Nfam, "fam", sep = "_")
   
   assign(scenario_name, results_parallel[[i]])
 }
@@ -351,15 +361,14 @@ for (i in seq_along(scenarios_list)) {
 # simulated_dataset_100_Complete_gamma_50_fam
 # simulated_dataset_100_Complete_gamma_200_fam
 # simulated_dataset_100_Complete_gamma_500_fam
-nomiss_datasets <- list(simulated_dataset_100_Complete_lognormal_50_fam,
-                        simulated_dataset_100_Complete_lognormal_200_fam,
-                        simulated_dataset_100_Complete_lognormal_500_fam,
-                        simulated_dataset_100_Complete_gamma_50_fam,
-                        simulated_dataset_100_Complete_gamma_200_fam,
-                        simulated_dataset_100_Complete_gamma_500_fam)
+nomiss_datasets <- list(simulated_dataset_1000_Complete_lognormal_50_fam,
+                        simulated_dataset_1000_Complete_lognormal_500_fam,
+                        simulated_dataset_1000_Complete_gamma_50_fam,
+                        simulated_dataset_1000_Complete_gamma_500_fam)
+saveRDS(nomiss_datasets, file = "1000_NoMissing_Gamma_LogNormal_50and500.RData")
 
 #######################################################################################
-################################ Generate 100 datasets ends ###########################
+################################ Generate 1000 datasets ends ##########################
 #######################################################################################
 
 #######################################################################################
@@ -369,14 +378,15 @@ proportions <- c(0.20, 0.40, 0.60, 0.80)
 
 miss_pattern <- matrix(c(rep(1, 14), 0, rep(1, 4)), nrow = 1, byrow = TRUE)
 
+parallel::clusterEvalQ(cl, library(mice))
 ## Missingness & proportion function
 introduce_missingness <- function(index, dataset_list, prop, miss_pattern) {
   famx <- dataset_list[[index]]
   
-  ampute_test <- ampute(data = famx, prop = prop, patterns = miss_pattern)
+  ampute_test <- mice::ampute(data = famx, prop = prop, patterns = miss_pattern)
   reasonable_weights <- ampute_test$weights
   reasonable_weights[1,] <- c(0, 0, 0, 0, 0, 0.5, 0, 0, 0, 0, 0, 1, 1, 2, 0, 0, 0, 0, 0)
-  ampute_test <- ampute(data = famx, prop = prop, patterns = miss_pattern, 
+  ampute_test <- mice::ampute(data = famx, prop = prop, patterns = miss_pattern, 
                         mech = "MAR", weights = reasonable_weights)
   miss_famx <- ampute_test$amp
   
@@ -392,21 +402,19 @@ run_for_all_proportions <- function(i, dataset_list, proportions, miss_pattern) 
   return(results)
 }
 
-n_cores <- detectCores() - 1
-cl <- makeCluster(n_cores)
-clusterEvalQ(cl, library(mice))  
+#n_cores <- parallelly::availableCores()
+#cl <- parallel::makeCluster(n_cores)
+  
 
 ## List of complete datasets
 complete_datasets <- list(
-  simulated_dataset_100_Complete_gamma_50_fam = simulated_dataset_100_Complete_gamma_50_fam,
-  simulated_dataset_100_Complete_gamma_200_fam = simulated_dataset_100_Complete_gamma_200_fam,
-  simulated_dataset_100_Complete_gamma_500_fam = simulated_dataset_100_Complete_gamma_500_fam,
-  simulated_dataset_100_Complete_lognormal_50_fam = simulated_dataset_100_Complete_lognormal_50_fam,
-  simulated_dataset_100_Complete_lognormal_200_fam = simulated_dataset_100_Complete_lognormal_200_fam,
-  simulated_dataset_100_Complete_lognormal_500_fam = simulated_dataset_100_Complete_lognormal_500_fam
+  simulated_dataset_1000_Complete_gamma_50_fam = simulated_dataset_1000_Complete_gamma_50_fam,
+  simulated_dataset_1000_Complete_gamma_500_fam = simulated_dataset_1000_Complete_gamma_500_fam,
+  simulated_dataset_1000_Complete_lognormal_50_fam = simulated_dataset_1000_Complete_lognormal_50_fam,
+  simulated_dataset_1000_Complete_lognormal_500_fam = simulated_dataset_1000_Complete_lognormal_500_fam
 )
 
-clusterExport(cl, c("introduce_missingness", "run_for_all_proportions", "miss_pattern", "proportions",
+parallel::clusterExport(cl, c("introduce_missingness", "run_for_all_proportions", "miss_pattern", "proportions",
                     "complete_datasets"))
 
 mar_datasets <- list()
@@ -414,33 +422,33 @@ mar_datasets <- list()
 ## Iterate over each complete dataset and apply the missing data mechanism
 for (dataset_name in names(complete_datasets)) {
   dataset <- complete_datasets[[dataset_name]]
-  clusterExport(cl, "dataset")
+  parallel::clusterExport(cl, "dataset")
   ## Apply the function in parallel
-  results_parallel <- parLapply(cl, 1:100, function(i) {
+  results_parallel <- parallel::parLapply(cl, 1:1000, function(i) {
     run_for_all_proportions(i, dataset, proportions, miss_pattern)
   })
   
   ## Store the results in the mar_datasets list
   for (prop in proportions) {
-    mar_datasets[[paste0("simulated_dataset_100_MAR", prop * 100, "_", dataset_name)]] <- lapply(1:100, function(i) results_parallel[[i]][[as.character(prop)]])
+    mar_datasets[[paste0("simulated_dataset_1000_MAR", prop * 100, "_", dataset_name)]] <- lapply(1:1000, function(i) results_parallel[[i]][[as.character(prop)]])
   }
 }
 
-stopCluster(cl)
+#stopCluster(cl)
 
-### mar_datasets contains 24 lists of 100 datasets -> 2400 datasets
-### nomiss_datasets contains 6 lists of 100 datasets -> 600 datasets
+### mar_datasets contains 24 lists of 1000 datasets -> 2400 datasets
+### nomiss_datasets contains 6 lists of 1000 datasets -> 600 datasets
 ### mar_datasets
-names(mar_datasets)
+#names(mar_datasets)
 #saveRDS(complete_datasets, file = "100 complete datasets lists.RData")
-#saveRDS(mar_datasets, file = "100 mar datasets lists.RData")
+saveRDS(mar_datasets, file = "1000_mar_lists.RData")
+#test_list <- readRDS("1000 mar datasets lists.RData")
 #test_list <- readRDS("100 mar datasets lists.RData")
 
 
 #######################################################################################
 ################################ Generate MAR Ends ####################################
 #######################################################################################
-
 
 
 

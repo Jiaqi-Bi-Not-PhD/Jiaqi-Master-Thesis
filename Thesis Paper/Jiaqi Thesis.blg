@@ -6,44 +6,44 @@ A level-1 auxiliary file: chapter2.aux
 A level-1 auxiliary file: chapter3.aux
 The style file: unsrtnat.bst
 Database file #1: westernthesis.bib
-You've used 25 entries,
+You've used 24 entries,
             2481 wiz_defined-function locations,
-            714 strings with 8801 characters,
-and the built_in function-call counts, 9476 in all, are:
-= -- 760
-> -- 527
-< -- 17
-+ -- 207
-- -- 156
-* -- 748
-:= -- 1544
-add.period$ -- 75
-call.type$ -- 25
-change.case$ -- 44
-chr.to.int$ -- 24
-cite$ -- 25
-duplicate$ -- 478
-empty$ -- 868
-format.name$ -- 193
-if$ -- 1978
+            709 strings with 8652 characters,
+and the built_in function-call counts, 9146 in all, are:
+= -- 737
+> -- 506
+< -- 16
++ -- 199
+- -- 150
+* -- 722
+:= -- 1489
+add.period$ -- 72
+call.type$ -- 24
+change.case$ -- 43
+chr.to.int$ -- 23
+cite$ -- 24
+duplicate$ -- 459
+empty$ -- 838
+format.name$ -- 186
+if$ -- 1909
 int.to.chr$ -- 2
-int.to.str$ -- 26
-missing$ -- 30
-newline$ -- 132
-num.names$ -- 75
-pop$ -- 216
+int.to.str$ -- 25
+missing$ -- 28
+newline$ -- 127
+num.names$ -- 72
+pop$ -- 205
 preamble$ -- 1
-purify$ -- 25
+purify$ -- 24
 quote$ -- 0
-skip$ -- 275
+skip$ -- 265
 stack$ -- 0
-substring$ -- 399
-swap$ -- 61
-text.length$ -- 3
+substring$ -- 397
+swap$ -- 58
+text.length$ -- 2
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 157
+type$ -- 153
 warning$ -- 0
-while$ -- 80
+while$ -- 78
 width$ -- 0
-write$ -- 325
+write$ -- 312
