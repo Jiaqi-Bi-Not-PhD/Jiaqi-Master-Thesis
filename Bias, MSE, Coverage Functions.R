@@ -28,4 +28,4 @@ calculate_metrics <- function(imp_results, true_value = true_value) {
     Coverage = coverage
   ))
 }
-#calculate_metrics(MI_function_test, true_value)
+calculate_metrics(test_results, true_value)

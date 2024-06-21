@@ -14,21 +14,22 @@ MI_FamEvent_K_H0T <- function(data, M = 5, option = "General", frailty.dist = "g
     tryCatch({
       data_imp <- list() 
       ## Step 1 - Kinship matrix
-      kinship_mat <- with(data, kinship(id = indID, dadid = fatherID, momid = motherID,
+      kinship_mat <- with(data, kinship2::kinship(id = indID, dadid = fatherID, momid = motherID,
                                         sex = gender))
-      kinship_mat_sparse <- Matrix(kinship_mat, sparse = TRUE)
+      kinship_mat_sparse <- Matrix::Matrix(kinship_mat, sparse = TRUE)
       kinship_mat_sparse <- 2 * kinship_mat_sparse
       kinship_mat <- as.matrix(kinship_mat_sparse)
       
       Iden_mat <- diag(nrow = nrow(data)) # Identity matrix n*n
-      Iden_mat_sparse <- Matrix(Iden_mat, sparse = TRUE)
+      Iden_mat_sparse <- Matrix::Matrix(Iden_mat, sparse = TRUE)
       
       ## Step X - Initial baseline cumulative hazard
-      miss50_gamma_cca <- penmodel(Surv(time, status) ~ gender + mgene + newx, cluster = "famID", gvar = "mgene", 
+      miss50_gamma_cca <- penmodel(survival::Surv(time, status) ~ gender + mgene + newx, cluster = "famID", gvar = "mgene", 
                                    design = "pop", base.dist = "Weibull", frailty.dist = frailty.dist, 
                                    agemin = min(data$currentage[data$status == 1]), data = data,
                                    parms = c(0.035,2.3,1, 3, 3,2))
       baseline_gammafr <- as.vector(summary(miss50_gamma_cca)$estimates[1:2,1])
+      #print(baseline_gammafr) #####
       logalpha <- baseline_gammafr[1]
       loglambda <- baseline_gammafr[2]
       data <- data |>
@@ -38,15 +39,17 @@ MI_FamEvent_K_H0T <- function(data, M = 5, option = "General", frailty.dist = "g
       #start_time <- Sys.time() # Starting time 
       for (m in 1:M) {
         ## Step 2 - empirical estimates
-        model_test <- relmatLmer(newx ~ gender + ageonset + currentage + log(H0) + status + mgene + (1|indID), data = data, relmat = list(indID = kinship_mat))
-        #summary(model_test)
-        X <- model.matrix(~  gender + ageonset + currentage + log(H0) + status + mgene, data = data) # imputation model design matrix
+        model_test <- lme4qtl::relmatLmer(newx ~ log(log(ageonset)) + mgene + poly(log(H0), 5) + gender + ageonset + naff + majorgene + generation + relation + (1|indID), data = data, relmat = list(indID = kinship_mat))
+        summary(model_test)
+        X <- model.matrix(~ log(log(ageonset)) + mgene + poly(log(H0), 5) + gender + ageonset + naff + majorgene + generation + relation, data = data) # imputation model design matrix
         V <- vcov(model_test)
         
         #betas <- coef(model_test)
         betas <- as.vector(summary(model_test)$coefficients[,1]) # beta coefficients
-        sigma_g_2 <- attr(VarCorr(model_test)$indID, "stddev")^2 # genetic variance
-        sigma_e_2 <- attr(VarCorr(model_test), "sc")^2 # residual variance
+        #print(betas) #####
+        sigma_g_2 <- attr(lme4::VarCorr(model_test)$indID, "stddev")^2 # genetic variance
+        #print(sigma_g_2) #####
+        sigma_e_2 <- attr(lme4::VarCorr(model_test), "sc")^2 # residual variance
         
         Sigma <- sigma_g_2*kinship_mat_sparse + sigma_e_2*Iden_mat_sparse # Sparse matrix for Sigma
         Sigma_mat <- as.matrix(Sigma) # Non-sparse
@@ -71,6 +74,7 @@ MI_FamEvent_K_H0T <- function(data, M = 5, option = "General", frailty.dist = "g
         #  mutate(cond_var = conditional_variances_temp)
         
         newx <- data$newx
+        #print(head(newx))
         
         
         ## Step 4
@@ -124,7 +128,7 @@ MI_FamEvent_K_H0T <- function(data, M = 5, option = "General", frailty.dist = "g
         
         if (m <= 2) {
           ## Step X - update baseline cumulative hazard
-          updates_impdata <- penmodel(Surv(time, status) ~ gender + mgene + newx_I, cluster = "famID", 
+          updates_impdata <- penmodel(survival::Surv(time, status) ~ gender + mgene + newx_I, cluster = "famID", 
                                       gvar = "mgene", 
                                       design = "pop", base.dist = "Weibull", frailty.dist = frailty.dist, 
                                       agemin = min(data$currentage[data$status == 1]), 
@@ -146,7 +150,7 @@ MI_FamEvent_K_H0T <- function(data, M = 5, option = "General", frailty.dist = "g
       
       gamma_results <- list()
       for (i in 1:M) {
-        gamma_results[[i]] <- penmodel(Surv(time, status) ~ gender + mgene + newx_I, cluster = "famID", gvar = "mgene", 
+        gamma_results[[i]] <- penmodel(survival::Surv(time, status) ~ gender + mgene + newx_I, cluster = "famID", gvar = "mgene", 
                                        design = "pop", base.dist = "Weibull", frailty.dist = frailty.dist, 
                                        agemin = min(data_imp[[i]]$currentage[data_imp[[i]]$status == 1]), data = data_imp[[i]],
                                        parms = c(0.035,2.3,1, 3, 3,2)) 
@@ -158,7 +162,7 @@ MI_FamEvent_K_H0T <- function(data, M = 5, option = "General", frailty.dist = "g
       return(pooled_est)
       #return(model_list)
     }, error = function(e) {
-      message("Error occurred: ", e$message, "on attempt ", attempts)
+      message("Error occurred: ", e$message, " on attempt ", attempts)
       if (attempts == max_attempts) {
         message("Max attempts reached, abandoning this dataset")
         return(NULL)
@@ -167,3 +171,4 @@ MI_FamEvent_K_H0T <- function(data, M = 5, option = "General", frailty.dist = "g
   }
 }
 #test_results <- MI_FamEvent_K_H0T(data = data)
+#test_results2 <- MI_FamEvent_K_H0T(data = data1)

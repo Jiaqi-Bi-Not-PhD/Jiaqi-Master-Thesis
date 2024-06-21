@@ -29,9 +29,9 @@ MI_FamEvent_K_logT <- function(data, M = 5, option = "General", frailty.dist = "
   Iden_mat_sparse <- Matrix(Iden_mat, sparse = TRUE)
   
   ## Step 2 - empirical estimates
-  model_test <- relmatLmer(newx ~ currentage + ageonset + log(time) + status + (1|indID), data = data, relmat = list(indID = kinship_mat))
+  model_test <- relmatLmer(newx ~ log(log(ageonset)) + mgene + poly(log(H0), 5) + gender + ageonset + naff + majorgene + generation + relation + (1|indID), data = data, relmat = list(indID = kinship_mat))
   #summary(model_test)
-  X <- model.matrix(~ currentage + ageonset + log(time) + status, data = data) # imputation model design matrix
+  X <- model.matrix(~ log(log(ageonset)) + mgene + poly(log(H0), 5) + gender + ageonset + naff + majorgene + generation + relation, data = data) # imputation model design matrix
   
   #betas <- coef(model_test)
   betas <- as.vector(summary(model_test)$coefficients[,1]) # beta coefficients

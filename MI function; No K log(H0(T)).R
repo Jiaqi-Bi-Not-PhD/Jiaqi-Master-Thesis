@@ -27,8 +27,8 @@ MI_FamEvent_noK_H0T <- function(data, M = 5, option = "General", frailty.dist = 
   data_imp <- list()
   for (i in 1:M) {
     ## Step 1 - Empirical estimates
-    imp_model <- lm(newx ~ currentage + ageonset + log(time) + status data = data_H0) 
-    X <- model.matrix( ~ currentage + ageonset + log(time) + status, data = data_H0)
+    imp_model <- lm(newx ~ log(log(ageonset)) + mgene + poly(log(H0), 5) + gender + ageonset + naff + majorgene + generation + relation, data = data_H0) 
+    X <- model.matrix( ~ log(log(ageonset)) + mgene + poly(log(H0), 5) + gender + ageonset + naff + majorgene + generation + relation, data = data_H0)
     
     betas <- coef(imp_model)
     sigmahat <- sigma(imp_model)

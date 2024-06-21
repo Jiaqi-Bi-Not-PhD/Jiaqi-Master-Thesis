@@ -17,8 +17,8 @@ MI_FamEvent_noK_logT <- function(data, M = 5, option = "General", frailty.dist =
     attempts <- attempts + 1
     tryCatch({
       ## Step 1 - Empirical estimates
-      imp_model <- lm(newx ~ ageonset + log(time) + status , data = data) 
-      X <- model.matrix( ~ ageonset + log(time) + status, data = data) 
+      imp_model <- lm(newx ~ log(log(ageonset)) + mgene + poly(log(H0), 5) + gender + ageonset + naff + majorgene + generation + relation , data = data) 
+      X <- model.matrix( ~ log(log(ageonset)) + mgene + poly(log(H0), 5) + gender + ageonset + naff + majorgene + generation + relation, data = data) 
       betas <- coef(imp_model)
       sigmahat <- sigma(imp_model)
       V <- vcov(imp_model)
